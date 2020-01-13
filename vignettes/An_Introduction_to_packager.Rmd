@@ -1,0 +1,251 @@
+---
+title: "An Introduction to *packager*"
+author: 
+date: 2019-12-15, 21:01:26
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An Introduction to packager }
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Teaser
+```packager``` is a set of functions I use to create and maintain most of my ```R```-packages
+using a build process such as  [```fakemake```](https://CRAN.R-project.org/package=fakemake)
+or, [GNU make](https://www.gnu.org/software/make/).
+It borrows  heavily from packages ```devtools```, ```usethis```, ```rcmdcheck```, ```remotes``` and ```lintr```. 
+
+# ```withr```
+Due to [the CRAN policy](https://cran.r-project.org/web/packages/policies.html) 
+of not writing "anywhere else on the
+file system apart from the R session's temporary directory",
+throughout this vignette I use  **R**'s temporary directory, often by using 
+`path <- file.path(tempdir(), "my_path")` followed by 
+`withr::with_dir(path, ...)` or the like.
+I do this because this is a vignette and its codes are run on
+[CRAN](https://cran.r-project.org/).
+
+In real life, we would skip the temporary directory stuff.
+
+ 
+
+# Creating Packages
+To create a new package I use:
+```{r, results = "hide", message = FALSE}
+path <- file.path(tempdir(), "myFirstPackage")
+packager::create(path, fakemake = "check")
+```
+
+The package is built, tested, checked and committed into git:
+```{r}
+list.files(path, recursive = FALSE)
+r <- git2r::repository(path)
+summary(r)
+git2r::status(r)
+```
+We can look at some of the files 
+(the directory ```myFirstPackage.Rcheck``` might be of interest):
+```{r}
+cat(readLines(file.path(path, "log", "spell.Rout")), sep = "\n")
+tail(readLines(file.path(path, "log", "check.Rout")), sep = "\n")
+```
+
+And we see what`s left to do:
+```{r}
+cat(readLines(file.path(path, "TODO.md")), sep = "\n")
+```
+
+## Customizing 
+We see that the package's DESCRIPTION is filled with default values.
+```{r}
+cat(readLines(file.path(path, "DESCRIPTION")), sep = "\n")
+```
+
+We could set the package information on the existing package, but we rather create a 
+new one now.
+So we get rid of our first package
+```{r}
+unlink(path, recursive = TRUE)
+if ("myFirstPackage" %in% .packages()) detach("package:myFirstPackage", 
+                                              unload = TRUE)
+```
+
+and customize the package creation 
+(but we skip the process of testing, building and checking for the sake of CPU
+ time, we just build the docs):
+
+```{r, results = "hide", message = FALSE}
+package_title <- "veryImportantPackage"
+path <- file.path(tempdir(), package_title)
+a  <- utils::person(given = "Your", family = "Name", email = "some@whe.re", 
+                    role = c("aut", "cre"))
+packager::create(path, author_at_r = a, title = package_title,
+                 description = "This is very important.",
+                 details = "At least to me.", fakemake = "roxygen2")
+```
+```{r}
+cat(readLines(file.path(path, "DESCRIPTION")), sep = "\n")
+```
+
+The package's man page is set up accordingly:
+
+```{r, eval = FALSE}
+pkgload::load_all(path)
+help(paste0(package_title, "-package"))
+```
+```{r, echo = FALSE}
+pkgload::load_all(path)
+# insert developement page
+help_file <-  system.file("man", paste0(package_title, "-package.Rd"), 
+                          package = devtools::as.package(path)$package)
+captured <- gsub('_\b', '',  capture.output(tools:::Rd2txt(help_file) ))
+cat(captured, sep = "\n")
+```
+
+I use 
+```
+adc <- utils::person(given = "Andreas Dominik",
+                      family = "Cullmann",
+                      email = "fvafrcu@mailbox.org",
+                      role = c("aut", "cre"))
+pop <- as.list(getOption("packager"))
+pop[["whoami"]] <- adc
+options(packager = pop)
+
+```
+in one of my startup files to set the author information globally.
+
+# Maintaining Packages Using [```fakemake```](https://CRAN.R-project.org/package=fakemake)
+
+
+Our brand new package `r devtools::as.package(path)[["package"]]` is checked into git already:
+```{r}
+r <- git2r::repository(path)
+summary(r)
+git2r::status(r)
+```
+
+but we have so far only built the documentation from the ```roxygen``` comments:
+```{r}
+list.files(file.path(path, "log"))
+```
+So we get a ```makelist``` and look at its targets and aliases:
+```{r}
+ml <- packager::get_package_makelist(is_cran = TRUE)
+cbind(lapply(ml, function(x) x[["target"]]),
+      lapply(ml, function(x) x[["alias"]]))
+```
+
+## Building the Package
+
+We choose to build the package:
+```{r}
+suppressMessages(withr::with_dir(path, 
+                                  print(fakemake::make("build", ml, 
+                                                       verbose = FALSE))))
+```
+
+We note the warning 
+```{r}
+cat(git2r::diff(r, as_char = TRUE, path = file.path(".Rbuildignore")))
+```
+
+and see that now there are untracked files in our package's 
+log directory and that some files changed.
+```{r}
+git2r::status(r)
+cat(diff(r, as_char = TRUE, path = ".Rbuildignore"))
+```
+After inspecting the change, we commit:
+```{r}
+withr::with_dir(path, packager::git_add_commit(path = ".", untracked = TRUE,
+                                               message = "make build"))
+git2r::status(r)
+```
+
+## Checking the Package
+
+So now we want the check the package:
+
+```{r}
+suppressMessages(withr::with_dir(path, 
+                                 print(fakemake::make("check", ml, 
+                                                      verbose = FALSE))))
+```
+We again see new files and changes to old files.
+```{r}
+git2r::status(r)
+```
+Note that the ```RUnit``` test files are run while checking the tarball, hence we
+see output from ```RUnit``` in our log directory.
+
+We assume that we passed the check:
+```{r}
+cat(tail(readLines(file.path(path, "log", "check.Rout")), n = 7), sep = "\n")
+check_log <- file.path(path, "log", "check.Rout")
+status <- packager::get_check_status(check_log)
+RUnit::checkEqualsNumeric(status[["status"]][["errors"]], 0)
+```
+and commit again
+
+```{r}
+withr::with_dir(path, packager::git_add_commit(path = ".", untracked = TRUE,
+                                               message = "make check"))
+```
+
+If we choose to rerun the check without touching any files "down the make chain" (i.e. no files that any of our make targets depend on), we see there's nothing to be done:
+
+```{r}
+system.time(withr::with_dir(path, print(fakemake::make("check", ml, verbose = FALSE))))
+```
+This is the big difference between running the check via `fakemake` with a set of dependencies (set up with `packager`) and
+running the check (be it using `R CMD check` or `rcmdcheck::rcmdcheck` or its wrapper `devtools::check`) unconditionally: the latter method rebuilds and checks the whole package every time. __This is why I wrote `packager` and `fakemake`.__
+
+## Submitting the Package
+
+Now we would like to submit our package to [CRAN](https://cran.r-project.org/) (which we will not do here, but we want to!)
+We provide comments to [CRAN](https://cran.r-project.org/): 
+
+```{r}
+withr::with_dir(path, print(fakemake::make("cran_comments", ml, verbose = FALSE)))
+cat(readLines(file.path(path, "cran-comments.md")), sep = "\n")
+```
+After editing the contents we feel ready to submit:
+
+
+```{r}
+try(packager::submit(path))
+```
+
+Oops: we need to commit git first:
+
+```{r}
+packager::git_add_commit(path = path, untracked = TRUE, 
+                         message = "prepare for CRAN")
+git2r::status(r)
+
+```
+
+Now we try and fail again, because this vignette is built in batch mode 
+and there's a security query which then fails:
+```{r}
+try(packager::submit(path))
+```
+Should you run this code interactively, you will be prompted for the security query 
+(as you might be used from `devtools::release()`). 
+Best you know [how to write R extensions](https://cran.r-project.org/doc/manuals/R-exts.html) and 
+[the CRAN policies](https://cran.r-project.org/web/packages/policies.html).
+
+Anyway, we might want to tag the current commit and commence developing our package:
+
+```{r}
+packager::git_tag(path = path, message = "A Tag")
+packager::use_dev_version(path = path)
+desc::desc_get("Version", file = path)
+cat(readLines(file.path(path, "NEWS.md")), sep = "\n")
+
+```
+
+This is close to the workflow I have been using for most of my packages, 
+substituting [```fakemake```](https://CRAN.R-project.org/package=fakemake)
+with [GNU make](https://www.gnu.org/software/make/) whenever possible.

@@ -1,0 +1,186 @@
+# Force posix:
+.POSIX:
+
+R = R-devel
+Rscript = Rscript-devel
+Rscript_release = Rscript-release
+R_release = R-release
+
+PKGNAME = $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
+PKGVERS = $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
+PKGSRC  = $(shell pwd)
+R_FILES = $(shell find R/ -type f -name "*.[rR]" -print)
+MAN_FILES = $(shell find man/ -type f -print)
+RUNIT_FILES = $(shell find tests/ -type f  -print | grep  'runit')
+TESTTHAT_FILES = $(shell find tests/ -type f  -print | grep  'testthat')
+VIGNETTES_FILES = $(shell find vignettes/ -type f -print)
+INST_FILES = $(shell if [ -d inst/ ] ; then find inst/ -not -path "inst/doc/*" -type f -print; fi)
+DEPS = $(shell sed -n "s/.*\(\<.*\>\)::.*/\1/p" < Makefile | sort | uniq)
+TEMP_FILE = $(shell tempfile)
+LOG_DIR = log
+
+.PHONY: all
+all: cran-comments.md
+
+# devel stuff
+.PHONY: devel
+devel: build_win use_dev_version tag_release submit force_submit rhub
+
+.PHONY: tag_release
+tag_release:
+	$(R) --vanilla -e 'packager::git_tag(message = " ")'
+
+.PHONY: force_submit
+force_submit:  
+	$(R_release) -e "packager::submit(force = TRUE)"
+
+.PHONY: submit
+submit: 
+	echo "try(packager::submit(force = FALSE)); quit(save = \"no\")" > /tmp/rel.R
+	echo "source('/tmp/rel.R')" > ./.Rprofile
+	$(R_release)
+	rm /tmp/rel.R ./.Rprofile
+
+.PHONY: dev_release
+dev_release: 
+	echo "library('utils'); devtools::release(check = FALSE)" > /tmp/rel.R
+	echo "source('/tmp/rel.R')" > ./.Rprofile
+	$(R_release)
+	rm /tmp/rel.R ./.Rprofile
+
+.PHONY: rhub
+rhub:
+	$(Rscript_release) --vanilla -e 'rhub::check(path = ".", platform = "windows-x86_64-release")'
+
+.PHONY: build_win
+build_win:
+	$(Rscript) --vanilla -e 'devtools::check_win_devel()'
+
+.PHONY: use_dev_version
+use_dev_version:
+	$(Rscript) --vanilla -e 'packager::use_dev_version()'
+
+# install
+cran-comments.md:  $(LOG_DIR)/install.log
+	$(Rscript) --vanilla -e 'gitlab_token <- readLines(file.path("~", ".gitlab_private_token.txt"));packager::provide_cran_comments(check_log = "log/check.log", private_token = gitlab_token)'> $(LOG_DIR)/cran_comments.log 2>&1 
+
+.PHONY: install
+install: $(LOG_DIR)/install.log
+$(LOG_DIR)/install.log: $(LOG_DIR)/check.log
+	$(R) --vanilla CMD INSTALL  $(PKGNAME)_$(PKGVERS).tar.gz > $(LOG_DIR)/install.log 2>&1 
+
+.PHONY: check
+check: $(LOG_DIR)/check.log
+$(LOG_DIR)/check.log: $(PKGNAME)_$(PKGVERS).tar.gz 
+	export _R_CHECK_FORCE_SUGGESTS_=TRUE && \
+		$(R) --vanilla CMD check --as-cran --run-donttest $(PKGNAME)_$(PKGVERS).tar.gz; \
+		cp $(PKGNAME).Rcheck/00check.log $(LOG_DIR)/check.log
+
+.PHONY: build
+build: $(PKGNAME)_$(PKGVERS).tar.gz 
+$(PKGNAME)_$(PKGVERS).tar.gz: NEWS.md README.md DESCRIPTION LICENSE \
+	$(LOG_DIR)/roxygen2.log $(R_FILES) $(MAN_FILES) $(TESTTHAT_FILES) \
+	$(RUNIT_FILES) $(VIGNETTES_FILES) $(INST_FILES) $(LOG_DIR)/spell.log \
+	$(LOG_DIR)/check_codetags.log $(LOG_DIR)/news.log $(LOG_DIR)/runit.log \
+	$(LOG_DIR)/testthat.log $(LOG_DIR)/covr.log $(LOG_DIR)/cleanr.log \
+	$(LOG_DIR)/lintr.log $(LOG_DIR)/cyclocomp.log $(LOG_DIR)/vignettes.log \
+	$(LOG_DIR)/usage.log 
+	$(R_release) --vanilla CMD build $(PKGSRC) > $(LOG_DIR)/build.log 2>&1 
+
+.PHONY: vignettes
+vignettes: $(LOG_DIR)/vignettes.log
+$(LOG_DIR)/vignettes.log:	$(R_FILES) $(MAN_FILES) $(VIGNETTES_FILES)
+	$(Rscript) --vanilla -e 'devtools::build_vignettes(); dir.create(file.path("inst", "doc")); lapply(tools::pkgVignettes(dir = ".")[["docs"]], function(x) {if (grepl("\\.Rnw$$", x)) {withr::with_dir(file.path("inst", "doc"), utils::Stangle(x))} else {knitr::purl(x, output = file.path(".", "inst", "doc", sub("\\.Rmd$$", ".R", basename(x))), documentation = 0)}})' > $(LOG_DIR)/vignettes.log 2>&1 
+
+index.hml: README.md
+	pandoc  README.md -o index.html
+
+README.md: README.Rmd R/$(PKGNAME)-package.R
+	$(Rscript) --vanilla -e 'knitr::knit("README.Rmd")'
+
+$(LOG_DIR)/roxygen2.log: .log.log $(R_FILES)
+	$(R) --vanilla -e 'roxygen2::roxygenize(".")' > $(LOG_DIR)/roxygen2.log 2>&1 
+
+.log.log: 
+	$(Rscript) --vanilla -e 'packager::use_build_ignore(".log.log")'
+	$(Rscript) --vanilla -e 'packager::use_directory("log", ignore = TRUE)' > .log.log
+
+
+.PHONY: dependencies
+dependencies: $(LOG_DIR)/dependencies.log
+$(LOG_DIR)/dependencies.log: Makefile .log.log
+	$(Rscript) --vanilla -e 'deps <- unlist(strsplit("$(DEPS)", split = " ")); for (dep in deps) if (! require(dep, character.only = TRUE)) install.packages(dep, repos = "https://cran.uni-muenster.de/")' > $(LOG_DIR)/dependencies.log 2>&1 
+
+# utils
+utils: clean remove viz dev_install
+.PHONY: clean
+clean:
+	rm -rf $(PKGNAME).Rcheck
+
+.PHONY: remove
+remove:
+	 $(R) --vanilla CMD REMOVE  $(PKGNAME)
+
+.PHONY: dev_install
+dev_install: $(LOG_DIR)/dev_install.log
+$(LOG_DIR)/dev_install.log: $(R_FILES)
+	$(Rscript) --vanilla -e 'devtools::install(pkg = ".", dependencies = FALSE)' > $(LOG_DIR)/dev_install.log 2>&1; \
+		$(Rscript_release) --vanilla -e 'devtools::install(pkg = ".", dependencies = FALSE)' >> $(LOG_DIR)/dev_install.log 2>&1
+
+
+.PHONY: viz
+viz: $(LOG_DIR)/make.png 
+$(LOG_DIR)/make.png: .log.log Makefile $(R_FILES) $(MAN_FILES) \
+	$(TESTTHAT_FILES) $(RUNIT_FILES) $(VIGNETTES_FILES) $(INST_FILES)
+	make -Bnd all devel utils| make2graph | dot -Tpng -o $(LOG_DIR)/make.png
+
+# checks
+.PHONY: usage
+usage: $(LOG_DIR)/usage.log 
+$(LOG_DIR)/usage.log: .log.log $(R_FILES) $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'packager::check_usage(".")' > $(LOG_DIR)/usage.log 2>&1 
+
+.PHONY: cleanr
+cleanr: $(LOG_DIR)/cleanr.log 
+$(LOG_DIR)/cleanr.log: .log.log $(R_FILES) $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'tryCatch(cleanr::check_package(".", check_return = FALSE), cleanr = function(e) print(e))' > $(LOG_DIR)/cleanr.log 2>&1 
+
+.PHONY: lintr
+lintr: $(LOG_DIR)/lintr.log 
+$(LOG_DIR)/lintr.log: .log.log $(R_FILES) $(VIGNETTES_FILES) $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'packager::print_lints(lintr::lint_package(path = "."))' > $(LOG_DIR)/lintr.log 2>&1 
+
+.PHONY: coverage
+coverage: $(LOG_DIR)/covr.log 
+$(LOG_DIR)/covr.log: .log.log $(R_FILES) $(TESTTHAT_FILES) $(RUNIT_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'co <- covr::package_coverage(path = ".", function_exclusions = "\\.onLoad"); covr::zero_coverage(co); print(co)' > $(LOG_DIR)/covr.log 2>&1 
+
+.PHONY: testthat
+testthat: $(LOG_DIR)/testthat.log 
+$(LOG_DIR)/testthat.log: .log.log $(R_FILES) $(TESTTHAT_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'devtools::test()' >  $(LOG_DIR)/testthat.log 2>&1
+
+.PHONY: runit
+runit: $(LOG_DIR)/runit.log
+$(LOG_DIR)/runit.log: .log.log $(R_FILES) $(RUNIT_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log $(LOG_DIR)/dev_install.log
+	$(Rscript) --vanilla tests/runit.R > $(LOG_DIR)/runit.log 2>&1 
+	
+.PHONY: news
+news: $(LOG_DIR)/news.log
+$(LOG_DIR)/news.log: .log.log DESCRIPTION NEWS.md $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'packager::check_news()' > $(LOG_DIR)/news.log 2>&1 
+
+.PHONY: codetags
+codetags: $(LOG_DIR)/check_codetags.log 
+$(LOG_DIR)/check_codetags.log: .log.log $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'packager::check_codetags()' > $(LOG_DIR)/check_codetags.log 2>&1 
+
+.PHONY: spell
+spell: $(LOG_DIR)/spell.log
+$(LOG_DIR)/spell.log: .log.log DESCRIPTION $(LOG_DIR)/roxygen2.log $(MAN_FILES) $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'spell <- devtools::spell_check("."); if (length(spell) > 0) {print(spell); warning("spell check failed")} ' > $(LOG_DIR)/spell.log 2>&1 
+
+.PHONY: cyclocomp
+cyclocomp: $(LOG_DIR)/cyclocomp.log
+$(LOG_DIR)/cyclocomp.log: .log.log $(LOG_DIR)/dependencies.log $(R_FILES)
+	$(Rscript) --vanilla -e 'tryCatch(print(packager::check_cyclomatic_complexity()), error = identity)' > $(LOG_DIR)/cyclocomp.log 2>&1 

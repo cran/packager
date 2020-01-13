@@ -1,0 +1,49 @@
+{{#Rmd}}
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Build Status](https://travis-ci.org/fvafrCU/{{{ package }}}.svg?branch=master)](https://travis-ci.org/fvafrCU/{{{ package }}})
+[![Coverage Status](https://codecov.io/github/fvafrCU/{{{ package }}}/coverage.svg?branch=master)](https://codecov.io/github/fvafrCU/{{{ package }}}?branch=master)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/{{{ package }}})](https://cran.r-project.org/package={{{ package }}})
+[![RStudio_downloads_monthly](https://cranlogs.r-pkg.org/badges/{{{ package }}})](https://cran.r-project.org/package={{{ package }}})
+[![RStudio_downloads_total](https://cranlogs.r-pkg.org/badges/grand-total/{{{ package }}})](https://cran.r-project.org/package={{{ package }}})
+ 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+{{/Rmd}}
+
+# {{{ package }}}
+Please read the
+[vignette](https://htmlpreview.github.io/?https://github.com/fvafrCU/{{{ package }}}/blob/master/inst/doc/An_Introduction_to_{{{ package }}}.html).
+
+Or, after installation, the help page:
+```{r, eval = FALSE}
+help("{{{ package }}}-package", package = "{{{ package }}}")
+```
+```{r, echo = FALSE}
+  # insert developement page
+  help_file <- file.path("man", "{{{ package }}}-package.Rd")
+  captured <- gsub('_\b', '',  capture.output(tools:::Rd2txt(help_file) ))
+  cat(captured, sep = "\n")
+```
+{{#github}}
+## Installation
+
+You can install {{{ Package }}} from github with:
+
+{{#Rmd}}
+```{r gh-installation, eval = FALSE}
+{{/Rmd}}
+{{^Rmd}}
+``` r
+{{/Rmd}}
+if (! require("devtools")) install.packages("devtools")
+devtools::install_github("{{{username}}}/{{{repo}}}")
+```
+
+Feel free to fork!
+{{/github}}

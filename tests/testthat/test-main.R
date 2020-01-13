@@ -1,0 +1,15 @@
+if (interactive()) pkgload::load_all(".")
+testthat::context("test create")
+testthat::test_that("check on creation", {
+    testthat::skip_on_cran()
+    d <- file.path(tempdir(), "prutp")
+    on.exit(unlink(d, recursive = TRUE))
+    packager::create(path = d, fakemake = FALSE)
+    ml <- packager::get_package_makelist(is_cran = TRUE)
+    ml <- fakemake::remove_target(ml, "log/testthat.Rout")
+    withr::with_dir(d, fakemake::make("check", ml))
+    check_log <- file.path(d, "log", "check.Rout")
+    status <- packager::get_check_status(check_log)
+    testthat::expect_equal(status[["status"]][["errors"]], 0)
+}
+)

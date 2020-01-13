@@ -1,0 +1,20 @@
+---
+title: "An Introduction to *{{{ package }}}*"
+author: {{{ author }}}
+date: 2019-12-15, 20:58:53
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An Introduction to {{{ package }}} }
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Teaser
+{{{ description }}} 
+```{r hello}
+print("hello, world")
+```
+# Features
+{{{ details }}} 
+
+# A Minimal Example
