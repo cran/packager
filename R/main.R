@@ -63,6 +63,7 @@ create <- function(path, force = TRUE, ...) {
 #' @seealso \code{\link{create}}
 #' @export
 #' @examples
+#' \dontrun{
 #' path <- file.path(tempdir(), "mySecondPackage")
 #' usethis::create_package(path = path, open = FALSE)
 #' l1 <- list.files(path, recursive = TRUE)
@@ -70,6 +71,7 @@ create <- function(path, force = TRUE, ...) {
 #' l2 <- list.files(path, recursive = TRUE)
 #' print(l1); print(l2)
 #' unlink(path, recursive = TRUE)
+#' }
 infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
     usethis::proj_set(path)

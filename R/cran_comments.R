@@ -179,10 +179,15 @@ pick_log_file <- function(path, basename, extension = "(log|Rout)") {
 get_local_tests <- function(path) {
     comments <- c("\n## Local test results\n")
     if (!is.na(log_file <- pick_log_file(path, "runit"))) {
+        lines <- readLines(log_file)
         result <- grep(pattern = "test functions?.*errors.*failures", 
-                       x = readLines(log_file), value = TRUE)
-        comments <- c(comments, "- RUnit:\n    ", result, 
-                      "\n")
+                       x = lines, value = TRUE)
+        checks_lines <- grep("\\([0-9]* checks\\)", lines, value = TRUE)
+        checks <- sub("^.*\\((.* checks).*$", "\\1", checks_lines)
+        num_checks <- sum(as.numeric(sapply(strsplit(checks, split = " "), 
+                                            function(x) x[[1]])))
+        comments <- c(comments, "- RUnit:\n    ", result, " in ", num_checks, 
+                      " checks.", "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "testthat"))) {
         result <- grep(pattern = paste0("^(OK|Failed|Warnings|Skipped):"), 

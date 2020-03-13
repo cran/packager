@@ -29,6 +29,7 @@ Add a variety of extensions to a package (skeleton) and run
 it.
 }
 \examples{
+\dontrun{
 path <- file.path(tempdir(), "mySecondPackage")
 usethis::create_package(path = path, open = FALSE)
 l1 <- list.files(path, recursive = TRUE)
@@ -36,6 +37,7 @@ packager::infect(path = path, fakemake = "roxygen2")
 l2 <- list.files(path, recursive = TRUE)
 print(l1); print(l2)
 unlink(path, recursive = TRUE)
+}
 }
 \seealso{
 \code{\link{create}}

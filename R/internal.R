@@ -28,12 +28,15 @@ get_news <- function(path = ".") {
                      )
     if (root == FALSE) throw("Can't find the R package")
     description <- read.dcf(file.path(root, "DESCRIPTION"))
-    news <- unlist(strsplit(paste(readLines(file.path(root, "NEWS.md")),
-                                  collapse = "\n"), split = "# "))
-    package_pattern <- paste0("^", description[1, "Package"], " ",
-                            description[1, "Version"])
-    news <- grep(package_pattern, news, value = TRUE)
-    news <- sub(paste0(package_pattern, "\n"), "", news)
+    news <- readLines(file.path(root, "NEWS.md"))
+    version_pattern <- paste0("^", " ", description[1, "Version"])
+    news_by_version <- unlist(strsplit(paste(news,
+                                             collapse = "\n"), 
+                                       split = paste("#", 
+                                                     description[1, "Package"])
+                                       ))
+    news <- grep(version_pattern, news_by_version, value = TRUE)
+    news <- sub(paste0(version_pattern, "\n"), "", news)
     return(news)
 }
 

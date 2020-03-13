@@ -1,3 +1,9 @@
+# packager 1.1.0
+
+* provide\_cran\_comments() now reports changes read from NEWS.md that may
+  contain sections.
+* provide\_cran\_comments() now reports the number of checks run by RUnit.
+
 # packager 1.0.0
 
 * Removed reading travis.com logs.
