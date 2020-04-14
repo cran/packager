@@ -90,7 +90,7 @@ $(PKGNAME)_$(PKGVERS).tar.gz: NEWS.md README.md DESCRIPTION LICENSE \
 .PHONY: vignettes
 vignettes: $(LOG_DIR)/vignettes.log
 $(LOG_DIR)/vignettes.log:	$(R_FILES) $(MAN_FILES) $(VIGNETTES_FILES)
-	$(Rscript) --vanilla -e 'devtools::build_vignettes(); dir.create(file.path("inst", "doc")); lapply(tools::pkgVignettes(dir = ".")[["docs"]], function(x) {if (grepl("\\.Rnw$$", x)) {withr::with_dir(file.path("inst", "doc"), utils::Stangle(x))} else {knitr::purl(x, output = file.path(".", "inst", "doc", sub("\\.Rmd$$", ".R", basename(x))), documentation = 0)}})' > $(LOG_DIR)/vignettes.log 2>&1 
+	$(Rscript) --vanilla -e 'devtools::build_vignettes(); packager::extract_vignette_codes(".")' > $(LOG_DIR)/vignettes.log 2>&1 
 
 index.hml: README.md
 	pandoc  README.md -o index.html

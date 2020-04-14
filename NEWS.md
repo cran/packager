@@ -1,3 +1,11 @@
+# packager 1.2.0
+
+* Now using rasciidoc vignettes.
+  Pass `use_rasciidoc_vignette = FALSE` to `create()` or `infect()` to stick
+  with the original rmarkdown vignette.
+* Added an function internal function extract\_vignette\_codes() to extract R
+  code from different vignettes.
+
 # packager 1.1.0
 
 * provide\_cran\_comments() now reports changes read from NEWS.md that may

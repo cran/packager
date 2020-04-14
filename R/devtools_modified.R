@@ -87,7 +87,8 @@ use_news_md <- function(pkg = ".", ...) {
   invisible(NULL)
 }
 
-use_intro <- function(path = ".", ..., details = NA) {
+use_intro <- function(path = ".", ..., details = NA, 
+                      use_rasciidoc_vignette = TRUE) {
   if (is.na(details)) details <- NULL # NA would get printed into vignette.
   pkg <- devtools::as.package(path)
   pkg$details <- details
@@ -105,11 +106,13 @@ use_intro <- function(path = ".", ..., details = NA) {
   add_desc_package(pkg, "Suggests", "pkgload")
   add_desc_package(pkg, "VignetteBuilder", "knitr")
   use_directory("vignettes", pkg = pkg)
-  path <- file.path("vignettes", vignette_name)
+  file_path <- file.path("vignettes", vignette_name)
   use_template("vignette.Rmd",
-    save_as = path, data = pkg,
+    save_as = file_path, data = pkg,
     ignore = FALSE, pkg = pkg, ...
   )
+  if (isTRUE(use_rasciidoc_vignette))
+      convert_package_vignette(path = path)
   return(invisible(NULL))
 }
 

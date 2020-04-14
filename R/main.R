@@ -131,6 +131,8 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
 #' default details are inserted. Set to NULL to have no details at all.
 #' @param ... Arguments to be passed to internal function
 #' \code{packager:::use_intro}.
+#' @param use_rasciidoc_vignette Set to FALSE to sticks with the classic
+#' markdown vignette.
 #' @return \code{\link[base:invisible]{Invisibly}}
 #' a list of results of setting the xxx-package.R and the DESCRIPTION.
 #' @keywords internal
@@ -156,7 +158,7 @@ set_package_info <- function(path,
                              description = description,
                              author_at_r = author_at_r)
     r2 <- create_package_help(path = path, title = tools::toTitleCase(title),
-                              description = description, details = NA, ...)
+                              description = description, details = NA)
     r3 <- use_intro(path = path, details = details, ...)
     return(invisible(list(r1, r2, r3)))
 }

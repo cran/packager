@@ -1,4 +1,4 @@
-# frojm devtools 1.13.3, added cran_submission_url as argument
+# from devtools 1.13.3, added cran_submission_url as argument
 upload_cran <- function(pkg, built_path, cran_submission_url = NULL) {
     pkg <- as.package(pkg)
     maint <- maintainer(pkg)
