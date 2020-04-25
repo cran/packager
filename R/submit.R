@@ -41,6 +41,10 @@ submit <- function(path = ".", stop_on_git = TRUE, force = FALSE,
                        "git tag -a ", desc::desc_get_version(), " ",
                        git2r::reflog(r)[[1]][["sha"]], " -m 'CRAN release'"
                       )
+            m <- paste0(m, "\n",
+                   "  and checkout the developement version using ",
+                   "packager::use_dev_version() or\n\t",
+                   "make use_dev_version")
             if (isTRUE(verbose)) message(m)
             union_write(file.path(path, "TODO.md"), m)
             git_add_commit(path, "Submitted to CRAN")

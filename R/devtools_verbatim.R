@@ -18,6 +18,19 @@ is_dir <- function(x) file.info(x)$isdir
 is.package <- function(x) inherits(x, "package")
 
 
+#' Coerce input to a package.
+#'
+#' Possible specifications of package:
+#' \itemize{
+#'   \item path
+#'   \item package object
+#' }
+#' @param x object to coerce to a package
+#' @param create only relevant if a package structure does not exist yet: if
+#'   `TRUE`, create a package structure; if `NA`, ask the user
+#'   (in interactive mode only)
+#' @export
+#' @keywords internal
 as.package <- function(x = NULL, create = NA) {
   if (is.package(x)) return(x)
 
@@ -35,7 +48,7 @@ as.package <- function(x = NULL, create = NA) {
 #' paths. Repeated entries will be silently removed.
 #'
 #' @param pkg Path to the package directory (see
-#' \code{\link[devtools:as.package]{devtools::as.package}}).
+#' \code{\link[devtools:as.package]{as.package}}).
 #' @param files Paths of files.
 #' @param escape If \code{TRUE}, the default, will escape \code{.} to
 #'   \code{\\.} and surround with \code{^} and \code{$}.

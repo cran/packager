@@ -53,7 +53,7 @@ render_template <- function(name, data = list()) {
 # and fix the test on file.exists()
 # added git_user to pkg
 use_readme_rmd <- function(path = ".", ...) {
-  pkg <- devtools::as.package(path)
+  pkg <- as.package(path)
   if (uses_git(path)) {
     pkg[["git_user"]] <- tryCatch(git2r::default_signature(path)[["name"]],
       error = function(e) return(NULL)
@@ -82,7 +82,7 @@ use_readme_rmd <- function(path = ".", ...) {
 }
 
 use_news_md <- function(pkg = ".", ...) {
-  pkg <- devtools::as.package(pkg)
+  pkg <- as.package(pkg)
   use_template("NEWS.md", data = pkg, pkg = pkg, ...)
   invisible(NULL)
 }
@@ -90,7 +90,7 @@ use_news_md <- function(pkg = ".", ...) {
 use_intro <- function(path = ".", ..., details = NA, 
                       use_rasciidoc_vignette = TRUE) {
   if (is.na(details)) details <- NULL # NA would get printed into vignette.
-  pkg <- devtools::as.package(path)
+  pkg <- as.package(path)
   pkg$details <- details
   if (uses_github(pkg$path)) {
     pkg$github <- github_info(pkg$path)
@@ -112,7 +112,7 @@ use_intro <- function(path = ".", ..., details = NA,
     ignore = FALSE, pkg = pkg, ...
   )
   if (isTRUE(use_rasciidoc_vignette))
-      convert_package_vignette(path = path)
+      convert_package_vignettes(path = path)
   return(invisible(NULL))
 }
 

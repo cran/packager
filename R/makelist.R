@@ -60,7 +60,7 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
                      prerequisite_to = build_target)
     ml <- fat(makelist = ml, 
               target = file.path("log", "runit.Rout"),
-              code =  paste0("pkg <- devtools::as.package(\".\"); ",
+              code =  paste0("pkg <- packager::as.package(\".\"); ",
                              "source(file.path(pkg[[\"path\"]], \"tests\", ",
                              "\"runit.R\"))"),
               prerequisites = c(list_files("R"), list_files("inst"), 
@@ -171,7 +171,7 @@ list_files <- function(x) {
 add_detach <- function(makelist) {
     ml <- makelist
     prepend_detach_to_all_codes <- function(x) {
-        detach_code <-  paste0("pkg <- devtools::as.package(\".\")",
+        detach_code <-  paste0("pkg <- packager::as.package(\".\")",
                                "[[\"package\"]]; ",
                                "if (pkg %in% .packages()) ", 
                                "detach(paste0(\"package:\", pkg), ",

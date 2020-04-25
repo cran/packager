@@ -54,7 +54,7 @@ create_package_help <- function(path = ".",
             description <- paste(description, "You may add another paragraph",
                                  "for a 'Details' section.")
     }
-    pkg <- devtools::as.package(path)
+    pkg <- as.package(path)
     if (is.na(details))
         details <- paste0("You will find the details in\\cr\n",
                          "\\code{vignette(\"An_Introduction_to_",
@@ -174,8 +174,8 @@ use_runit <- function(path = ".", force = is_force(),
                       ignore = TRUE, source_package = "packager", ...) {
     file <- "runit.R"
     file_path <- file.path("tests", file)
-    use_template(file, save_as = file_path, data = devtools::as.package(path),
-                 pkg = devtools::as.package(path)[["path"]], force = force, 
+    use_template(file, save_as = file_path, data = as.package(path),
+                 pkg = as.package(path)[["path"]], force = force, 
                 ...)
 }
 
@@ -183,7 +183,7 @@ provide_throw <- function(path = ".",
                           force = is_force(),
                           ...) {
     usethis::use_testthat()
-    pkg <- devtools::as.package(path)
+    pkg <- as.package(path)
 
     file <- "throw.R"
     file_path <- file.path("R", file)
@@ -215,7 +215,7 @@ provide_throw <- function(path = ".",
 use_devel <- function(path = ".",
                       force = is_force(),
                       ignore = TRUE) {
-    pkg <- devtools::as.package(path)
+    pkg <- as.package(path)
     use_template("devel.R", data = pkg, pkg = pkg, force = force,
                  ignore = ignore)
     invisible(NULL)
@@ -224,7 +224,7 @@ use_devel <- function(path = ".",
 use_makefile <- function(path = ".",
                          force = is_force(),
                          ignore = TRUE) {
-    pkg <- devtools::as.package(path)
+    pkg <- as.package(path)
     use_template("nomakefile", "Makefile", data = pkg, pkg = pkg, force = force,
                  ignore = ignore)
     invisible(NULL)

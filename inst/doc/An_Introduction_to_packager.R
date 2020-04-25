@@ -48,10 +48,22 @@ cat(readLines(file.path(path, "DESCRIPTION")), sep = "\n")
 
 ## ---- echo = FALSE------------------------------------------------------------
 pkgload::load_all(path)
+# insert developement page
 help_file <-  system.file("man", paste0(package_title, "-package.Rd"), 
                           package = devtools::as.package(path)$package)
 captured <- gsub('_\b', '',  capture.output(tools:::Rd2txt(help_file) ))
 cat(captured, sep = "\n")
+
+
+## ---- eval = FALSE------------------------------------------------------------
+## adc <- utils::person(given = "Andreas Dominik",
+##                       family = "Cullmann",
+##                       email = "fvafrcu@mailbox.org",
+##                       role = c("aut", "cre"))
+## pop <- as.list(getOption("packager"))
+## pop[["whoami"]] <- adc
+## options(packager = pop)
+## 
 
 
 ## -----------------------------------------------------------------------------

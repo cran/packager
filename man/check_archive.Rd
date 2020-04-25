@@ -42,7 +42,7 @@ file.copy(system.file("templates", "throw.R", package = "fakemake"),
           file.path(package_path, "R"))
 roxygen2::roxygenize(package_path)
 print(tarball <- get_pkg_archive_path(package_path))
-devtools::build(pkg = package_path, path = package_path)
+pkgbuild::build(pkg = package_path, path = package_path)
 print(check_archive(tarball))
 }
 }

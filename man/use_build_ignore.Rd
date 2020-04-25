@@ -13,7 +13,7 @@ use_build_ignore(files, escape = TRUE, pkg = ".")
 \code{\\.} and surround with \code{^} and \code{$}.}
 
 \item{pkg}{Path to the package directory (see
-\code{\link[devtools:as.package]{devtools::as.package}}).}
+\code{\link[devtools:as.package]{as.package}}).}
 }
 \value{
 Nothing, called for its side effect.

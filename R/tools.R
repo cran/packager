@@ -19,7 +19,7 @@
 #'                 }
 #' )
 use_bsd2clause_license <- function (path = ".") {
-    pkg <- devtools::as.package(path)
+    pkg <- as.package(path)
     license  <- list(License = "BSD_2_clause + file LICENSE")
     d <- desc::desc(path)
     d$set(License = license)
@@ -125,15 +125,15 @@ provide_make <- function(path, Rbuildignore = TRUE, ...) {
 
 #' Use a Template
 #'
-#' \pkg{devtools}' or, later \pkg{usethis}' function hardcoded the source
-#' package, the had dialogs on opened files in RStudio. Did Stuff I do not want.
+#' The \pkg{devtools}' or, later \pkg{usethis}' function hardcoded the source
+#' package, it had dialogs on opened files in RStudio. Did Stuff I do not want.
 #'
 #' @param template The name of the packages's template (a file in the template
 #' directory). 
 #' @param save_as The path where the template should be written to.
 #' @param data A named list of information used to render the new file from the
 #' template, typically the output of
-#' \code(\link[devtools:as.package]{devtools::as.package}}.
+#' \code(\link[devtools:as.package]{as.package}}.
 #' @param ignore Add the new file to \file{.Rbuildignore}?
 #' @param git_commit Add the new file to git and commit?
 #' @param pkg The path to the package template shall be used for.
@@ -149,7 +149,7 @@ use_template <- function(template, save_as = template, data = list(),
                          git_commit = TRUE,
                          force = isTRUE(getOption("packager")[["force"]])) {
   status <- FALSE
-  pkg <- devtools::as.package(pkg)
+  pkg <- as.package(pkg)
   path <- file.path(pkg$path, save_as)
   if (!file.exists(path) || isTRUE(force)) {
     template_path <- system.file("templates", template,
@@ -396,7 +396,7 @@ set_desc_url <- function(url, path = ".", normalize = TRUE,
 #' print(tarball <- get_pkg_archive_path(package_path))
 #' file.exists(tarball)
 get_pkg_archive_path <- function(path = ".", absolute = TRUE) {
-    pkg <- devtools::as.package(path)
+    pkg <- as.package(path)
     tgz <- normalizePath(file.path(pkg$path,
                                    paste0(pkg$package, "_", 
                                           pkg$version, ".tar.gz")),

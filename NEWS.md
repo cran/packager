@@ -1,3 +1,11 @@
+# packager 1.2.1
+
+* Internal function `convert_package_vignettes()` now works for multiple Rmd
+  files.
+* Fixed package creation broken by missing package `rasciidoc` in field Suggests
+  of file DESCRIPTION.
+* `submit()` now tells you to use a developement version after submission.
+
 # packager 1.2.0
 
 * Now using rasciidoc vignettes.

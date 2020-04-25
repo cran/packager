@@ -2,6 +2,7 @@
 
 export(add_github_url_to_desc)
 export(add_news)
+export(as.package)
 export(check_archive)
 export(check_archive_as_cran)
 export(check_codetags)

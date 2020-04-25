@@ -77,7 +77,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     usethis::proj_set(path)
     r <- git2r::init(path = path)
     usethis::use_build_ignore("^.*\\.tar\\.gz$", escape = FALSE)
-    usethis::use_build_ignore(paste0(devtools::as.package(path)[["package"]],
+    usethis::use_build_ignore(paste0(as.package(path)[["package"]],
                                       ".Rcheck"))
     usethis::use_build_ignore("cran-comments.md")
     usethis::use_build_ignore(".Rprofile")
@@ -85,7 +85,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     usethis::use_build_ignore("index.html")
     use_git_ignore(".Rprofile", path = path)
     use_git_ignore("*.tar.gz", path = path)
-    use_git_ignore(paste0(devtools::as.package(path)[["package"]],
+    use_git_ignore(paste0(as.package(path)[["package"]],
                                     ".Rcheck"), path = path)
     use_makefile(path = path)
     set_package_info(path = path, ...)

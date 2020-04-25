@@ -12,7 +12,7 @@ use_directory(path, ignore = FALSE, pkg = ".")
 \item{ignore}{Add the directory to \file{.Rbuildignore}?}
 
 \item{pkg}{Path to the package directory (see
-\code{\link[devtools:as.package]{devtools::as.package}}).}
+\code{\link[devtools:as.package]{as.package}}).}
 }
 \description{
 Create a directory.\cr

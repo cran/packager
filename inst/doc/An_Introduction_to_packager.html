@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="generator" content="AsciiDoc 8.6.9" />
-<title>"An Introduction to <strong>packager</strong>"</title>
+<title>An Introduction to <strong>packager</strong></title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
@@ -767,8 +767,9 @@ asciidoc.install(2);
 </head>
 <body class="article">
 <div id="header">
-<h1>"An Introduction to <strong>packager</strong>"</h1>
+<h1>An Introduction to <strong>packager</strong></h1>
 <span id="author">Andreas Dominik Cullmann</span><br />
+<span id="revdate">2020-04-25, 16:09:38</span>
 <div id="toc">
   <div id="toctitle">Table of Contents</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -815,7 +816,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning:</span></span>
-<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/RtmpPUqwae/myFirstPackage/log/spell.Rout for details.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/RtmpIfBMFJ/myFirstPackage/log/spell.Rout for details.</span></span>
 </tt></pre></div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -855,8 +856,8 @@ http://www.gnu.org/software/src-highlite -->
 summary(r)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## Local:    master /tmp/RtmpPUqwae/myFirstPackage
-## Head:     [feded56] 2020-04-14: Packager Changes
+<pre><code>## Local:    master /tmp/RtmpIfBMFJ/myFirstPackage
+## Head:     [3c43763] 2020-04-25: Packager Changes
 ##
 ## Branches:         1
 ## Tags:             0
@@ -869,11 +870,11 @@ summary(r)</tt></pre></div></div>
 ## Staged files:     0
 ##
 ## Latest commits:
-## [feded56] 2020-04-14: Packager Changes
-## [028990c] 2020-04-14: Adding `make.R` from template `make.R` of package` packager`.
-## [2fadae8] 2020-04-14: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [f5f2a27] 2020-04-14: Adding `tests/runit.R` from template `runit.R` of package` packager`.
-## [546dc8a] 2020-04-14: Adding `tests/testthat/test-throw.R` from template `test-throw.R` of package` packager`.</code></pre>
+## [3c43763] 2020-04-25: Packager Changes
+## [3e55f77] 2020-04-25: Adding `make.R` from template `make.R` of package` packager`.
+## [8aa1e5a] 2020-04-25: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [da99fb8] 2020-04-25: Adding `tests/runit.R` from template `runit.R` of package` packager`.
+## [8b23783] 2020-04-25: Adding `tests/testthat/test-throw.R` from template `test-throw.R` of package` packager`.</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -909,10 +910,10 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## [1] ""
-## [2] "Status: 1 ERROR"
-## [3] "See"
-## [4] "  ‘/tmp/RtmpPUqwae/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
-## [5] "for details."
+## [2] "See"
+## [3] "  ‘/tmp/RtmpIfBMFJ/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
+## [4] "for details."
+## [5] ""
 ## [6] ""</code></pre>
 </div></div>
 <div class="paragraph"><p>And we see what+s left to do:</p></div>
@@ -954,6 +955,7 @@ http://www.gnu.org/software/src-highlite -->
 ##     knitr,
 ##     rmarkdown,
 ##     pkgload,
+##     rasciidoc,
 ##     testthat,
 ##     RUnit,
 ##     devtools,
@@ -1016,6 +1018,7 @@ http://www.gnu.org/software/src-highlite -->
 ##     knitr,
 ##     rmarkdown,
 ##     pkgload,
+##     rasciidoc,
 ##     testthat,
 ##     RUnit,
 ##     devtools,
@@ -1056,15 +1059,19 @@ http://www.gnu.org/software/src-highlite -->
 ##      'vignette("An_Introduction_to_veryImportantPackage", package =
 ##      "veryImportantPackage")'.</code></pre>
 </div></div>
-<div class="paragraph"><p>I use
-
-adc &#8592; utils::person(given = "Andreas Dominik",
-                      family = "Cullmann",
-                      email = "fvafrcu@mailbox.org",
-                      role = c("aut", "cre"))
-pop &#8592; as.list(getOption("packager"))
-pop<a id="whoami"></a> &#8592; adc
-options(packager = pop)</p></div>
+<div class="paragraph"><p>I use</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>adc &lt;- utils::person(given = <span style="color: #FF0000">"Andreas Dominik"</span>,
+                      family = <span style="color: #FF0000">"Cullmann"</span>,
+                      email = <span style="color: #FF0000">"fvafrcu@mailbox.org"</span>,
+                      role = c(<span style="color: #FF0000">"aut"</span>, <span style="color: #FF0000">"cre"</span>))
+pop &lt;- as.list(getOption(<span style="color: #FF0000">"packager"</span>))
+pop[[<span style="color: #FF0000">"whoami"</span>]] &lt;- adc
+options(packager = pop)</tt></pre></div></div>
 <div class="paragraph"><p>in one of my startup files to set the author information globally.</p></div>
 </div>
 </div>
@@ -1082,8 +1089,8 @@ http://www.gnu.org/software/src-highlite -->
 summary(r)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## Local:    master /tmp/RtmpPUqwae/veryImportantPackage
-## Head:     [536cad7] 2020-04-14: Packager Changes
+<pre><code>## Local:    master /tmp/RtmpIfBMFJ/veryImportantPackage
+## Head:     [73f00c7] 2020-04-25: Packager Changes
 ##
 ## Branches:         1
 ## Tags:             0
@@ -1096,11 +1103,11 @@ summary(r)</tt></pre></div></div>
 ## Staged files:     0
 ##
 ## Latest commits:
-## [536cad7] 2020-04-14: Packager Changes
-## [55a1292] 2020-04-14: Adding `make.R` from template `make.R` of package` packager`.
-## [aa56cf7] 2020-04-14: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [e5fba94] 2020-04-14: Adding `tests/runit.R` from template `runit.R` of package` packager`.
-## [f072844] 2020-04-14: Adding `tests/testthat/test-throw.R` from template `test-throw.R` of package` packager`.</code></pre>
+## [73f00c7] 2020-04-25: Packager Changes
+## [b978668] 2020-04-25: Adding `make.R` from template `make.R` of package` packager`.
+## [7fcd242] 2020-04-25: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [ee8ac4a] 2020-04-25: Adding `tests/runit.R` from template `runit.R` of package` packager`.
+## [9ab9048] 2020-04-25: Adding `tests/testthat/test-throw.R` from template `test-throw.R` of package` packager`.</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -1170,7 +1177,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning:</span></span>
-<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/RtmpPUqwae/veryImportantPackage/log/spell.Rout for details.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/RtmpIfBMFJ/veryImportantPackage/log/spell.Rout for details.</span></span>
 </tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
@@ -1255,7 +1262,7 @@ http://www.gnu.org/software/src-highlite -->
                                                message = <span style="color: #FF0000">"make build"</span>))</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [37cb656] 2020-04-14: make build</code></pre>
+<pre><code>## [49e5c98] 2020-04-25: make build</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -1304,10 +1311,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## Untracked files:
-##      Untracked:  log/check.Rout
-##
-## Unstaged changes:
-##      Modified:   log/build.Rout</code></pre>
+##      Untracked:  log/check.Rout</code></pre>
 </div></div>
 <div class="paragraph"><p>Note that the <code>RUnit</code> test files are run while checking the tarball, hence we
 see output from <code>RUnit</code> in our log directory.</p></div>
@@ -1320,11 +1324,10 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>cat(tail(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)), n = 7), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## * DONE
-## Status: 1 ERROR
+<pre><code>## Status: 1 WARNING
 ##
 ## See
-##   ‘/tmp/RtmpPUqwae/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
+##   ‘/tmp/RtmpIfBMFJ/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
 ## for details.</code></pre>
 </div></div>
 <div class="listingblock">
@@ -1336,12 +1339,9 @@ http://www.gnu.org/software/src-highlite -->
 status &lt;- packager::get_check_status(check_log)
 RUnit::checkEqualsNumeric(status[[<span style="color: #FF0000">"status"</span>]][[<span style="color: #FF0000">"errors"</span>]], 0)</tt></pre></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.8
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Error in RUnit::checkEqualsNumeric(status[["status"]][["errors"]], 0): Mean relative difference: 1</span></span>
-</tt></pre></div></div>
+<div class="content">
+<pre><code>## [1] TRUE</code></pre>
+</div></div>
 <div class="paragraph"><p>and commit again</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -1352,7 +1352,7 @@ http://www.gnu.org/software/src-highlite -->
                                                message = <span style="color: #FF0000">"make check"</span>))</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [b09ac10] 2020-04-14: make check</code></pre>
+<pre><code>## [21c2d4f] 2020-04-25: make check</code></pre>
 </div></div>
 <div class="paragraph"><p>If we choose to rerun the check without touching any files "down the make chain" (i.e. no files that any of our make targets depend on), we see there&#8217;s nothing to be done:</p></div>
 <div class="listingblock">
@@ -1368,7 +1368,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>##    user  system elapsed
-##   1.092   0.004   1.097</code></pre>
+##   1.124   0.000   1.129</code></pre>
 </div></div>
 <div class="paragraph"><p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and
 running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <em>This is why I wrote <code>packager</code> and <code>fakemake</code>.</em></p></div>
@@ -1395,7 +1395,7 @@ http://www.gnu.org/software/src-highlite -->
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## 1 error  | 0 warnings | 0 notes</span></span>
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## 0 errors | 1 warning  | 0 notes</span></span>
 </tt></pre></div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -1428,7 +1428,7 @@ http://www.gnu.org/software/src-highlite -->
 ##
 ## # Package veryImportantPackage 0.1.0
 ##
-## Reporting is done by packager version 1.2.0
+## Reporting is done by packager version 1.2.1
 ##
 ## ## Test  environments
 ## - R version 3.3.3 (2017-03-06)
@@ -1470,7 +1470,7 @@ http://www.gnu.org/software/src-highlite -->
                          message = <span style="color: #FF0000">"prepare for CRAN"</span>)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [dcff96e] 2020-04-14: prepare for CRAN</code></pre>
+<pre><code>## [71ebd17] 2020-04-25: prepare for CRAN</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -1514,7 +1514,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>packager::git_tag(path = path, message = <span style="color: #FF0000">"A Tag"</span>)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [dcff96] 0.1.0</code></pre>
+<pre><code>## [71ebd1] 0.1.0</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -1531,7 +1531,7 @@ http://www.gnu.org/software/src-highlite -->
 </tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [73f0c6b] 2020-04-14: Using Developement Version</code></pre>
+<pre><code>## [be31d89] 2020-04-25: Using Developement Version</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -1571,7 +1571,7 @@ with <a href="https://www.gnu.org/software/make/">GNU make</a> whenever possible
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-04-14 14:04:14 CEST
+ 2020-04-25 20:14:02 CEST
 </div>
 </div>
 </body>

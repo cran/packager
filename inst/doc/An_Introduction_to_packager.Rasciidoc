@@ -1,11 +1,12 @@
-=  "An Introduction to *packager*"
-Andreas Dominik Cullmann
+= An Introduction to *packager*
+:Author: Andreas Dominik Cullmann
+:Date: 2020-04-25, 16:09:38
 :toc2:
+
 ////
     %\VignetteIndexEntry{An Introduction to packager }
     %\VignetteEngine{rasciidoc::rasciidoc}
     %\VignetteEncoding{UTF-8}
-:toc2:
 ////
 
 == Teaser
@@ -94,6 +95,7 @@ help(paste0(package_title, "-package"))
 //end.rcode
 //begin.rcode, echo = FALSE
 pkgload::load_all(path)
+# insert developement page
 help_file <-  system.file("man", paste0(package_title, "-package.Rd"), 
                           package = devtools::as.package(path)$package)
 captured <- gsub('_\b', '',  capture.output(tools:::Rd2txt(help_file) ))
@@ -101,7 +103,7 @@ cat(captured, sep = "\n")
 //end.rcode
 
 I use 
-//end.rcode
+//begin.rcode, eval = FALSE
 adc <- utils::person(given = "Andreas Dominik",
                       family = "Cullmann",
                       email = "fvafrcu@mailbox.org",

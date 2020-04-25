@@ -101,7 +101,7 @@ provide_cran_comments <- function(check_log = NULL,
         error = function(e) return(name)
         )
     }
-    pkg <- devtools::as.package(path)
+    pkg <- as.package(path)
     comments_file <- file.path(pkg[["path"]], "cran-comments.md")
     here <- info(session = NULL)
     if (! is.null(check_log)) {
@@ -196,7 +196,7 @@ get_local_tests <- function(path) {
                       paste(sub("\\s+", " ", result), collapse = ", "), "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "covr"))) {
-        pkg <- devtools::as.package(path)
+        pkg <- as.package(path)
         result <- grep(pattern = paste0("^", pkg[["package"]], " Coverage:"), 
                        x = readLines(log_file), value = TRUE)
         comments <- c(comments, "- Coverage by covr:\n    ", result, 

@@ -36,7 +36,7 @@ be read.}
 \code{\link{TRUE}} on success, \code{\link{FALSE}} otherwise.
 }
 \description{
-\pkg{devtools}' or, later \pkg{usethis}' function hardcoded the source
-package, the had dialogs on opened files in RStudio. Did Stuff I do not want.
+The \pkg{devtools}' or, later \pkg{usethis}' function hardcoded the source
+package, it had dialogs on opened files in RStudio. Did Stuff I do not want.
 }
 \keyword{internal}
