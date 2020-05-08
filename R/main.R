@@ -100,6 +100,9 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     withr::with_dir(path, usethis::use_testthat())
     provide_throw(path = path)
     provide_make(path = path)
+    provide_man_roxygen(path = path)
+
+
     usethis::use_build_ignore(".log.Rout")
     use_directory("log", pkg = path, ignore = TRUE)
     if (!(is.null(fakemake) || isFALSE(fakemake))) {

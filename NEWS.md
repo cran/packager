@@ -1,3 +1,8 @@
+# packager 1.3.0
+
+* `infect()` now creates man-roxygen/return_invisibly_null.R as a template for
+  roxygen.
+
 # packager 1.2.1
 
 * Internal function `convert_package_vignettes()` now works for multiple Rmd

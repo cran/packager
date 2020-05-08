@@ -1,7 +1,7 @@
-015d5f02b59e085cb1e1d36c744dd108 *DESCRIPTION
+2d4a95671659bd77f3986fc35e0a8993 *DESCRIPTION
 2e562f598285368f0874203edd598c65 *LICENSE
 7e44552516778b683eee670f39331808 *NAMESPACE
-4704ec9ee2513cd0d8c4293e99d6bc2e *NEWS.md
+f575698dbfdff79200c92723c4efb7b0 *NEWS.md
 8587159473a480ca4a79076fc6c2188b *R/checks.R
 41d31b516622e0d7b1c26cb7311bbebe *R/convert_vignette.R
 ca2d262a974fb28b333d889ec87810cc *R/cran_comments.R
@@ -11,9 +11,9 @@ af502a8c754e56e80cb52b5a36a9014c *R/extract_vignette_code.R
 6f586e40d9726ea041b26e9e5df52ef9 *R/git.R
 86cbfddb8d9f430bb7bde2e99908ca4c *R/gitlab.R
 f18a73658d562f44b0fc44a20d6c71a3 *R/install_deps.R
-9cab47dc02b88ea7ac24d552a7987940 *R/internal.R
+e6c27a5db8fbc226e0d97a6550327d56 *R/internal.R
 cf4c076321d6caa93a56b17a7d6bed4e *R/lintr_modified.R
-6aa480bc4b49b465db4ecffbc5aa644a *R/main.R
+ae0e541d6a8f210b247843d0e9e49d09 *R/main.R
 fd9ca04f47864b4d716df22dc1e9e0b8 *R/makelist.R
 88741f7191d0c2ccf3d289d29db4eb2e *R/options.R
 c1024d3af3068af8753c593181eb2d5c *R/packager-package.R
@@ -33,7 +33,7 @@ b7a7c0e960451704cbcddacdc367cf2d *build/vignette.rds
 8a9040c78e2770afca52d17fbd4d56cc *inst/WORDLIST
 15009f58b53dda4d63acc7e633c6de6f *inst/doc/An_Introduction_to_packager.R
 04c52551cddf0306e18c46aa7ab64d4e *inst/doc/An_Introduction_to_packager.Rasciidoc
-2becf6848825b625493a9519fa690819 *inst/doc/An_Introduction_to_packager.html
+86dc1d9198b770004e5f3fbcc5f53d30 *inst/doc/An_Introduction_to_packager.html
 04c52551cddf0306e18c46aa7ab64d4e *inst/files/An_Introduction_to_packager.Rasciidoc
 76d721acdd488f61d3399ab7569bd12a *inst/files/An_Introduction_to_packager.Rmd
 ca2537e49d377ffdbf25a7505188a716 *inst/files/a.R

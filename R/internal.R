@@ -290,3 +290,14 @@ update_make <- function(path) {
     use_makefile(path = path, force = TRUE)
     provide_make(path = path, force = TRUE)
 }
+
+
+provide_man_roxygen <- function(path, force = is_force(), ...) {
+    use_directory("man-roxygen", pkg = path, ignore = TRUE)
+    pkg <- as.package(path)
+    file <- "return_invisibly_null.R"
+    file_path <- file.path("man-roxygen", file)
+    use_template(file, save_as = file_path, data = pkg,
+                 ignore = TRUE, pkg = pkg[["path"]], force = force, ...)
+
+}
