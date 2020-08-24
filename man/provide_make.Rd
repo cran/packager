@@ -16,10 +16,10 @@ provide_make(path, Rbuildignore = TRUE, ...)
 \code{\link[packager:use_template]{packager::use_template}}.}
 }
 \value{
-\code{\link[base:invisible]{Invisibly}}
-\code{\link[base:logical]{TRUE}} on success,
-\code{\link[base:invisible]{Invisibly}}
-\code{\link[base:logical]{FALSE}} otherwise.
+\code{\link[=invisible]{Invisibly}}
+\code{\link[=logical]{TRUE}} on success,
+\code{\link[=invisible]{Invisibly}}
+\code{\link[=logical]{FALSE}} otherwise.
 }
 \description{
 Provide File \command{make.R}

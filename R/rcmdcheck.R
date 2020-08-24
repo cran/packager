@@ -21,7 +21,7 @@ write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".") {
 #' @template package_path 
 #' @export
 #' @keywords internal
-#' @return \code{\link[base:invisible]{Invisibly}  \link{NULL}}.
+#' @return \code{\link[=invisible]{Invisibly}  \link{NULL}}.
 rcmdcheck_and_log <- function(path = ".") {
     write_info()
     check <- write_rcmdcheck(path = path)
@@ -32,12 +32,12 @@ rcmdcheck_and_log <- function(path = ".") {
     return(invisible(NULL))
 }
 
-#' \code{\link[base:grep]{Grep}} Lines From a File
+#' \code{\link[=grep]{Grep}} Lines From a File
 #'
 #' @param file The path to the file or a character vector holding the lines.
-#' @param pattern The pattern to \code{\link[base:grep]{grep}} for.
-#' @param strip  \code{\link[base:sub]{Substitute}} the pattern with the empty
-#' string before returning the lines \code{\link[base:grep]{grepped}}?
+#' @param pattern The pattern to \code{\link[=grep]{grep}} for.
+#' @param strip  \code{\link[=sub]{Substitute}} the pattern with the empty
+#' string before returning the lines \code{\link[=grep]{grepped}}?
 #' @export
 #' @keywords internal
 #' @return A character vector giving the lines.
@@ -79,12 +79,6 @@ grep_log <- function(file, pattern, strip = TRUE) {
 #' @keywords internal
 #' @return The object obtained by evaluating the file.
 #' @examples
-#' sink_file <- tempfile()
-#' sink(sink_file)
-#' packager:::write_info()
-#' sink()
-#' grep_log(sink_file, pattern = "=== packager info:")
-#' info <- eval_from_log(sink_file, pattern = "=== packager info:")
 #' \dontrun{
 #' # We need "." to be a package directory, and it takes quite some time.
 #' sink_file <- tempfile()

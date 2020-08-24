@@ -15,7 +15,7 @@ Invisibly \code{\link{NULL}}.
 }
 \description{
 It's my favorite and \pkg{devtools} provides
-\code{\link[usethis:use_mit_license]{use_mit_license}} only.
+\code{\link{use_mit_license}} only.
 }
 \examples{
 withr::with_dir(tempdir(),

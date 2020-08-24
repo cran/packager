@@ -1,7 +1,7 @@
 #' Use a Development Version in DESCRIPTION and \file{NEWS.md}
 #'
 #' This is much like
-#' \code{\link[usethis:use_dev_version]{usethis::use_dev_version}}, but their
+#' \code{\link[usethis:use_version]{usethis::use_dev_version}}, but their
 #' conventions keep changing.
 #' @template package_path 
 #' @param force Set to \code{TRUE} to force version bumping with uncommitted git

@@ -21,12 +21,6 @@ Just a wrapper for evaluating the tagged code obtained via
 example)
 }
 \examples{
-sink_file <- tempfile()
-sink(sink_file)
-packager:::write_info()
-sink()
-grep_log(sink_file, pattern = "=== packager info:")
-info <- eval_from_log(sink_file, pattern = "=== packager info:")
 \dontrun{
 # We need "." to be a package directory, and it takes quite some time.
 sink_file <- tempfile()

@@ -36,7 +36,7 @@ adding the \acronym{URL} given to the \acronym{URL} field in
 \item{verbose}{Be verbose?}
 }
 \value{
-\code{\link[base:invisible]{Invisibly} \link[base:logical]{TRUE}}
+\code{\link[=invisible]{Invisibly} \link[=logical]{TRUE}}
 }
 \description{
 I frequently forget to add an \acronym{URL} to my packages'

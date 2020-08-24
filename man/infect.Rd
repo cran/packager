@@ -30,13 +30,15 @@ it.
 }
 \examples{
 \dontrun{
+if (require("roxygen2")) { 
 path <- file.path(tempdir(), "mySecondPackage")
 usethis::create_package(path = path, open = FALSE)
 l1 <- list.files(path, recursive = TRUE)
-packager::infect(path = path, fakemake = "roxygen2")
+packager::infect(path = path, fakemake = "roxygen2", fakemake = FALSE)
 l2 <- list.files(path, recursive = TRUE)
 print(l1); print(l2)
 unlink(path, recursive = TRUE)
+}
 }
 }
 \seealso{

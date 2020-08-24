@@ -12,7 +12,6 @@
 #' condition of class c("error", "packager", "condition").
 #' @keywords internal
 #' @examples
-#' tryCatch(packager:::throw("Hello error!"), packager = function(e) return(e))
 throw <- function(message_string, system_call = sys.call(-1), ...) {
     condition <- structure(
                            class = c("error", "packager", "condition"),

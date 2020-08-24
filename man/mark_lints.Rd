@@ -39,14 +39,4 @@ named ..._internals..., ..._verbatim... or ..._modified... .
 \note{
 \code{print_lints} is an old, stale name for \code{mark_lints}.
 }
-\examples{
-files <- file.path(system.file("files", package = "packager"),
-                   c("a_verbatim.R", "a.R"))
-lints <- lintr:::flatten_lints(lapply(files, 
-                                      function(file) {
-                                          lintr::lint(file,
-                                                      parse_settings = FALSE)}))
-
-mark_lints(lints, invert = FALSE)
-mark_lints(lints, invert = TRUE)
-}
+\keyword{internal}

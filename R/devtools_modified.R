@@ -88,7 +88,7 @@ use_news_md <- function(pkg = ".", ...) {
 }
 
 use_intro <- function(path = ".", ..., details = NA, 
-                      use_rasciidoc_vignette = TRUE) {
+                      use_rasciidoc_vignette = FALSE) {
   if (is.na(details)) details <- NULL # NA would get printed into vignette.
   pkg <- as.package(path)
   pkg$details <- details

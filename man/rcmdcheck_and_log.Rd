@@ -11,7 +11,7 @@ rcmdcheck_and_log(path = ".")
 \code{\link[devtools:as.package]{devtools::as.package}}).}
 }
 \value{
-\code{\link[base:invisible]{Invisibly}  \link{NULL}}.
+\code{\link[=invisible]{Invisibly}  \link{NULL}}.
 }
 \description{
 The \code{\link{deparse}}d  \code{\link{dput}}s of \code{\link{Sys.info}} and

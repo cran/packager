@@ -2,22 +2,22 @@
 % Please edit documentation in R/rcmdcheck.R
 \name{grep_log}
 \alias{grep_log}
-\title{\code{\link[base:grep]{Grep}} Lines From a File}
+\title{\code{\link[=grep]{Grep}} Lines From a File}
 \usage{
 grep_log(file, pattern, strip = TRUE)
 }
 \arguments{
 \item{file}{The path to the file or a character vector holding the lines.}
 
-\item{pattern}{The pattern to \code{\link[base:grep]{grep}} for.}
+\item{pattern}{The pattern to \code{\link[=grep]{grep}} for.}
 
-\item{strip}{\code{\link[base:sub]{Substitute}} the pattern with the empty
-string before returning the lines \code{\link[base:grep]{grepped}}?}
+\item{strip}{\code{\link[=sub]{Substitute}} the pattern with the empty
+string before returning the lines \code{\link[=grep]{grepped}}?}
 }
 \value{
 A character vector giving the lines.
 }
 \description{
-\code{\link[base:grep]{Grep}} Lines From a File
+\code{\link[=grep]{Grep}} Lines From a File
 }
 \keyword{internal}

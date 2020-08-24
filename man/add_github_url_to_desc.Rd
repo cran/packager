@@ -16,8 +16,8 @@ add_github_url_to_desc(path = ".", default_gh_user = NULL, normalize = TRUE)
 \code{\link[desc:desc_set_urls]{desc::desc_set_urls}}.}
 }
 \value{
-\code{\link[base:invisible]{Invisibly} \link[base:logical]{TRUE}} if
-adding a \verb{github} \acronym{URL}, \code{\link[base:logical]{FALSE}}
+\code{\link[=invisible]{Invisibly} \link[=logical]{TRUE}} if
+adding a \verb{github} \acronym{URL}, \code{\link[=logical]{FALSE}}
 otherwise.
 }
 \description{

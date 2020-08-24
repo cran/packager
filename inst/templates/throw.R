@@ -11,8 +11,6 @@
 #' @return The function does never return anything, it stops with a
 #' condition of class c("error", "{{{ package }}}", "condition").
 #' @keywords internal
-#' @examples
-#' tryCatch({{{ package }}}:::throw("Hello error!"), {{{ package }}} = function(e) return(e))
 throw <- function(message_string, system_call = sys.call(-1), ...) {
     condition <- structure(class = c("error", "{{{ package }}}", "condition"),
                            list(message = message_string, call = system_call),

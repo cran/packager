@@ -1,3 +1,7 @@
+# packager 1.4.0
+
+* Returned to Rmd vignettes since rasciidoc vignettes fail on CRAN.
+
 # packager 1.3.0
 
 * `infect()` now creates man-roxygen/return_invisibly_null.R as a template for

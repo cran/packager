@@ -17,16 +17,18 @@
 #' packager::create(path = path, fakemake = "roxygen2")
 #' list.files(path, recursive = TRUE)
 #' \dontrun{
+#' if (require("roxygen2")) { 
 #'   ml <- packager::get_package_makelist(is_cran = TRUE)
 #'   d <- file.path(tempdir(), "somePackage")
 #'   dir.create(d)
-#'   packager::create(d, fakemake = FALSE)
+#'   packager::create(d, fakemake = FALSE, fakemake = FALSE)
 #'   withr::with_dir(d, fakemake::make("check", ml))
 #'   check_log <- file.path(d, "log", "check.Rout")
 #'   status <- packager::get_check_status(check_log)
 #'   RUnit::checkEqualsNumeric(status[["status"]][["errors"]], 0)
 #'   list.files(d, recursive = TRUE)
 #'   unlink(d, recursive = TRUE)
+#' }
 #' }
 create <- function(path, force = TRUE, ...) {
     # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
@@ -64,13 +66,15 @@ create <- function(path, force = TRUE, ...) {
 #' @export
 #' @examples
 #' \dontrun{
+#' if (require("roxygen2")) { 
 #' path <- file.path(tempdir(), "mySecondPackage")
 #' usethis::create_package(path = path, open = FALSE)
 #' l1 <- list.files(path, recursive = TRUE)
-#' packager::infect(path = path, fakemake = "roxygen2")
+#' packager::infect(path = path, fakemake = "roxygen2", fakemake = FALSE)
 #' l2 <- list.files(path, recursive = TRUE)
 #' print(l1); print(l2)
 #' unlink(path, recursive = TRUE)
+#' }
 #' }
 infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.

@@ -15,6 +15,6 @@ changes.}
 }
 \description{
 This is much like
-\code{\link[usethis:use_dev_version]{usethis::use_dev_version}}, but their
+\code{\link[usethis:use_version]{usethis::use_dev_version}}, but their
 conventions keep changing.
 }

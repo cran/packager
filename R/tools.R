@@ -1,7 +1,7 @@
 #' Use the BSD-2-Clause License
 #'
 #' It's my favorite and \pkg{devtools} provides
-#' \code{\link[usethis:use_mit_license]{use_mit_license}} only.
+#' \code{\link{use_mit_license}} only.
 #' @template package_path 
 #' @return Invisibly \code{\link{NULL}}.
 #' @keywords internal
@@ -53,8 +53,8 @@ use_bsd2clause_license <- function (path = ".") {
 #' @param default_gh_user See details.
 #' @param normalize Passed to
 #' \code{\link[desc:desc_set_urls]{desc::desc_set_urls}}.
-#' @return \code{\link[base:invisible]{Invisibly} \link[base:logical]{TRUE}} if
-#' adding a \verb{github} \acronym{URL}, \code{\link[base:logical]{FALSE}}
+#' @return \code{\link[=invisible]{Invisibly} \link[=logical]{TRUE}} if
+#' adding a \verb{github} \acronym{URL}, \code{\link[=logical]{FALSE}}
 #' otherwise.
 #' @keywords internal
 #' @export
@@ -112,10 +112,10 @@ add_github_url_to_desc <- function(path = ".", default_gh_user = NULL,
 #' \code{path}?
 #' @param ... Arguments passed to
 #' \code{\link[packager:use_template]{packager::use_template}}.
-#' @return \code{\link[base:invisible]{Invisibly}}
-#' \code{\link[base:logical]{TRUE}} on success,
-#' \code{\link[base:invisible]{Invisibly}}
-#' \code{\link[base:logical]{FALSE}} otherwise.
+#' @return \code{\link[=invisible]{Invisibly}}
+#' \code{\link[=logical]{TRUE}} on success,
+#' \code{\link[=invisible]{Invisibly}}
+#' \code{\link[=logical]{FALSE}} otherwise.
 #' @keywords internal
 #' @export
 provide_make <- function(path, Rbuildignore = TRUE, ...) {
@@ -196,17 +196,8 @@ use_template <- function(template, save_as = template, data = list(),
 #' @param sort Sort by file name suffix?
 #' @param invert Invert the sorting?
 #' @return The list of lints with names marked.
+#' @keywords internal
 #' @export
-#' @examples
-#' files <- file.path(system.file("files", package = "packager"),
-#'                    c("a_verbatim.R", "a.R"))
-#' lints <- lintr:::flatten_lints(lapply(files, 
-#'                                       function(file) {
-#'                                           lintr::lint(file,
-#'                                                       parse_settings = FALSE)}))
-#' 
-#' mark_lints(lints, invert = FALSE)
-#' mark_lints(lints, invert = TRUE)
 mark_lints <- function(x, sort = TRUE, invert = FALSE,
                  file_name_markers = c("_internals", "_verbatim", "_modified")
                  ) {
@@ -251,7 +242,7 @@ print_lints <- mark_lints
 #' Is a Directory an R Package Root Directory?
 #'
 #' Just a convenience wrapper to
-#' \code{\link[rprojroot:is_r_package]{rprojroot::is_r_package}}.
+#' \code{\link[rprojroot:criteria]{rprojroot::is_r_package}}.
 #' @param path The path to the directory.
 #' @return TRUE if the directory is an \R package root directory.
 #' @keywords internal
@@ -335,7 +326,7 @@ provide_gitlab_url <- function(path = ".") {
 #' instead
 #' adding the \acronym{URL} given to the \acronym{URL} field in
 #' \file{DESCRIPTION}?
-#' @return \code{\link[base:invisible]{Invisibly} \link[base:logical]{TRUE}}
+#' @return \code{\link[=invisible]{Invisibly} \link[=logical]{TRUE}}
 #' @keywords internal
 #' @export
 #' @examples

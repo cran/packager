@@ -14,6 +14,6 @@ TRUE if the directory is an \R package root directory.
 }
 \description{
 Just a convenience wrapper to
-\code{\link[rprojroot:is_r_package]{rprojroot::is_r_package}}.
+\code{\link[rprojroot:criteria]{rprojroot::is_r_package}}.
 }
 \keyword{internal}
