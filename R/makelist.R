@@ -2,7 +2,7 @@
 #'
 #' @param is_cran Streamline \code{makelist} for usage on CRAN?
 #' @param gitlab_token A private gitlab token. Used to query logs on
-#' \url{https://gitlab.com}.
+#' \url{https://about.gitlab.com}.
 #' @return A list for 
 #' \code{\link[fakemake:make]{fakemake::make}}.
 #' @export
@@ -157,7 +157,7 @@ get_basic_makelist <- function() {
                                       "file.path(\"log\", \"covr.Rout\")",
                                       "file.path(\"log\", \"roxygen2.Rout\")")),
                list(alias = "check", target = "log/check.Rout",
-                    code = paste0("check_archive(packager::get_pkg_archive_path(), ",
+                    code = paste0("packager::check_archive(packager::get_pkg_archive_path(), ",
                                   "cmdargs = \"--no-manual\")"),
                     prerequisites = "packager::get_pkg_archive_path(absolute = FALSE)"))
     return(add_log(pl))

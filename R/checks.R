@@ -123,7 +123,7 @@ check_codetags <- function(path = ".", exclude_pattern = "\\.Rcheck/",
 #' Check a Package Archive
 #'
 #' This is a wrapper to
-#' \code{\link[callr:rcmd_safe]{callr::rcmd_safe}("check")},
+#' \code{\link[callr:rcmd]{callr::rcmd_safe}("check")},
 #' similar to, but leaner than
 #' \code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck}}. While
 #' the latter parses the output of \code{rcmd_safe} and uses
@@ -135,7 +135,7 @@ check_codetags <- function(path = ".", exclude_pattern = "\\.Rcheck/",
 #' @param cmdargs Command line arguments (see
 #' \code{\link[callr:rcmd]{callr::rcmd}}).
 #' @return A list with standard output, standard error
-#' and exit status of the check
+#' and exit status of the check.
 #' (see \code{\link[callr:rcmd]{callr::rcmd}}).
 #' @family maintenance functions
 #' @export

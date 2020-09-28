@@ -6,25 +6,39 @@ stages:
     - deploy
 
 before_script:
-       - cat /etc/apt/sources.list
-       - apt-get update && apt-get upgrade -y && apt-get -y install libssl-dev libxml2-dev && apt-get -y install texlive-latex-base &&  apt-get -y install texlive-fonts-extra
-       - R --vanilla -e 'install.packages(c("desc"), repos = "https://cloud.r-project.org/")'
-       - R --vanilla -e ' for (p in desc::desc_get_deps()[["package"]]) {if (! require(p, character.only = TRUE)) install.packages(p, repos = "https://cloud.r-project.org/")}'
+    - R --vanilla -e 'install.packages("remotes", repos = "https://cloud.r-project.org/")'
+    - R --vanilla -e 'remotes::install_git("https://gitlab.com/fvafrCU/packager")'
+    - R --vanilla -e 'packager::install_deps(path = ".", repos = "http://ftp5.gwdg.de/pub/misc/cran/")'
 
-build:
+build_and_check:
   stage: build
   script:
-    - R CMD build . 
+      # without --no-manual I get 
+         # LaTeX errors when creating PDF version.
+         # This typically indicates Rd problems.
+         # LaTeX errors found:
+         # ! Font TS1/cmr/m/n/10=tcrm1000 at 10.0pt not loadable: Metric (TFM) file not fo
+         # und.
+         # <to be read again> 
+         #                    relax 
+         # l.23 building and checking a package).}
+      # so:
+      - R CMD build . &&  R CMD check --no-manual $(ls *.tar.gz)
+      # The later needs the desc-package but is more robst as it constructs the
+      # file to be checked from the file DESCRIPTION
+      #- R --vanilla -e 'remotes::install_git("https://gitlab.com/fvafrCU/packager")' && R CMD build . &&  R --vanilla -e 'system(paste0("R CMD check ", desc::desc_get("Package"), "_", sub("'", "", desc::desc_get_version()), ".tar.gz"))'
 
-check:
+
+packager:
   stage: check
   script:  
-    - R --vanilla -e 'remotes::install_gitlab("fvafrCU/packager")'
-    - R --vanilla -e 'packager::rcmdcheck_and_log(".")'
+    - R --vanilla -e 'packager::rcmdcheck_and_log(".", args = c("--as-cran", "--no-manual"))'
 
+      
 coverage:
   stage: test
-  script: R --vanilla -e 'install.packages("covr", repos = "https://cloud.r-project.org/"); covr::package_coverage()'
+  script: 
+    - R --vanilla -e 'install.packages("covr", repos = "https://cloud.r-project.org/"); covr::package_coverage()'
   coverage: '/^.*\s*Coverage:\s*\d+.\d+\%$/'
 
 pages:

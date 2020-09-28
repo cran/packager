@@ -56,7 +56,7 @@ get_gitlab_info <- function(path = ".", private_token, ...) {
 #' maintainer as stated in file DESCRIPTION is used.
 #' @param write_to_file Do write the comment to \file{cran-comment.md}?
 #' @param private_token Provide a private token to access
-#' \url{https://gitlab.com}. 
+#' \url{https://about.gitlab.com}. 
 #' @param proxy A proxy to use.
 #' @note By default this function writes to disk as side effect.
 #' @return Character vector containing the \acronym{CRAN} comments, which are

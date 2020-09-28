@@ -26,7 +26,7 @@ file.path("log", "check.Rout").}
 \item{write_to_file}{Do write the comment to \file{cran-comment.md}?}
 
 \item{private_token}{Provide a private token to access
-\url{https://gitlab.com}.}
+\url{https://about.gitlab.com}.}
 
 \item{name}{The name to sign with, if NA, the given name of the package
 maintainer as stated in file DESCRIPTION is used.}

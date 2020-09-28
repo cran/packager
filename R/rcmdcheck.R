@@ -5,8 +5,9 @@ write_info <- function(prefix = "=== packager info:") {
     return(invisible(NULL))
 }
 
-write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".") {
-    obj <- rcmdcheck::rcmdcheck(path = path, args = "--as-cran")
+write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".", 
+                            args = "--as-cran") {
+    obj <- rcmdcheck::rcmdcheck(path = path, args = args)
     invisible(utils::capture.output(info <- deparse(dput(obj))))
     cat(paste0(prefix, info), sep = "\n")
     return(invisible(obj))
@@ -19,12 +20,14 @@ write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".") {
 #' \code{\link{cat}}ed so we can evaluate them from reading logs (on
 #' \verb{gitlab}, for example).
 #' @template package_path 
+#' @param args Arguments passed to
+#' \code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck}}.
 #' @export
 #' @keywords internal
 #' @return \code{\link[=invisible]{Invisibly}  \link{NULL}}.
-rcmdcheck_and_log <- function(path = ".") {
+rcmdcheck_and_log <- function(path = ".", args = "--as-cran") {
     write_info()
-    check <- write_rcmdcheck(path = path)
+    check <- write_rcmdcheck(path = path, args = args)
     if (! identical(check$errors, character(0))) {
         throw(paste0("rcmdcheck::rcmdcheck(",  shQuote(path), ") failed."))
     }

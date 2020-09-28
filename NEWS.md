@@ -1,3 +1,12 @@
+# packager 1.5.0
+
+* Added argument `args` to `rcmdcheck_and_log()` that is passed to
+  `rcmdcheck::rcmdcheck()`.
+* Fix help links to package `callr` following 
+  Deepayan Sarkar (see https://deepayan.github.io/tmp/topichelp/funs.html).
+* Fixed `get_package_makelist()` to use `packager::check_archive()` instead of 
+  `check_archive()`.
+
 # packager 1.4.0
 
 * Returned to Rmd vignettes since rasciidoc vignettes fail on CRAN.

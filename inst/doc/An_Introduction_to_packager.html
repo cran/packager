@@ -319,12 +319,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;myFirstPackage&quot;</span>)</a>
 <a class="sourceLine" id="cb1-2" title="2">packager<span class="op">::</span><span class="kw">create</span>(path, <span class="dt">fakemake =</span> <span class="st">&quot;check&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning in eval(parse(text = make_list[[index]][[&quot;code&quot;]])): 
-## Spell check failed, see /tmp/Rtmpi0GjXM/myFirstPackage/log/spell.Rout for details.</code></pre>
-<pre><code>## Warning: 'check_archive' is deprecated.
-## Use 'packager::check_archive' instead.
-## See help(&quot;Deprecated&quot;)</code></pre>
+## Spell check failed, see /tmp/RtmpqNOvH8/myFirstPackage/log/spell.Rout for details.</code></pre>
 <p>The package is built, tested, checked and committed into git:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">list.files</span>(path, <span class="dt">recursive =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">list.files</span>(path, <span class="dt">recursive =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>##  [1] &quot;DESCRIPTION&quot;                 &quot;LICENSE&quot;                    
 ##  [3] &quot;Makefile&quot;                    &quot;Meta&quot;                       
 ##  [5] &quot;NAMESPACE&quot;                   &quot;NEWS.md&quot;                    
@@ -335,10 +332,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## [15] &quot;man&quot;                         &quot;man-roxygen&quot;                
 ## [17] &quot;myFirstPackage.Rcheck&quot;       &quot;myFirstPackage_0.1.0.tar.gz&quot;
 ## [19] &quot;tests&quot;                       &quot;vignettes&quot;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
-<pre><code>## Local:    master /tmp/Rtmpi0GjXM/myFirstPackage
-## Head:     [d9f8967] 2020-08-24: Packager Changes
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
+<pre><code>## Local:    master /tmp/RtmpqNOvH8/myFirstPackage
+## Head:     [d14d9e0] 2020-09-28: Packager Changes
 ## 
 ## Branches:         1
 ## Tags:             0
@@ -351,33 +348,33 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## Staged files:     0
 ## 
 ## Latest commits:
-## [d9f8967] 2020-08-24: Packager Changes
-## [7f016e1] 2020-08-24: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [928fc22] 2020-08-24: Adding `make.R` from template `make.R` of package` packager`.
-## [094f170] 2020-08-24: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [a5c7594] 2020-08-24: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+## [d14d9e0] 2020-09-28: Packager Changes
+## [15d73e1] 2020-09-28: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [e11976c] 2020-09-28: Adding `make.R` from template `make.R` of package` packager`.
+## [10786a5] 2020-09-28: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [3ba58f7] 2020-09-28: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>We can look at some of the files (the directory <code>myFirstPackage.Rcheck</code> might be of interest):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;spell.Rout&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;spell.Rout&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## DESCRIPTION does not contain 'Language' field. Defaulting to 'en-US'.
 ##   WORD      FOUND IN
 ## RStudio   README.Rmd:8,9
 ## gitlab    README.Rmd:43</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Status: 1 WARNING&quot;                                                   
 ## [2] &quot;See&quot;                                                                 
-## [3] &quot;  ‘/tmp/Rtmpi0GjXM/myFirstPackage/myFirstPackage.Rcheck/00check.log’&quot;
+## [3] &quot;  ‘/tmp/RtmpqNOvH8/myFirstPackage/myFirstPackage.Rcheck/00check.log’&quot;
 ## [4] &quot;for details.&quot;                                                        
 ## [5] &quot;&quot;                                                                    
 ## [6] &quot;&quot;</code></pre>
 <p>And we see what`s left to do:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;TODO.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;TODO.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## - make sure https://gitlab.com/fvafrcu/myFirstPackage exists!</code></pre>
 <div id="customizing" class="section level2">
 <h2>Customizing</h2>
 <p>We see that the package’s DESCRIPTION is filled with default values.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;DESCRIPTION&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;DESCRIPTION&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## Package: myFirstPackage
 ## Title: What it Does (One Line, Title Case)
 ## Version: 0.1.0
@@ -406,18 +403,18 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## Roxygen: list(markdown = TRUE)
 ## RoxygenNote: 7.1.1</code></pre>
 <p>We could set the package information on the existing package, but we rather create a new one now. So we get rid of our first package</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">unlink</span>(path, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="cf">if</span> (<span class="st">&quot;myFirstPackage&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">.packages</span>()) <span class="kw">detach</span>(<span class="st">&quot;package:myFirstPackage&quot;</span>, </a>
-<a class="sourceLine" id="cb18-3" title="3">                                              <span class="dt">unload =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">unlink</span>(path, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="cf">if</span> (<span class="st">&quot;myFirstPackage&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">.packages</span>()) <span class="kw">detach</span>(<span class="st">&quot;package:myFirstPackage&quot;</span>, </a>
+<a class="sourceLine" id="cb17-3" title="3">                                              <span class="dt">unload =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>and customize the package creation (but we skip the process of testing, building and checking for the sake of CPU time, we just build the docs):</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">package_title &lt;-<span class="st"> &quot;veryImportantPackage&quot;</span></a>
-<a class="sourceLine" id="cb19-2" title="2">path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), package_title)</a>
-<a class="sourceLine" id="cb19-3" title="3">a  &lt;-<span class="st"> </span>utils<span class="op">::</span><span class="kw">person</span>(<span class="dt">given =</span> <span class="st">&quot;Your&quot;</span>, <span class="dt">family =</span> <span class="st">&quot;Name&quot;</span>, <span class="dt">email =</span> <span class="st">&quot;some@whe.re&quot;</span>, </a>
-<a class="sourceLine" id="cb19-4" title="4">                    <span class="dt">role =</span> <span class="kw">c</span>(<span class="st">&quot;aut&quot;</span>, <span class="st">&quot;cre&quot;</span>))</a>
-<a class="sourceLine" id="cb19-5" title="5">packager<span class="op">::</span><span class="kw">create</span>(path, <span class="dt">author_at_r =</span> a, <span class="dt">title =</span> package_title,</a>
-<a class="sourceLine" id="cb19-6" title="6">                 <span class="dt">description =</span> <span class="st">&quot;This is very important.&quot;</span>,</a>
-<a class="sourceLine" id="cb19-7" title="7">                 <span class="dt">details =</span> <span class="st">&quot;At least to me.&quot;</span>, <span class="dt">fakemake =</span> <span class="st">&quot;roxygen2&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;DESCRIPTION&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">package_title &lt;-<span class="st"> &quot;veryImportantPackage&quot;</span></a>
+<a class="sourceLine" id="cb18-2" title="2">path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), package_title)</a>
+<a class="sourceLine" id="cb18-3" title="3">a  &lt;-<span class="st"> </span>utils<span class="op">::</span><span class="kw">person</span>(<span class="dt">given =</span> <span class="st">&quot;Your&quot;</span>, <span class="dt">family =</span> <span class="st">&quot;Name&quot;</span>, <span class="dt">email =</span> <span class="st">&quot;some@whe.re&quot;</span>, </a>
+<a class="sourceLine" id="cb18-4" title="4">                    <span class="dt">role =</span> <span class="kw">c</span>(<span class="st">&quot;aut&quot;</span>, <span class="st">&quot;cre&quot;</span>))</a>
+<a class="sourceLine" id="cb18-5" title="5">packager<span class="op">::</span><span class="kw">create</span>(path, <span class="dt">author_at_r =</span> a, <span class="dt">title =</span> package_title,</a>
+<a class="sourceLine" id="cb18-6" title="6">                 <span class="dt">description =</span> <span class="st">&quot;This is very important.&quot;</span>,</a>
+<a class="sourceLine" id="cb18-7" title="7">                 <span class="dt">details =</span> <span class="st">&quot;At least to me.&quot;</span>, <span class="dt">fakemake =</span> <span class="st">&quot;roxygen2&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;DESCRIPTION&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## Package: veryImportantPackage
 ## Title: veryImportantPackage
 ## Version: 0.1.0
@@ -446,8 +443,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## Roxygen: list(markdown = TRUE)
 ## RoxygenNote: 7.1.1</code></pre>
 <p>The package’s man page is set up accordingly:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">pkgload<span class="op">::</span><span class="kw">load_all</span>(path)</a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="kw">help</span>(<span class="kw">paste0</span>(package_title, <span class="st">&quot;-package&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">pkgload<span class="op">::</span><span class="kw">load_all</span>(path)</a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="kw">help</span>(<span class="kw">paste0</span>(package_title, <span class="st">&quot;-package&quot;</span>))</a></code></pre></div>
 <pre><code>## Loading veryImportantPackage</code></pre>
 <pre><code>## veryImportantPackage
 ## 
@@ -475,10 +472,10 @@ options(packager = pop)
 <div id="maintaining-packages-using-fakemake" class="section level1">
 <h1>Maintaining Packages Using <a href="https://CRAN.R-project.org/package=fakemake"><code>fakemake</code></a></h1>
 <p>Our brand new package veryImportantPackage is checked into git already:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
-<pre><code>## Local:    master /tmp/Rtmpi0GjXM/veryImportantPackage
-## Head:     [f565f6a] 2020-08-24: Packager Changes
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
+<pre><code>## Local:    master /tmp/RtmpqNOvH8/veryImportantPackage
+## Head:     [20d99fe] 2020-09-28: Packager Changes
 ## 
 ## Branches:         1
 ## Tags:             0
@@ -491,20 +488,20 @@ options(packager = pop)
 ## Staged files:     0
 ## 
 ## Latest commits:
-## [f565f6a] 2020-08-24: Packager Changes
-## [fa9eac9] 2020-08-24: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [1d1e2c4] 2020-08-24: Adding `make.R` from template `make.R` of package` packager`.
-## [2c14d43] 2020-08-24: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [ab17183] 2020-08-24: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+## [20d99fe] 2020-09-28: Packager Changes
+## [bb8c0db] 2020-09-28: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [4656134] 2020-09-28: Adding `make.R` from template `make.R` of package` packager`.
+## [3cab7d1] 2020-09-28: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [813b479] 2020-09-28: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>but we have so far only built the documentation from the <code>roxygen</code> comments:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">list.files</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">list.files</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] &quot;roxygen2.Rout&quot;</code></pre>
 <p>So we get a <code>makelist</code> and look at its targets and aliases:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">ml &lt;-<span class="st"> </span>packager<span class="op">::</span><span class="kw">get_package_makelist</span>(<span class="dt">is_cran =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb32-2" title="2"><span class="kw">cbind</span>(<span class="kw">lapply</span>(ml, <span class="cf">function</span>(x) x[[<span class="st">&quot;target&quot;</span>]]),</a>
-<a class="sourceLine" id="cb32-3" title="3">      <span class="kw">lapply</span>(ml, <span class="cf">function</span>(x) x[[<span class="st">&quot;alias&quot;</span>]]))</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">ml &lt;-<span class="st"> </span>packager<span class="op">::</span><span class="kw">get_package_makelist</span>(<span class="dt">is_cran =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="kw">cbind</span>(<span class="kw">lapply</span>(ml, <span class="cf">function</span>(x) x[[<span class="st">&quot;target&quot;</span>]]),</a>
+<a class="sourceLine" id="cb31-3" title="3">      <span class="kw">lapply</span>(ml, <span class="cf">function</span>(x) x[[<span class="st">&quot;alias&quot;</span>]]))</a></code></pre></div>
 <pre><code>##       [,1]                                               [,2]           
 ##  [1,] &quot;log/roxygen2.Rout&quot;                                &quot;roxygen2&quot;     
 ##  [2,] &quot;log/spell.Rout&quot;                                   &quot;spell&quot;        
@@ -526,18 +523,18 @@ options(packager = pop)
 <div id="building-the-package" class="section level2">
 <h2>Building the Package</h2>
 <p>We choose to build the package:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">suppressMessages</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, </a>
-<a class="sourceLine" id="cb34-2" title="2">                                  <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;build&quot;</span>, ml, </a>
-<a class="sourceLine" id="cb34-3" title="3">                                                       <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">suppressMessages</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, </a>
+<a class="sourceLine" id="cb33-2" title="2">                                  <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;build&quot;</span>, ml, </a>
+<a class="sourceLine" id="cb33-3" title="3">                                                       <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
 <pre><code>## Warning in eval(parse(text = make_list[[index]][[&quot;code&quot;]])): 
-## Spell check failed, see /tmp/Rtmpi0GjXM/veryImportantPackage/log/spell.Rout for details.</code></pre>
+## Spell check failed, see /tmp/RtmpqNOvH8/veryImportantPackage/log/spell.Rout for details.</code></pre>
 <pre><code>##  [1] &quot;log/cleanr.Rout&quot;                   &quot;log/codetags.Rout&quot;                
 ##  [3] &quot;log/covr.Rout&quot;                     &quot;log/lintr.Rout&quot;                   
 ##  [5] &quot;log/news.Rout&quot;                     &quot;log/spell.Rout&quot;                   
 ##  [7] &quot;log/testthat.Rout&quot;                 &quot;log/usage.Rout&quot;                   
 ##  [9] &quot;log/vignettes.Rout&quot;                &quot;veryImportantPackage_0.1.0.tar.gz&quot;</code></pre>
 <p>We note the warning</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">cat</span>(git2r<span class="op">::</span><span class="kw">diff</span>(r, <span class="dt">as_char =</span> <span class="ot">TRUE</span>, <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">&quot;.Rbuildignore&quot;</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">cat</span>(git2r<span class="op">::</span><span class="kw">diff</span>(r, <span class="dt">as_char =</span> <span class="ot">TRUE</span>, <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">&quot;.Rbuildignore&quot;</span>)))</a></code></pre></div>
 <pre><code>## diff --git a/.Rbuildignore b/.Rbuildignore
 ## index 869d606..60acd7f 100644
 ## --- a/.Rbuildignore
@@ -549,7 +546,7 @@ options(packager = pop)
 ## +^doc$
 ## +^Meta$</code></pre>
 <p>and see that now there are untracked files in our package’s log directory and that some files changed.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## Untracked files:
 ##  Untracked:  log/build.Rout
 ##  Untracked:  log/cleanr.Rout
@@ -565,7 +562,7 @@ options(packager = pop)
 ## Unstaged changes:
 ##  Modified:   .Rbuildignore
 ##  Modified:   .gitignore</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">cat</span>(<span class="kw">diff</span>(r, <span class="dt">as_char =</span> <span class="ot">TRUE</span>, <span class="dt">path =</span> <span class="st">&quot;.Rbuildignore&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">cat</span>(<span class="kw">diff</span>(r, <span class="dt">as_char =</span> <span class="ot">TRUE</span>, <span class="dt">path =</span> <span class="st">&quot;.Rbuildignore&quot;</span>))</a></code></pre></div>
 <pre><code>## diff --git a/.Rbuildignore b/.Rbuildignore
 ## index 869d606..60acd7f 100644
 ## --- a/.Rbuildignore
@@ -577,64 +574,62 @@ options(packager = pop)
 ## +^doc$
 ## +^Meta$</code></pre>
 <p>After inspecting the change, we commit:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb43-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make build&quot;</span>))</a></code></pre></div>
-<pre><code>## [38bdd6b] 2020-08-24: make build</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb42-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make build&quot;</span>))</a></code></pre></div>
+<pre><code>## [270fdbd] 2020-09-28: make build</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 </div>
 <div id="checking-the-package" class="section level2">
 <h2>Checking the Package</h2>
 <p>So now we want the check the package:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">suppressMessages</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, </a>
-<a class="sourceLine" id="cb47-2" title="2">                                 <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;check&quot;</span>, ml, </a>
-<a class="sourceLine" id="cb47-3" title="3">                                                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
-<pre><code>## Warning: 'check_archive' is deprecated.
-## Use 'packager::check_archive' instead.
-## See help(&quot;Deprecated&quot;)</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">suppressMessages</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, </a>
+<a class="sourceLine" id="cb46-2" title="2">                                 <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;check&quot;</span>, ml, </a>
+<a class="sourceLine" id="cb46-3" title="3">                                                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
 <pre><code>## [1] &quot;log/cleanr.Rout&quot;                   &quot;log/covr.Rout&quot;                    
 ## [3] &quot;log/lintr.Rout&quot;                    &quot;log/testthat.Rout&quot;                
 ## [5] &quot;veryImportantPackage_0.1.0.tar.gz&quot; &quot;log/check.Rout&quot;</code></pre>
 <p>We again see new files and changes to old files.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## Untracked files:
 ##  Untracked:  log/check.Rout
 ## 
 ## Unstaged changes:
-##  Modified:   log/build.Rout</code></pre>
+##  Modified:   log/build.Rout
+##  Modified:   log/testthat.Rout</code></pre>
 <p>Note that the <code>RUnit</code> test files are run while checking the tarball, hence we see output from <code>RUnit</code> in our log directory.</p>
 <p>We assume that we passed the check:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">cat</span>(<span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">n =</span> <span class="dv">7</span>), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">cat</span>(<span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">n =</span> <span class="dv">7</span>), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Status: 1 WARNING
 ## See
-##   ‘/tmp/Rtmpi0GjXM/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
+##   ‘/tmp/RtmpqNOvH8/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
 ## for details.</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">check_log &lt;-<span class="st"> </span><span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)</a>
-<a class="sourceLine" id="cb54-2" title="2">status &lt;-<span class="st"> </span>packager<span class="op">::</span><span class="kw">get_check_status</span>(check_log)</a>
-<a class="sourceLine" id="cb54-3" title="3">RUnit<span class="op">::</span><span class="kw">checkEqualsNumeric</span>(status[[<span class="st">&quot;status&quot;</span>]][[<span class="st">&quot;errors&quot;</span>]], <span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">check_log &lt;-<span class="st"> </span><span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)</a>
+<a class="sourceLine" id="cb52-2" title="2">status &lt;-<span class="st"> </span>packager<span class="op">::</span><span class="kw">get_check_status</span>(check_log)</a>
+<a class="sourceLine" id="cb52-3" title="3">RUnit<span class="op">::</span><span class="kw">checkEqualsNumeric</span>(status[[<span class="st">&quot;status&quot;</span>]][[<span class="st">&quot;errors&quot;</span>]], <span class="dv">0</span>)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>and commit again</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb56-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make check&quot;</span>))</a></code></pre></div>
-<pre><code>## [4bf2e58] 2020-08-24: make check</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb54-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make check&quot;</span>))</a></code></pre></div>
+<pre><code>## [9001d52] 2020-09-28: make check</code></pre>
 <p>If we choose to rerun the check without touching any files “down the make chain” (i.e. no files that any of our make targets depend on), we see there’s nothing to be done:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">system.time</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;check&quot;</span>, ml, <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">system.time</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;check&quot;</span>, ml, <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
 <pre><code>## NULL</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.607   0.000   0.609</code></pre>
+##   0.741   0.024   0.768</code></pre>
 <p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <strong>This is why I wrote <code>packager</code> and <code>fakemake</code>.</strong></p>
 </div>
 <div id="submitting-the-package" class="section level2">
 <h2>Submitting the Package</h2>
 <p>Now we would like to submit our package to <a href="https://cran.r-project.org/">CRAN</a> (which we will not do here, but we want to!) We provide comments to <a href="https://cran.r-project.org/">CRAN</a>:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;cran_comments&quot;</span>, ml, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;cran_comments&quot;</span>, ml, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)))</a></code></pre></div>
 <pre><code>## R CMD check results</code></pre>
 <pre><code>## 0 errors | 1 warning  | 0 notes</code></pre>
 <pre><code>## Warning in get_gitlab_info(path = path, private_token = private_token): You need
 ## a private token to access gitlab.</code></pre>
 <pre><code>## [1] &quot;log/cran_comments.Rout&quot;</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;cran-comments.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;cran-comments.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## Dear CRAN Team,
 ## this is a resubmission of package 'veryImportantPackage'. I have added the following changes:
 ## 
@@ -646,10 +641,10 @@ options(packager = pop)
 ## 
 ## # Package veryImportantPackage 0.1.0
 ## 
-## Reporting is done by packager version 1.4.0
+## Reporting is done by packager version 1.5.0
 ## 
 ## ## Test  environments 
-## - R Under development (unstable) (2020-06-12 r78687)
+## - R Under development (unstable) (2020-09-23 r79248)
 ##     Platform: x86_64-pc-linux-gnu (64-bit)
 ##     Running under: Devuan GNU/Linux 3 (beowulf)
 ##     NA
@@ -671,29 +666,29 @@ options(packager = pop)
 ## - devtools::spell_check:
 ##     found 2 unkown words.</code></pre>
 <p>After editing the contents we feel ready to submit:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw">try</span>(packager<span class="op">::</span><span class="kw">submit</span>(path))</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">try</span>(packager<span class="op">::</span><span class="kw">submit</span>(path))</a></code></pre></div>
 <pre><code>## Error in packager::submit(path) : You have uncommitted changes.</code></pre>
 <p>Oops: we need to commit git first:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> path, <span class="dt">untracked =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb70-2" title="2">                         <span class="dt">message =</span> <span class="st">&quot;prepare for CRAN&quot;</span>)</a></code></pre></div>
-<pre><code>## [9106bc2] 2020-08-24: prepare for CRAN</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> path, <span class="dt">untracked =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb68-2" title="2">                         <span class="dt">message =</span> <span class="st">&quot;prepare for CRAN&quot;</span>)</a></code></pre></div>
+<pre><code>## [a158c19] 2020-09-28: prepare for CRAN</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>Now we try and fail again, because this vignette is built in batch mode and there’s a security query which then fails:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw">try</span>(packager<span class="op">::</span><span class="kw">submit</span>(path))</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw">try</span>(packager<span class="op">::</span><span class="kw">submit</span>(path))</a></code></pre></div>
 <pre><code>## Warning in packager::submit(path): You have no upstream!</code></pre>
 <pre><code>## Ready to submit?Error in utils::menu(qs[rand]) : menu() cannot be used non-interactively</code></pre>
 <p>Should you run this code interactively, you will be prompted for the security query (as you might be used from <code>devtools::release()</code>). Best you know <a href="https://cran.r-project.org/doc/manuals/R-exts.html">how to write R extensions</a> and <a href="https://cran.r-project.org/web/packages/policies.html">the CRAN policies</a>.</p>
 <p>Anyway, we might want to tag the current commit and commence developing our package:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">packager<span class="op">::</span><span class="kw">git_tag</span>(<span class="dt">path =</span> path, <span class="dt">message =</span> <span class="st">&quot;A Tag&quot;</span>)</a></code></pre></div>
-<pre><code>## [9106bc] 0.1.0</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">packager<span class="op">::</span><span class="kw">use_dev_version</span>(<span class="dt">path =</span> path)</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">packager<span class="op">::</span><span class="kw">git_tag</span>(<span class="dt">path =</span> path, <span class="dt">message =</span> <span class="st">&quot;A Tag&quot;</span>)</a></code></pre></div>
+<pre><code>## [a158c1] 0.1.0</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">packager<span class="op">::</span><span class="kw">use_dev_version</span>(<span class="dt">path =</span> path)</a></code></pre></div>
 <pre><code>## Package version bumped from '0.1.0' to '0.1.0.9000'</code></pre>
-<pre><code>## [d7389dd] 2020-08-24: Using Developement Version</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1">desc<span class="op">::</span><span class="kw">desc_get</span>(<span class="st">&quot;Version&quot;</span>, <span class="dt">file =</span> path)</a></code></pre></div>
+<pre><code>## [4898797] 2020-09-28: Using Developement Version</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">desc<span class="op">::</span><span class="kw">desc_get</span>(<span class="st">&quot;Version&quot;</span>, <span class="dt">file =</span> path)</a></code></pre></div>
 <pre><code>##      Version 
 ## &quot;0.1.0.9000&quot;</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;NEWS.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;NEWS.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## # veryImportantPackage 0.1.0.9000
 ## 
 ## * FIXME

@@ -1,6 +1,6 @@
 is_check <- function(x) {
     is_check_stage <- identical(getElement(x, "stage"), "check")
-    is_check_job <- identical(getElement(x, "name"), "check")
+    is_check_job <- identical(getElement(x, "name"), "packager")
     is_check <- is_check_stage && is_check_job
     return(is_check)
 }

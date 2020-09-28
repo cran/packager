@@ -10,7 +10,7 @@ get_package_makelist(is_cran = FALSE, gitlab_token = NULL)
 \item{is_cran}{Streamline \code{makelist} for usage on CRAN?}
 
 \item{gitlab_token}{A private gitlab token. Used to query logs on
-\url{https://gitlab.com}.}
+\url{https://about.gitlab.com}.}
 }
 \value{
 A list for 
