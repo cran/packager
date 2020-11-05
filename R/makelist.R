@@ -138,7 +138,7 @@ get_basic_makelist <- function() {
                     prerequisites = r_codes),
                list(alias = "lint",
                     target = file.path("log", "lintr.Rout"),
-                    code = "print(lintr::lint_package(path = \".\"))",
+                    code = "print(packager::lint_package(path = \".\"))",
                     prerequisites = r_codes),
                list(alias = "covr",
                     target = file.path("log", "covr.Rout"),

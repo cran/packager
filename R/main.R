@@ -120,6 +120,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
             git2r::add(r, paths)
             git_commit(r, "Packager Changes")
     }
+    use_git_check_version_not_tagged(path)
     usethis::proj_set(NULL)
     return(invisible(NULL))
 }

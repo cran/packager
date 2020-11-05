@@ -4,13 +4,20 @@
 \alias{rcmdcheck_and_log}
 \title{Run \code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck}} and Write to Log}
 \usage{
-rcmdcheck_and_log(path = ".", args = "--as-cran")
+rcmdcheck_and_log(
+  path = ".",
+  args = "--as-cran",
+  build_args = args[-which(args == "--as-cran")]
+)
 }
 \arguments{
 \item{path}{Path to the package directory (see
 \code{\link[devtools:as.package]{devtools::as.package}}).}
 
 \item{args}{Arguments passed to
+\code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck}}.}
+
+\item{build_args}{Arguments passed to
 \code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck}}.}
 }
 \value{

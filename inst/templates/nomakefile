@@ -148,7 +148,7 @@ $(LOG_DIR)/cleanr.log: .log.log $(R_FILES) $(LOG_DIR)/dependencies.log
 .PHONY: lintr
 lintr: $(LOG_DIR)/lintr.log 
 $(LOG_DIR)/lintr.log: .log.log $(R_FILES) $(VIGNETTES_FILES) $(LOG_DIR)/dependencies.log
-	$(Rscript) --vanilla -e 'packager::print_lints(lintr::lint_package(path = "."))' > $(LOG_DIR)/lintr.log 2>&1 
+	$(Rscript) --vanilla -e 'packager::print_lints(packager::lint_package(path = "."))' > $(LOG_DIR)/lintr.log 2>&1 
 
 .PHONY: coverage
 coverage: $(LOG_DIR)/covr.log 

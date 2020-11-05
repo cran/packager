@@ -1,3 +1,22 @@
+# packager 1.6.0
+
+* `infect()` now (via `use_git_check_version_not_tagged()`) adds a git hook to
+  prevent from commiting to a package version that is already tagged in git.
+* Added function `lint_package` as a wrapper to `lintr::lint_package`.
+  Why? lintr added the `cyclocomp_linter` to it's default linters. Which sucks,
+  because we run cyclocomp independently. And lintr should lint, not check for
+  cyclomatic complexity. As this might reoccur in future and we don't want to
+  adapt all our calls to `lint_package` excluding crappy linters, this is a
+  hardcoded wrapper.
+* Now passing `build_args` to `rcmdcheck::rcmdcheck()`.
+* Changed default value for `build_args` from `character()` a derivation from
+  the default value for `args` for function `rcmdcheck_and_log()`.
+  So now all `args` except "--as-cran" will be used as `build_args` by default.
+  Comes in handy, because usually we want to exclude actions (via "--no-manual" 
+  or the like) from both build and check. Now don't need to pass them to two
+  arguments explicitely.
+
+
 # packager 1.5.0
 
 * Added argument `args` to `rcmdcheck_and_log()` that is passed to
