@@ -19,3 +19,13 @@ I sometimes forget to bump the package version of a tagged state in git,
 then commiting git to that version. Nothing servere, but should be avoided.
 So we add a check (to) a pre-commit hook for git.
 }
+\details{
+\code{\link[git2r:commit]{git2r::commit}} somehow ignores hooks,
+ so this works only for proper git.
+}
+\seealso{
+Other infrastructure functions: 
+\code{\link{use_git_pre_commit_script}()}
+}
+\concept{infrastructure functions}
+\keyword{internal}

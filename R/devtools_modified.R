@@ -89,6 +89,9 @@ use_news_md <- function(pkg = ".", ...) {
 
 use_intro <- function(path = ".", ..., details = NA, 
                       use_rasciidoc_vignette = FALSE) {
+  checkmate::assert_directory_exists(path)
+  checkmate::qassert(use_rasciidoc_vignette, "B1")
+  checkmate::assert_character(details)
   if (is.na(details)) details <- NULL # NA would get printed into vignette.
   pkg <- as.package(path)
   pkg$details <- details

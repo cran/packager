@@ -149,7 +149,15 @@ use_template <- function(template, save_as = template, data = list(),
                          git_commit = TRUE,
                          force = isTRUE(getOption("packager")[["force"]])) {
   status <- FALSE
+  checkmate::qassert(template, "S1")
+  checkmate::qassert(save_as, "S1")
+  checkmate::qassert(data, "L")
+  checkmate::qassert(source_package, "S1")
+  checkmate::qassert(ignore, "B1")
+  checkmate::qassert(git_commit, "B1")
+  checkmate::qassert(force, "B1")
   pkg <- as.package(pkg)
+  checkmate::assert_class(pkg, "package")
   path <- file.path(pkg$path, save_as)
   if (!file.exists(path) || isTRUE(force)) {
     template_path <- system.file("templates", template,

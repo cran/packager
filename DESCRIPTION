@@ -1,6 +1,6 @@
 Package: packager
 Title: Create, Build and Maintain Packages
-Version: 1.6.0
+Version: 1.7.0
 Authors@R: 
     person(given = "Andreas Dominik",
            family = "Cullmann",
@@ -15,9 +15,9 @@ License: BSD_2_clause + file LICENSE
 URL: https://gitlab.com/fvafrCU/packager
 Depends: R (>= 3.3.0)
 Imports: callr, checkmate, codetools, crayon, cyclocomp, desc,
-        fakemake, fs, git2r, httr, methods, pkgbuild, pkgload,
-        rcmdcheck, remotes, rprojroot, tools, usethis, utils, whisker,
-        whoami, withr
+        fakemake, git2r, httr, methods, pkgbuild, pkgload, rcmdcheck,
+        remotes, rprojroot, tools, usethis, utils, whisker, whoami,
+        withr
 Suggests: cleanr, covr, devtools, digest, knitr, lintr, rmarkdown,
         roxygen2, RUnit, spelling, testthat
 VignetteBuilder: knitr
@@ -25,8 +25,8 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-11-04 23:16:57 UTC; qwer
+Packaged: 2020-11-16 20:32:08 UTC; qwer
 Author: Andreas Dominik Cullmann [aut, cre]
 Maintainer: Andreas Dominik Cullmann <fvafrcu@mailbox.org>
 Repository: CRAN
-Date/Publication: 2020-11-05 05:10:02 UTC
+Date/Publication: 2020-11-17 06:10:02 UTC

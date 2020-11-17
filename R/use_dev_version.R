@@ -16,6 +16,13 @@ use_dev_version <- function(path = ".", force = FALSE) {
     git2r::commit(repo = path, message = "Using Developement Version")
 }
 
+#' @export
+#' @rdname use_dev_version
+#' @note From \code{\link[usethis:use_version]{usethis::use_dev_version}}, 
+#' the name was \code{use_dev_version}, but \code{use_devel_version} seems
+#' more natural. But it is just a link.
+use_devel_version <- use_dev_version
+
 #' Add a Development Section to \file{NEWS.md}
 #'
 #' @param path Path to your package's directory or the \file{NEWS.md} file.

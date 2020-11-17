@@ -31,6 +31,8 @@
 #' }
 #' }
 create <- function(path, force = TRUE, ...) {
+    checkmate::qassert(force, "B1")
+    checkmate::qassert(path, "S1")
     # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
     if (isTRUE(force)) unlink(path, recursive = TRUE)
     usethis::create_package(path = path, rstudio = FALSE, open = FALSE)
@@ -77,6 +79,9 @@ create <- function(path, force = TRUE, ...) {
 #' }
 #' }
 infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
+    checkmate::qassert(git_add_and_commit, "B1")
+    checkmate::assert_directory_exists(path)
+    checkmate::qassert(fakemake, c("S1", 0, "B1"))
     # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
     usethis::proj_set(path)
     r <- git2r::init(path = path)
@@ -120,6 +125,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
             git2r::add(r, paths)
             git_commit(r, "Packager Changes")
     }
+    sanitize_usethis_git_hook(path)
     use_git_check_version_not_tagged(path)
     usethis::proj_set(NULL)
     return(invisible(NULL))
@@ -162,6 +168,11 @@ set_package_info <- function(path,
                              author_at_r = getOption("packager")[["whoami"]],
                              title = "What it Does (One Line, Title Case)",
                              description = NULL, details = NA, ...) {
+    checkmate::assert_directory_exists(path)
+    checkmate::qassert(title, "S1")
+    checkmate::qassert(description, c(0, "S1"))
+    checkmate::assert_string(details, na.ok = TRUE)
+    checkmate::assert_class(author_at_r, "person", null.ok = TRUE)
     r1 <- update_description(path = path, title = tools::toTitleCase(title),
                              description = description,
                              author_at_r = author_at_r)

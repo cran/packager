@@ -5,15 +5,29 @@
 \alias{release}
 \title{Release a Package to CRAN}
 \usage{
-submit(path = ".", stop_on_git = TRUE, force = FALSE, verbose = TRUE)
+submit(
+  path = ".",
+  stop_on_git = TRUE,
+  stop_on_devel = TRUE,
+  force = FALSE,
+  verbose = TRUE
+)
 
-release(path = ".", stop_on_git = TRUE, force = FALSE, verbose = TRUE)
+release(
+  path = ".",
+  stop_on_git = TRUE,
+  stop_on_devel = TRUE,
+  force = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{path}{The package's root directory.}
 
 \item{stop_on_git}{Stop if git has uncommitted changes or is not synced with
 the origin?}
+
+\item{stop_on_devel}{Stop if the package has a developement version? (That is, a four part version.)}
 
 \item{force}{Skip user interaction?}
 

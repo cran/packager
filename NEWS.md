@@ -1,3 +1,14 @@
+# packager 1.7.0
+
+* Added argument `stop_on_devel = TRUE` to `submit()` that enables a check on 
+  whether the package has a developement version (that is, 
+  following the [semantic versioning](https://semver.org/) definition of a 
+  pre-release version, the version has a fourth part) and, if so, stops the 
+  submission. 
+* Function `use_git_check_version_not_tagged()` is now exported.
+* New Function `use_git_pre_commit_script` to add git pre-commit scripts and
+  infrastructure.
+
 # packager 1.6.0
 
 * `infect()` now (via `use_git_check_version_not_tagged()`) adds a git hook to

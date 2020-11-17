@@ -7,12 +7,13 @@
 #' @param path The package's root directory.
 #' @param stop_on_git Stop if git has uncommitted changes or is not synced with
 #' the origin?
+#' @param stop_on_devel Stop if the package has a developement version? (That is, a four part version.)
 #' @param force Skip user interaction?
 #' @param verbose Be verbose?
 #' @return \code{\link[base:invisible]{Invisibly} \link{NULL}}
 #' @export
-submit <- function(path = ".", stop_on_git = TRUE, force = FALSE,
-                    verbose = TRUE) {
+submit <- function(path = ".", stop_on_git = TRUE, stop_on_devel = TRUE,
+                   force = FALSE, verbose = TRUE) {
     if (uses_git(path) && isTRUE(stop_on_git)) {
         if (is_git_uncommitted(path = path) )
             throw("You have uncommitted changes.")
@@ -23,7 +24,9 @@ submit <- function(path = ".", stop_on_git = TRUE, force = FALSE,
                 throw("Your repository is not synced with it's upstream.")
         }
     }
-    if (! isTRUE(force) && !is_yes("Ready to submit?")) {
+    if (isTRUE(stop_on_devel) && is_devel_package(path)) {
+        throw("This package has a developement version.")
+    } else if (! isTRUE(force) && !is_yes("Ready to submit?")) {
         throw("Aborting on user request.")
     } else {
         csu <- "https://xmpalantir.wu.ac.at/cransubmit/index2.php"
@@ -60,3 +63,11 @@ submit <- function(path = ".", stop_on_git = TRUE, force = FALSE,
 #' \code{\link[devtools:release]{release}} is the original function from
 #' \pkg{devtools}.
 release <- submit
+
+
+is_devel_version <- function(x) return(!is.na(numeric_version(x)[1,4]))
+
+is_devel_package <- function(path) {
+    version <- desc::desc_get_version(path)
+    return(is_devel_version(version))
+}

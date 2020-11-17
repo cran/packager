@@ -1,9 +1,12 @@
 if (interactive()) pkgload::load_all(".")
 test_create_rmd <- function() {
-    old_opts <- options(warn = 1)
-    on.exit(old_opts)
+    if (!identical(environment(), .GlobalEnv)) {
+        old_opts <- options(warn = 1)
+        on.exit(old_opts)
+        on.exit(unlink(d, recursive = TRUE))
+    }
     d <- file.path(tempdir(), "prutp")
-    on.exit(unlink(d, recursive = TRUE))
+    if (interactive()) unlink(d, recursive = TRUE)
     # use the classic Rmd-vignette
     if (!require("roxygen2")) { 
         # https://cran.r-project.org/doc/manuals/R-exts.html, 
@@ -42,11 +45,13 @@ test_create_rmd <- function() {
     # in create()'s examples, now it is located in test/testthat/test-main.R
 
     #% check for the git pre-commit hook
-    hook <- readLines(file.path(d, ".git", "hooks", "pre-commit"))
-    template <- readLines(system.file("templates", 
-                                      "check_version_not_tagged.sh", 
-                                      package = "packager"))
-    # there might be other hooks (created by usethis::create_package)
-    RUnit::checkTrue(all(template %in% hook))
+    packager::git_tag(path = d, message = "Test")
+    # modify something
+    unlink(file.path(d, "TODO.md"))
+    status <- withr::with_dir(d, system2("git", args = "commit -am'foo'"))
+    RUnit::checkTrue(!isTRUE(status))
+    # git2r ignores the hooks: 
+    git <- git2r::commit(d, message = "foo", all = TRUE)
+    RUnit::checkIdentical(class(git), "git_commit")
 }
 if (interactive()) test_create_rmd() 

@@ -2,9 +2,12 @@
 % Please edit documentation in R/use_dev_version.R
 \name{use_dev_version}
 \alias{use_dev_version}
+\alias{use_devel_version}
 \title{Use a Development Version in DESCRIPTION and \file{NEWS.md}}
 \usage{
 use_dev_version(path = ".", force = FALSE)
+
+use_devel_version(path = ".", force = FALSE)
 }
 \arguments{
 \item{path}{Path to the package directory (see
@@ -17,4 +20,9 @@ changes.}
 This is much like
 \code{\link[usethis:use_version]{usethis::use_dev_version}}, but their
 conventions keep changing.
+}
+\note{
+From \code{\link[usethis:use_version]{usethis::use_dev_version}}, 
+the name was \code{use_dev_version}, but \code{use_devel_version} seems
+more natural. But it is just a link.
 }

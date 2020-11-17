@@ -389,7 +389,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;myFirstPackage&quot;</span>)</a>
 <a class="sourceLine" id="cb1-2" title="2">packager<span class="op">::</span><span class="kw">create</span>(path, <span class="dt">fakemake =</span> <span class="st">&quot;check&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning in eval(parse(text = make_list[[index]][[&quot;code&quot;]])): 
-## Spell check failed, see /tmp/RtmpVWfdPh/myFirstPackage/log/spell.Rout for details.</code></pre>
+## Spell check failed, see /tmp/RtmpLil5sg/myFirstPackage/log/spell.Rout for details.</code></pre>
 <p>The package is built, tested, checked and committed into git:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">list.files</span>(path, <span class="dt">recursive =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>##  [1] &quot;DESCRIPTION&quot;                 &quot;LICENSE&quot;                    
@@ -404,8 +404,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## [19] &quot;tests&quot;                       &quot;vignettes&quot;</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
-<pre><code>## Local:    master /tmp/RtmpVWfdPh/myFirstPackage
-## Head:     [378523c] 2020-11-04: Packager Changes
+<pre><code>## Local:    master /tmp/RtmpLil5sg/myFirstPackage
+## Head:     [930762e] 2020-11-16: Packager Changes
 ## 
 ## Branches:         1
 ## Tags:             0
@@ -418,11 +418,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## Staged files:     0
 ## 
 ## Latest commits:
-## [378523c] 2020-11-04: Packager Changes
-## [3235d72] 2020-11-04: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [87b7fb6] 2020-11-04: Adding `make.R` from template `make.R` of package` packager`.
-## [d8957bd] 2020-11-04: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [adf13c9] 2020-11-04: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+## [930762e] 2020-11-16: Packager Changes
+## [0917d29] 2020-11-16: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [254dbc1] 2020-11-16: Adding `make.R` from template `make.R` of package` packager`.
+## [9eb2cd3] 2020-11-16: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [b1dd84e] 2020-11-16: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>We can look at some of the files (the directory <code>myFirstPackage.Rcheck</code> might be of interest):</p>
@@ -434,7 +434,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Status: 1 WARNING&quot;                                                   
 ## [2] &quot;See&quot;                                                                 
-## [3] &quot;  ‘/tmp/RtmpVWfdPh/myFirstPackage/myFirstPackage.Rcheck/00check.log’&quot;
+## [3] &quot;  ‘/tmp/RtmpLil5sg/myFirstPackage/myFirstPackage.Rcheck/00check.log’&quot;
 ## [4] &quot;for details.&quot;                                                        
 ## [5] &quot;&quot;                                                                    
 ## [6] &quot;&quot;</code></pre>
@@ -544,8 +544,8 @@ options(packager = pop)
 <p>Our brand new package veryImportantPackage is checked into git already:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
 <a class="sourceLine" id="cb25-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
-<pre><code>## Local:    master /tmp/RtmpVWfdPh/veryImportantPackage
-## Head:     [d9b2957] 2020-11-04: Packager Changes
+<pre><code>## Local:    master /tmp/RtmpLil5sg/veryImportantPackage
+## Head:     [1dbff3b] 2020-11-16: Packager Changes
 ## 
 ## Branches:         1
 ## Tags:             0
@@ -558,11 +558,11 @@ options(packager = pop)
 ## Staged files:     0
 ## 
 ## Latest commits:
-## [d9b2957] 2020-11-04: Packager Changes
-## [8da757a] 2020-11-04: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [c2b5a65] 2020-11-04: Adding `make.R` from template `make.R` of package` packager`.
-## [4a5b039] 2020-11-04: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [8408784] 2020-11-04: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+## [1dbff3b] 2020-11-16: Packager Changes
+## [91e8151] 2020-11-16: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [3d7c090] 2020-11-16: Adding `make.R` from template `make.R` of package` packager`.
+## [ef7ffba] 2020-11-16: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [e8ce92a] 2020-11-16: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>but we have so far only built the documentation from the <code>roxygen</code> comments:</p>
@@ -597,7 +597,7 @@ options(packager = pop)
 <a class="sourceLine" id="cb33-2" title="2">                                  <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;build&quot;</span>, ml, </a>
 <a class="sourceLine" id="cb33-3" title="3">                                                       <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
 <pre><code>## Warning in eval(parse(text = make_list[[index]][[&quot;code&quot;]])): 
-## Spell check failed, see /tmp/RtmpVWfdPh/veryImportantPackage/log/spell.Rout for details.</code></pre>
+## Spell check failed, see /tmp/RtmpLil5sg/veryImportantPackage/log/spell.Rout for details.</code></pre>
 <pre><code>##  [1] &quot;log/cleanr.Rout&quot;                   &quot;log/codetags.Rout&quot;                
 ##  [3] &quot;log/covr.Rout&quot;                     &quot;log/lintr.Rout&quot;                   
 ##  [5] &quot;log/news.Rout&quot;                     &quot;log/spell.Rout&quot;                   
@@ -646,7 +646,7 @@ options(packager = pop)
 <p>After inspecting the change, we commit:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb42-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make build&quot;</span>))</a></code></pre></div>
-<pre><code>## [12cc0cc] 2020-11-04: make build</code></pre>
+<pre><code>## [3514782] 2020-11-16: make build</code></pre>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 </div>
@@ -662,14 +662,17 @@ options(packager = pop)
 <p>We again see new files and changes to old files.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## Untracked files:
-##  Untracked:  log/check.Rout</code></pre>
+##  Untracked:  log/check.Rout
+## 
+## Unstaged changes:
+##  Modified:   log/testthat.Rout</code></pre>
 <p>Note that the <code>RUnit</code> test files are run while checking the tarball, hence we see output from <code>RUnit</code> in our log directory.</p>
 <p>We assume that we passed the check:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">cat</span>(<span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">n =</span> <span class="dv">7</span>), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Status: 1 WARNING
 ## See
-##   ‘/tmp/RtmpVWfdPh/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
+##   ‘/tmp/RtmpLil5sg/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
 ## for details.</code></pre>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">check_log &lt;-<span class="st"> </span><span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)</a>
 <a class="sourceLine" id="cb52-2" title="2">status &lt;-<span class="st"> </span>packager<span class="op">::</span><span class="kw">get_check_status</span>(check_log)</a>
@@ -678,12 +681,12 @@ options(packager = pop)
 <p>and commit again</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb54-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make check&quot;</span>))</a></code></pre></div>
-<pre><code>## [b2c5db9] 2020-11-04: make check</code></pre>
+<pre><code>## [49d9c25] 2020-11-16: make check</code></pre>
 <p>If we choose to rerun the check without touching any files “down the make chain” (i.e. no files that any of our make targets depend on), we see there’s nothing to be done:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">system.time</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;check&quot;</span>, ml, <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
 <pre><code>## NULL</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.552   0.000   0.553</code></pre>
+##   0.551   0.000   0.553</code></pre>
 <p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <strong>This is why I wrote <code>packager</code> and <code>fakemake</code>.</strong></p>
 </div>
 <div id="submitting-the-package" class="section level2">
@@ -707,7 +710,7 @@ options(packager = pop)
 ## 
 ## # Package veryImportantPackage 0.1.0
 ## 
-## Reporting is done by packager version 1.6.0
+## Reporting is done by packager version 1.7.0
 ## 
 ## ## Test  environments 
 ## - R Under development (unstable) (2020-09-23 r79248)
@@ -737,7 +740,7 @@ options(packager = pop)
 <p>Oops: we need to commit git first:</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> path, <span class="dt">untracked =</span> <span class="ot">TRUE</span>, </a>
 <a class="sourceLine" id="cb68-2" title="2">                         <span class="dt">message =</span> <span class="st">&quot;prepare for CRAN&quot;</span>)</a></code></pre></div>
-<pre><code>## [000b589] 2020-11-04: prepare for CRAN</code></pre>
+<pre><code>## [4d7fdc7] 2020-11-16: prepare for CRAN</code></pre>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
 <pre><code>## working directory clean</code></pre>
 <p>Now we try and fail again, because this vignette is built in batch mode and there’s a security query which then fails:</p>
@@ -747,10 +750,10 @@ options(packager = pop)
 <p>Should you run this code interactively, you will be prompted for the security query (as you might be used from <code>devtools::release()</code>). Best you know <a href="https://cran.r-project.org/doc/manuals/R-exts.html">how to write R extensions</a> and <a href="https://cran.r-project.org/web/packages/policies.html">the CRAN policies</a>.</p>
 <p>Anyway, we might want to tag the current commit and commence developing our package:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">packager<span class="op">::</span><span class="kw">git_tag</span>(<span class="dt">path =</span> path, <span class="dt">message =</span> <span class="st">&quot;A Tag&quot;</span>)</a></code></pre></div>
-<pre><code>## [000b58] 0.1.0</code></pre>
+<pre><code>## [4d7fdc] 0.1.0</code></pre>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">packager<span class="op">::</span><span class="kw">use_dev_version</span>(<span class="dt">path =</span> path)</a></code></pre></div>
 <pre><code>## Package version bumped from '0.1.0' to '0.1.0.9000'</code></pre>
-<pre><code>## [91aff15] 2020-11-04: Using Developement Version</code></pre>
+<pre><code>## [ad44e97] 2020-11-16: Using Developement Version</code></pre>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">desc<span class="op">::</span><span class="kw">desc_get</span>(<span class="st">&quot;Version&quot;</span>, <span class="dt">file =</span> path)</a></code></pre></div>
 <pre><code>##      Version 
 ## &quot;0.1.0.9000&quot;</code></pre>
