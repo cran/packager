@@ -11,7 +11,6 @@
 #' @return The function does never return anything, it stops with a
 #' condition of class c("error", "packager", "condition").
 #' @keywords internal
-#' @examples
 throw <- function(message_string, system_call = sys.call(-1), ...) {
     condition <- structure(
                            class = c("error", "packager", "condition"),

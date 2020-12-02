@@ -21,6 +21,7 @@ adding a \verb{github} \acronym{URL}, \code{\link[=logical]{FALSE}}
 otherwise.
 }
 \description{
+When writing packages, I often forget to add the appropriate \verb{github}
 \acronym{URL}.
 }
 \details{

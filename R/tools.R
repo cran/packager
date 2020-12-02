@@ -31,10 +31,9 @@ use_bsd2clause_license <- function (path = ".") {
     return(invisible(NULL))
 }
 
-
 #' Add a \verb{github} \acronym{URL} to File \file{DESCRIPTION}
 #'
-#" When writing packages, I often forget to add the appropriate \verb{github}
+#' When writing packages, I often forget to add the appropriate \verb{github}
 #' \acronym{URL}.
 #'
 #' The \acronym{URL} is constructed by the package's name as read from it's file
@@ -133,7 +132,7 @@ provide_make <- function(path, Rbuildignore = TRUE, ...) {
 #' @param save_as The path where the template should be written to.
 #' @param data A named list of information used to render the new file from the
 #' template, typically the output of
-#' \code(\link[devtools:as.package]{as.package}}.
+#' \code{\link[devtools:as.package]{as.package}}.
 #' @param ignore Add the new file to \file{.Rbuildignore}?
 #' @param git_commit Add the new file to git and commit?
 #' @param pkg The path to the package template shall be used for.

@@ -21,6 +21,10 @@ directory).}
 
 \item{save_as}{The path where the template should be written to.}
 
+\item{data}{A named list of information used to render the new file from the
+template, typically the output of
+\code{\link[devtools:as.package]{as.package}}.}
+
 \item{ignore}{Add the new file to \file{.Rbuildignore}?}
 
 \item{pkg}{The path to the package template shall be used for.}

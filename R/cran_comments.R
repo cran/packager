@@ -1,47 +1,3 @@
-info <- function(session = NULL) {
-    if (is.null(session))
-        session <- utils::sessionInfo()
-    if (!identical(class(session), "sessionInfo"))
-        warning("Argument session is not of class `sessionInfo`!")
-    info <- c(session[["R.version"]][["version.string"]],
-              paste0("Platform: ", session[["platform"]]),
-              paste0("Running under: ", session[["running"]]))
-    return(info)
-}
-
-get_gitlab_info <- function(path = ".", private_token, ...) {
-    info <- NULL
-    if (missing(private_token) || is.null(private_token)) {
-        warning("You need a private token to access gitlab.")
-    } else {
-        url <- get_git_url(get_remote_url(path))
-        if (!is.null(url)) {
-            project <- sub("\\.git$", "", basename(url))
-            user <- tolower(basename(dirname(url)))
-            log <- tryCatch(get_gitlab_log(user = user, project = project,
-                                           private_token, ...),
-                            error = function(e) return(NULL))
-            if (!is.null(log)) {
-                info <- eval_from_log(file = log, 
-                                      pattern = "=== packager info:")
-                info <- info(info)
-                rcmdcheck <- eval_from_log(log, 
-                                           pattern = "=== packager rcmdcheck:")
-                if (is.null(rcmdcheck)) {
-                    status <- "FAILED"
-                } else {
-                    status <- grep("^Status",
-                                   strsplit(rcmdcheck[["stdout"]],
-                                            split = "\n")[[1]],
-                                   value = TRUE)
-                }
-                info <- c(info, status)
-            }
-        }
-    }
-    return(info)
-}
-
 #' Provide a Template for Your Comments To CRAN
 #'
 #'  \code{\link{submit}} reads a file \file{cran-comments.md}. This
@@ -50,8 +6,9 @@ get_gitlab_info <- function(path = ".", private_token, ...) {
 #' the package's \file{NEWS.md}.
 #' @template package_path 
 #' @param initial Is this an initial submission?
-#' @param check_log Path to the check log relative to \code{path}. Typically
-#' file.path("log", "check.Rout").
+#' @param check_log Deprecated, will be removed in a future release. 
+#'        The local R CMD check log is now supposed to live be
+#'        `log/check.(log|Rout)`.
 #' @param name The name to sign with, if NA, the given name of the package
 #' maintainer as stated in file DESCRIPTION is used.
 #' @param write_to_file Do write the comment to \file{cran-comment.md}?
@@ -76,7 +33,7 @@ get_gitlab_info <- function(path = ".", private_token, ...) {
 #' } else {
 #'     gitlab_token <- readLines(file.path("~", ".gitlab_private_token.txt"))
 #'     comments <- provide_cran_comments(path = ".",
-#'                                       write_to_file = TRUE,
+#'                                       write_to_file = TRUE)#,
 #'                                       private_token = gitlab_token)
 #' }
 #' cat(comments, sep = "")
@@ -103,24 +60,6 @@ provide_cran_comments <- function(check_log = NULL,
     }
     pkg <- as.package(path)
     comments_file <- file.path(pkg[["path"]], "cran-comments.md")
-    here <- info(session = NULL)
-    if (! is.null(check_log)) {
-        check <- parse_check_results(check_log)
-        check_output <- utils::capture.output(print.check_results(check),
-                                              type = "message")[2]
-    } else {
-        check_candidates <- list.files(file.path(path, "log"), 
-                                       pattern =  "check\\.(log|Rout)$", 
-                                       full.names = TRUE)
-        if (!is.na(check_candidates[1])) { 
-            check <- parse_check_results(check_candidates[1])
-            check_output <- utils::capture.output(print.check_results(check),
-                                                  type = "message")[2]
-        } else {
-            check_output  <- "ERROR: No check log given!"
-        }
-    }
-    here <- c(here, check_output)
     if (file.exists(file.path(pkg[["path"]], "NEWS.md"))) {
         news <- get_news(path = path)
     } else {
@@ -146,8 +85,9 @@ provide_cran_comments <- function(check_log = NULL,
                   "\n\nReporting is done by packager version ",
                   as.character(desc::desc_get_version(system.file("DESCRIPTION", 
                                                      package = "packager"))),
-                  "\n\n## Test  environments ", "\n")
-    comments <- c(comments, "- ", paste(here, collapse = "\n    "), "\n")
+                  "\n")
+    comments <- c(comments, get_local_check(path))
+    comments <- c(comments, get_local_rhub(path))
     if (is.null(proxy)) {
         gitlab_info <- get_gitlab_info(path = path,
                                        private_token = private_token)
@@ -156,9 +96,9 @@ provide_cran_comments <- function(check_log = NULL,
                                        private_token = private_token, proxy)
     }
     if (!is.null(gitlab_info))
-        comments <- c(comments, paste(c("- gitlab.com", gitlab_info),
+        comments <- c(comments, paste(c("\n- gitlab.com", gitlab_info),
                                       collapse = "\n  "), "\n")
-    comments <- c(comments, "- win-builder (devel)", "\n")
+    comments <- c(comments, "\n- win-builder (devel)", "\n")
     comments <- c(comments, get_local_tests(path))
     comments <- c(comments, get_local_meta(path))
 
@@ -174,6 +114,21 @@ pick_log_file <- function(path, basename, extension = "(log|Rout)") {
                              full.names = TRUE)
     newest <- candidates[order(file.mtime(candidates), decreasing = TRUE)][1]
     return(newest)
+}
+
+get_local_check <- function(path) {
+    comments <- c("\n\n## Test environments\n")
+    here <- info(session = NULL)
+    if (!is.na(log_file <- pick_log_file(path, "check"))) {
+        check_output <- parse_check_results(log_file)
+        check_output <- utils::capture.output(print.check_results(check_output),
+                                              type = "message")[2]
+    } else {
+        check_output  <- "ERROR: No check log found!"
+    }
+    comments <- c(comments, "- ", paste(c(here, check_output),
+                                       collapse = "\n   ")) 
+    return(comments)
 }
 
 get_local_tests <- function(path) {
@@ -232,6 +187,7 @@ get_local_meta <- function(path) {
     }
     if (!is.na(log_file <- pick_log_file(path, "cleanr"))) {
         lines <- readLines(log_file)
+        lines <- grep("found", lines, value = TRUE)
         comments <- c(comments, "- cleanr:\n    ", 
                       paste("found", max(length(lines) - 1, 0), 
                             "dreadful things about your code."),  
@@ -254,3 +210,69 @@ get_local_meta <- function(path) {
     }
     return(comments)
 }
+
+info <- function(session = NULL) {
+    if (is.null(session))
+        session <- utils::sessionInfo()
+    if (!identical(class(session), "sessionInfo"))
+        warning("Argument session is not of class `sessionInfo`!")
+    info <- c(session[["R.version"]][["version.string"]],
+              paste0("Platform: ", session[["platform"]]),
+              paste0("Running under: ", session[["running"]]))
+    return(info)
+}
+
+get_gitlab_info <- function(path = ".", private_token, ...) {
+    info <- NULL
+    if (missing(private_token) || is.null(private_token)) {
+        warning("You need a private token to access gitlab.")
+    } else {
+        url <- get_git_url(get_remote_url(path))
+        if (!is.null(url)) {
+            project <- sub("\\.git$", "", basename(url))
+            user <- tolower(basename(dirname(url)))
+            log <- tryCatch(get_gitlab_log(user = user, project = project,
+                                           private_token, ...),
+                            error = function(e) return(NULL))
+            if (!is.null(log)) {
+                info <- eval_from_log(file = log, 
+                                      pattern = "=== packager info:")
+                info <- info(info)
+                rcmdcheck <- eval_from_log(log, 
+                                           pattern = "=== packager rcmdcheck:")
+                if (is.null(rcmdcheck)) {
+                    status <- "FAILED"
+                } else {
+                    status <- grep("^Status",
+                                   strsplit(rcmdcheck[["stdout"]],
+                                            split = "\n")[[1]],
+                                   value = TRUE)
+                }
+                info <- c(info, status)
+            }
+        }
+    }
+    return(info)
+}
+
+get_local_rhub <- function(path) {
+    comments <- NULL
+    if (!is.na(log_file <- pick_log_file(path, "rhub"))) {
+        comments <- c(comments, "\n- rhub")
+        r <- readLines(log_file)
+        r <- unlist(strsplit(paste(r, collapse = "\n"), split = "\\$"))
+        r <- r[nchar(r) != 0]
+        desc_version <- desc::desc_get_version(path)
+
+        for(p in r) {
+            p <- unlist(strsplit(p, split = "\n"))
+            version <- sub(".*_(.*)\\.tar.*", "\\1", grep("Build ID", p, value = TRUE))
+            if (identical(package_version(version), desc_version)) {
+                comments <- c(comments, paste(p[-1], collapse = "\n   "))
+            }
+        }
+
+    }
+    return(comments)
+}
+

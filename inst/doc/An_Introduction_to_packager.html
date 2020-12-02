@@ -1,464 +1,949 @@
-<!DOCTYPE html>
-
-<html>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<meta name="author" content="Andreas Dominik Cullmann" />
-
-
-<title>An Introduction to packager</title>
-
-
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.10" />
+<title>An Introduction to <strong>packager</strong></title>
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-      a.sourceLine { display: inline-block; line-height: 1.25; }
-  a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-  a.sourceLine:empty { height: 1.2em; }
-  .sourceCode { overflow: visible; }
-  code.sourceCode { white-space: pre; position: relative; }
-  div.sourceCode { margin: 1em 0; }
-  pre.sourceCode { margin: 0; }
-  @media screen {
-  div.sourceCode { overflow: auto; }
-  }
-  @media print {
-  code.sourceCode { white-space: pre-wrap; }
-  a.sourceLine { text-indent: -1em; padding-left: 1em; }
-  }
-  pre.numberSource a.sourceLine
-    { position: relative; left: -4em; }
-  pre.numberSource a.sourceLine::before
-    { content: attr(title);
-      position: relative; left: -1em; text-align: right; vertical-align: baseline;
-      border: none; pointer-events: all; display: inline-block;
-      -webkit-touch-callout: none; -webkit-user-select: none;
-      -khtml-user-select: none; -moz-user-select: none;
-      -ms-user-select: none; user-select: none;
-      padding: 0 4px; width: 4em;
-      color: #aaaaaa;
-    }
-  pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-  div.sourceCode
-    {  }
-  @media screen {
-  a.sourceLine::before { text-decoration: underline; }
-  }
-  code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-  code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-  code span.at { color: #7d9029; } /* Attribute */
-  code span.bn { color: #40a070; } /* BaseN */
-  code span.bu { } /* BuiltIn */
-  code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-  code span.ch { color: #4070a0; } /* Char */
-  code span.cn { color: #880000; } /* Constant */
-  code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-  code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-  code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-  code span.dt { color: #902000; } /* DataType */
-  code span.dv { color: #40a070; } /* DecVal */
-  code span.er { color: #ff0000; font-weight: bold; } /* Error */
-  code span.ex { } /* Extension */
-  code span.fl { color: #40a070; } /* Float */
-  code span.fu { color: #06287e; } /* Function */
-  code span.im { } /* Import */
-  code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-  code span.op { color: #666666; } /* Operator */
-  code span.ot { color: #007020; } /* Other */
-  code span.pp { color: #bc7a00; } /* Preprocessor */
-  code span.sc { color: #4070a0; } /* SpecialChar */
-  code span.ss { color: #bb6688; } /* SpecialString */
-  code span.st { color: #4070a0; } /* String */
-  code span.va { color: #19177c; } /* Variable */
-  code span.vs { color: #4070a0; } /* VerbatimString */
-  code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    </style>
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
 
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
 }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
+body {
+  margin: 1em 5% 1em 5%;
+}
 
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
 
+em {
+  font-style: italic;
+  color: navy;
+}
 
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
+strong {
+  font-weight: bold;
+  color: #083194;
 }
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
 }
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
 }
 h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
+  padding-top: 0.5em;
 }
 h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
+  float: left;
 }
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
+h3 + * {
+  clear: left;
 }
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
+h5 {
+  font-size: 1.0em;
 }
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
 
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
 </style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
 
 
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
 
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
 
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
 </head>
-
-<body>
-
-
-
-
-<h1 class="title toc-ignore">An Introduction to <em>packager</em></h1>
-<h4 class="author">Andreas Dominik Cullmann</h4>
-<h4 class="date">2020-04-09, 15:43:44</h4>
-
-
-
-<div id="teaser" class="section level1">
-<h1>Teaser</h1>
-<p><code>packager</code> is a set of functions I use to create and maintain most of my <code>R</code>-packages using a build process such as <a href="https://CRAN.R-project.org/package=fakemake"><code>fakemake</code></a> or, <a href="https://www.gnu.org/software/make/">GNU make</a>. It borrows heavily from packages <code>devtools</code>, <code>usethis</code>, <code>rcmdcheck</code>, <code>remotes</code> and <code>lintr</code>.</p>
+<body class="article">
+<div id="header">
+<h1>An Introduction to <strong>packager</strong></h1>
+<span id="author">Andreas Dominik Cullmann</span><br />
+<span id="revdate">2020-04-25, 16:09:38</span>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
 </div>
-<div id="withr" class="section level1">
-<h1><code>withr</code></h1>
-<p>Due to <a href="https://cran.r-project.org/web/packages/policies.html">the CRAN policy</a> of not writing “anywhere else on the file system apart from the R session’s temporary directory”, throughout this vignette I use <strong>R</strong>’s temporary directory, often by using <code>path &lt;- file.path(tempdir(), &quot;my_path&quot;)</code> followed by <code>withr::with_dir(path, ...)</code> or the like. I do this because this is a vignette and its codes are run on <a href="https://cran.r-project.org/">CRAN</a>.</p>
-<p>In real life, we would skip the temporary directory stuff.</p>
 </div>
-<div id="creating-packages" class="section level1">
-<h1>Creating Packages</h1>
-<p>To create a new package I use:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;myFirstPackage&quot;</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">packager<span class="op">::</span><span class="kw">create</span>(path, <span class="dt">fakemake =</span> <span class="st">&quot;check&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning in eval(parse(text = make_list[[index]][[&quot;code&quot;]])): 
-## Spell check failed, see /tmp/RtmpLil5sg/myFirstPackage/log/spell.Rout for details.</code></pre>
-<p>The package is built, tested, checked and committed into git:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">list.files</span>(path, <span class="dt">recursive =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>##  [1] &quot;DESCRIPTION&quot;                 &quot;LICENSE&quot;                    
-##  [3] &quot;Makefile&quot;                    &quot;Meta&quot;                       
-##  [5] &quot;NAMESPACE&quot;                   &quot;NEWS.md&quot;                    
-##  [7] &quot;R&quot;                           &quot;README.Rmd&quot;                 
-##  [9] &quot;TODO.md&quot;                     &quot;devel.R&quot;                    
-## [11] &quot;doc&quot;                         &quot;inst&quot;                       
-## [13] &quot;log&quot;                         &quot;make.R&quot;                     
-## [15] &quot;man&quot;                         &quot;man-roxygen&quot;                
-## [17] &quot;myFirstPackage.Rcheck&quot;       &quot;myFirstPackage_0.1.0.tar.gz&quot;
-## [19] &quot;tests&quot;                       &quot;vignettes&quot;</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
-<pre><code>## Local:    master /tmp/RtmpLil5sg/myFirstPackage
-## Head:     [930762e] 2020-11-16: Packager Changes
-## 
+<div id="content">
+<div class="sect1">
+<h2 id="_teaser">Teaser</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code>packager</code> is a set of functions I use to create and maintain most of my <code>R</code>-packages
+using a build process such as  <a href="https://CRAN.R-project.org/package=fakemake"><code>fakemake</code></a>
+or, <a href="https://www.gnu.org/software/make/">GNU make</a>.
+It borrows  heavily from packages <code>devtools</code>, <code>usethis</code>, <code>rcmdcheck</code>, <code>remotes</code> and <code>lintr</code>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_withr_code"><code>withr</code></h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Due to <a href="https://cran.r-project.org/web/packages/policies.html">the CRAN policy</a>
+of not writing "anywhere else on the
+file system apart from the R session&#8217;s temporary directory",
+throughout this vignette I use  <strong>R</strong>'s temporary directory, often by using
+<code>path &#8592; file.path(tempdir(), "my_path")</code> followed by
+<code>withr::with_dir(path, &#8230;)</code> or the like.
+I do this because this is a vignette and its codes are run on
+<a href="https://cran.r-project.org/">CRAN</a>.</p></div>
+<div class="paragraph"><p>In real life, we would skip the temporary directory stuff.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_packages">Creating Packages</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>To create a new package I use:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>path &lt;- file.path(tempdir(), <span style="color: #FF0000">"myFirstPackage"</span>)
+packager::create(path, fakemake = <span style="color: #FF0000">"check"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in eval(parse(text = make_list[[index]][["code"]])):</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/Rtmpis8C5k/myFirstPackage/log/spell.Rout for details.</span></span>
+</tt></pre></div></div>
+<div class="paragraph"><p>The package is built, tested, checked and committed into git:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>list.files(path, recursive = FALSE)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>##  [1] "DESCRIPTION"                 "LICENSE"
+##  [3] "Makefile"                    "Meta"
+##  [5] "NAMESPACE"                   "NEWS.md"
+##  [7] "R"                           "README.Rmd"
+##  [9] "TODO.md"                     "devel.R"
+## [11] "doc"                         "inst"
+## [13] "log"                         "make.R"
+## [15] "man"                         "man-roxygen"
+## [17] "myFirstPackage.Rcheck"       "myFirstPackage_0.1.0.tar.gz"
+## [19] "tests"                       "vignettes"</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>r &lt;- git2r::repository(path)
+summary(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## Local:    master /tmp/Rtmpis8C5k/myFirstPackage
+## Head:     [ef466b5] 2020-12-02: Packager Changes
+##
 ## Branches:         1
 ## Tags:             0
 ## Commits:         16
 ## Contributors:     1
 ## Stashes:          0
-## Ignored files:    5
+## Ignored files:    6
 ## Untracked files:  0
 ## Unstaged files:   0
 ## Staged files:     0
-## 
+##
 ## Latest commits:
-## [930762e] 2020-11-16: Packager Changes
-## [0917d29] 2020-11-16: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [254dbc1] 2020-11-16: Adding `make.R` from template `make.R` of package` packager`.
-## [9eb2cd3] 2020-11-16: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [b1dd84e] 2020-11-16: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+## [ef466b5] 2020-12-02: Packager Changes
+## [09d9891] 2020-12-02: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [4a06b9b] 2020-12-02: Adding `make.R` from template `make.R` of package` packager`.
+## [54b6c42] 2020-12-02: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [899b9ff] 2020-12-02: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>git2r::status(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## working directory clean</code></pre>
-<p>We can look at some of the files (the directory <code>myFirstPackage.Rcheck</code> might be of interest):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;spell.Rout&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>We can look at some of the files
+(the directory <code>myFirstPackage.Rcheck</code> might be of interest):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"spell.Rout"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## DESCRIPTION does not contain 'Language' field. Defaulting to 'en-US'.
 ##   WORD      FOUND IN
 ## RStudio   README.Rmd:8,9
 ## gitlab    README.Rmd:43</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
-<pre><code>## [1] &quot;Status: 1 WARNING&quot;                                                   
-## [2] &quot;See&quot;                                                                 
-## [3] &quot;  ‘/tmp/RtmpLil5sg/myFirstPackage/myFirstPackage.Rcheck/00check.log’&quot;
-## [4] &quot;for details.&quot;                                                        
-## [5] &quot;&quot;                                                                    
-## [6] &quot;&quot;</code></pre>
-<p>And we see what`s left to do:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;TODO.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>tail(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [1] "Status: 1 WARNING"
+## [2] "See"
+## [3] "  ‘/tmp/Rtmpis8C5k/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
+## [4] "for details."
+## [5] ""
+## [6] ""</code></pre>
+</div></div>
+<div class="paragraph"><p>And we see what+s left to do:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"TODO.md"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## - make sure https://gitlab.com/fvafrcu/myFirstPackage exists!</code></pre>
-<div id="customizing" class="section level2">
-<h2>Customizing</h2>
-<p>We see that the package’s DESCRIPTION is filled with default values.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;DESCRIPTION&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+</div></div>
+<div class="sect2">
+<h3 id="_customizing">Customizing</h3>
+<div class="paragraph"><p>We see that the package&#8217;s DESCRIPTION is filled with default values.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"DESCRIPTION"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## Package: myFirstPackage
 ## Title: What it Does (One Line, Title Case)
 ## Version: 0.1.0
 ## Authors@R:
-##     person(given = &quot;Andreas Dominik&quot;,
-##            family = &quot;Cullmann&quot;,
-##            role = c(&quot;aut&quot;, &quot;cre&quot;),
-##            email = &quot;fvafrcu@mailbox.org&quot;)
+##     person(given = "Andreas Dominik",
+##            family = "Cullmann",
+##            role = c("aut", "cre"),
+##            email = "fvafrcu@mailbox.org")
 ## Description: What the package does (one paragraph).
 ## License: BSD_2_clause + file LICENSE
 ## URL: https://gitlab.com/fvafrcu/myFirstPackage
 ## Depends:
 ##     R (&gt;= 4.1.0)
-## Suggests: 
+## Suggests:
 ##     knitr,
 ##     rmarkdown,
 ##     pkgload,
@@ -466,39 +951,61 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ##     RUnit,
 ##     devtools,
 ##     rprojroot
-## VignetteBuilder: 
+## VignetteBuilder:
 ##     knitr
 ## Encoding: UTF-8
 ## LazyData: true
 ## Roxygen: list(markdown = TRUE)
 ## RoxygenNote: 7.1.1</code></pre>
-<p>We could set the package information on the existing package, but we rather create a new one now. So we get rid of our first package</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">unlink</span>(path, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="cf">if</span> (<span class="st">&quot;myFirstPackage&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">.packages</span>()) <span class="kw">detach</span>(<span class="st">&quot;package:myFirstPackage&quot;</span>, </a>
-<a class="sourceLine" id="cb17-3" title="3">                                              <span class="dt">unload =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p>and customize the package creation (but we skip the process of testing, building and checking for the sake of CPU time, we just build the docs):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">package_title &lt;-<span class="st"> &quot;veryImportantPackage&quot;</span></a>
-<a class="sourceLine" id="cb18-2" title="2">path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), package_title)</a>
-<a class="sourceLine" id="cb18-3" title="3">a  &lt;-<span class="st"> </span>utils<span class="op">::</span><span class="kw">person</span>(<span class="dt">given =</span> <span class="st">&quot;Your&quot;</span>, <span class="dt">family =</span> <span class="st">&quot;Name&quot;</span>, <span class="dt">email =</span> <span class="st">&quot;some@whe.re&quot;</span>, </a>
-<a class="sourceLine" id="cb18-4" title="4">                    <span class="dt">role =</span> <span class="kw">c</span>(<span class="st">&quot;aut&quot;</span>, <span class="st">&quot;cre&quot;</span>))</a>
-<a class="sourceLine" id="cb18-5" title="5">packager<span class="op">::</span><span class="kw">create</span>(path, <span class="dt">author_at_r =</span> a, <span class="dt">title =</span> package_title,</a>
-<a class="sourceLine" id="cb18-6" title="6">                 <span class="dt">description =</span> <span class="st">&quot;This is very important.&quot;</span>,</a>
-<a class="sourceLine" id="cb18-7" title="7">                 <span class="dt">details =</span> <span class="st">&quot;At least to me.&quot;</span>, <span class="dt">fakemake =</span> <span class="st">&quot;roxygen2&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;DESCRIPTION&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>We could set the package information on the existing package, but we rather create a
+new one now.
+So we get rid of our first package</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>unlink(path, recursive = TRUE)
+<span style="font-weight: bold"><span style="color: #0000FF">if</span></span> (<span style="color: #FF0000">"myFirstPackage"</span> <span style="color: #990000">%in%</span> .packages()) detach(<span style="color: #FF0000">"package:myFirstPackage"</span>,
+                                              unload = TRUE)</tt></pre></div></div>
+<div class="paragraph"><p>and customize the package creation
+(but we skip the process of testing, building and checking for the sake of CPU
+ time, we just build the docs):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>package_title &lt;- <span style="color: #FF0000">"veryImportantPackage"</span>
+path &lt;- file.path(tempdir(), package_title)
+a  &lt;- utils::person(given = <span style="color: #FF0000">"Your"</span>, family = <span style="color: #FF0000">"Name"</span>, email = <span style="color: #FF0000">"some@whe.re"</span>,
+                    role = c(<span style="color: #FF0000">"aut"</span>, <span style="color: #FF0000">"cre"</span>))
+packager::create(path, author_at_r = a, title = package_title,
+                 description = <span style="color: #FF0000">"This is very important."</span>,
+                 details = <span style="color: #FF0000">"At least to me."</span>, fakemake = <span style="color: #FF0000">"roxygen2"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"DESCRIPTION"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## Package: veryImportantPackage
 ## Title: veryImportantPackage
 ## Version: 0.1.0
 ## Authors@R:
-##     person(given = &quot;Your&quot;,
-##            family = &quot;Name&quot;,
-##            role = c(&quot;aut&quot;, &quot;cre&quot;),
-##            email = &quot;some@whe.re&quot;)
+##     person(given = "Your",
+##            family = "Name",
+##            role = c("aut", "cre"),
+##            email = "some@whe.re")
 ## Description: This is very important.
 ## License: BSD_2_clause + file LICENSE
 ## URL: https://gitlab.com/fvafrcu/veryImportantPackage
 ## Depends:
 ##     R (&gt;= 4.1.0)
-## Suggests: 
+## Suggests:
 ##     knitr,
 ##     rmarkdown,
 ##     pkgload,
@@ -506,47 +1013,75 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ##     RUnit,
 ##     devtools,
 ##     rprojroot
-## VignetteBuilder: 
+## VignetteBuilder:
 ##     knitr
 ## Encoding: UTF-8
 ## LazyData: true
 ## Roxygen: list(markdown = TRUE)
 ## RoxygenNote: 7.1.1</code></pre>
-<p>The package’s man page is set up accordingly:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">pkgload<span class="op">::</span><span class="kw">load_all</span>(path)</a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="kw">help</span>(<span class="kw">paste0</span>(package_title, <span class="st">&quot;-package&quot;</span>))</a></code></pre></div>
-<pre><code>## Loading veryImportantPackage</code></pre>
+</div></div>
+<div class="paragraph"><p>The package&#8217;s man page is set up accordingly:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>pkgload::load_all(path)
+help(paste0(package_title, <span style="color: #FF0000">"-package"</span>))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Loading veryImportantPackage</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## veryImportantPackage
-## 
+##
 ## Description:
-## 
+##
 ##      This is very important.
-## 
+##
 ## Details:
-## 
+##
 ##      You will find the details in
-##      'vignette(&quot;An_Introduction_to_veryImportantPackage&quot;, package =
-##      &quot;veryImportantPackage&quot;)'.</code></pre>
-<p>I use</p>
-<pre><code>adc &lt;- utils::person(given = &quot;Andreas Dominik&quot;,
-                      family = &quot;Cullmann&quot;,
-                      email = &quot;fvafrcu@mailbox.org&quot;,
-                      role = c(&quot;aut&quot;, &quot;cre&quot;))
-pop &lt;- as.list(getOption(&quot;packager&quot;))
-pop[[&quot;whoami&quot;]] &lt;- adc
-options(packager = pop)
-</code></pre>
-<p>in one of my startup files to set the author information globally.</p>
+##      'vignette("An_Introduction_to_veryImportantPackage", package =
+##      "veryImportantPackage")'.</code></pre>
+</div></div>
+<div class="paragraph"><p>I use</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>adc &lt;- utils::person(given = <span style="color: #FF0000">"Andreas Dominik"</span>,
+                      family = <span style="color: #FF0000">"Cullmann"</span>,
+                      email = <span style="color: #FF0000">"fvafrcu@mailbox.org"</span>,
+                      role = c(<span style="color: #FF0000">"aut"</span>, <span style="color: #FF0000">"cre"</span>))
+pop &lt;- as.list(getOption(<span style="color: #FF0000">"packager"</span>))
+pop[[<span style="color: #FF0000">"whoami"</span>]] &lt;- adc
+options(packager = pop)</tt></pre></div></div>
+<div class="paragraph"><p>in one of my startup files to set the author information globally.</p></div>
 </div>
 </div>
-<div id="maintaining-packages-using-fakemake" class="section level1">
-<h1>Maintaining Packages Using <a href="https://CRAN.R-project.org/package=fakemake"><code>fakemake</code></a></h1>
-<p>Our brand new package veryImportantPackage is checked into git already:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">r &lt;-<span class="st"> </span>git2r<span class="op">::</span><span class="kw">repository</span>(path)</a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="kw">summary</span>(r)</a></code></pre></div>
-<pre><code>## Local:    master /tmp/RtmpLil5sg/veryImportantPackage
-## Head:     [1dbff3b] 2020-11-16: Packager Changes
-## 
+</div>
+<div class="sect1">
+<h2 id="_maintaining_packages_using_a_href_https_cran_r_project_org_package_fakemake_code_fakemake_code_a">Maintaining Packages Using <a href="https://CRAN.R-project.org/package=fakemake"><code>fakemake</code></a></h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Our brand new package veryImportantPackage is checked into git already:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>r &lt;- git2r::repository(path)
+summary(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## Local:    master /tmp/Rtmpis8C5k/veryImportantPackage
+## Head:     [f29b73b] 2020-12-02: Packager Changes
+##
 ## Branches:         1
 ## Tags:             0
 ## Commits:         16
@@ -556,55 +1091,101 @@ options(packager = pop)
 ## Untracked files:  0
 ## Unstaged files:   0
 ## Staged files:     0
-## 
+##
 ## Latest commits:
-## [1dbff3b] 2020-11-16: Packager Changes
-## [91e8151] 2020-11-16: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [3d7c090] 2020-11-16: Adding `make.R` from template `make.R` of package` packager`.
-## [ef7ffba] 2020-11-16: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [e8ce92a] 2020-11-16: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+## [f29b73b] 2020-12-02: Packager Changes
+## [4136c89] 2020-12-02: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [03f4ec4] 2020-12-02: Adding `make.R` from template `make.R` of package` packager`.
+## [d73f2a5] 2020-12-02: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [ecc8d0e] 2020-12-02: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>git2r::status(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## working directory clean</code></pre>
-<p>but we have so far only built the documentation from the <code>roxygen</code> comments:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">list.files</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>))</a></code></pre></div>
-<pre><code>## [1] &quot;roxygen2.Rout&quot;</code></pre>
-<p>So we get a <code>makelist</code> and look at its targets and aliases:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">ml &lt;-<span class="st"> </span>packager<span class="op">::</span><span class="kw">get_package_makelist</span>(<span class="dt">is_cran =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb31-2" title="2"><span class="kw">cbind</span>(<span class="kw">lapply</span>(ml, <span class="cf">function</span>(x) x[[<span class="st">&quot;target&quot;</span>]]),</a>
-<a class="sourceLine" id="cb31-3" title="3">      <span class="kw">lapply</span>(ml, <span class="cf">function</span>(x) x[[<span class="st">&quot;alias&quot;</span>]]))</a></code></pre></div>
-<pre><code>##       [,1]                                               [,2]           
-##  [1,] &quot;log/roxygen2.Rout&quot;                                &quot;roxygen2&quot;     
-##  [2,] &quot;log/spell.Rout&quot;                                   &quot;spell&quot;        
-##  [3,] &quot;log/cleanr.Rout&quot;                                  &quot;cleanr&quot;       
-##  [4,] &quot;log/lintr.Rout&quot;                                   &quot;lint&quot;         
-##  [5,] &quot;log/covr.Rout&quot;                                    &quot;covr&quot;         
-##  [6,] &quot;packager::get_pkg_archive_path(absolute = FALSE)&quot; &quot;build&quot;        
-##  [7,] &quot;log/check.Rout&quot;                                   &quot;check&quot;        
-##  [8,] &quot;.log.Rout&quot;                                        &quot;.log&quot;         
-##  [9,] &quot;log/testthat.Rout&quot;                                &quot;testthat&quot;     
-## [10,] &quot;log/vignettes.Rout&quot;                               &quot;vignettes&quot;    
-## [11,] &quot;log/codetags.Rout&quot;                                &quot;codetags&quot;     
-## [12,] &quot;log/news.Rout&quot;                                    &quot;news&quot;         
-## [13,] &quot;log/usage.Rout&quot;                                   &quot;usage&quot;        
-## [14,] &quot;log/winbuilder.Rout&quot;                              &quot;winbuilder&quot;   
-## [15,] &quot;log/cran_comments.Rout&quot;                           &quot;cran_comments&quot;
-## [16,] &quot;log/check_as_cran.Rout&quot;                           &quot;check_as_cran&quot;
-## [17,] &quot;log/submit.Rout&quot;                                  &quot;submit&quot;</code></pre>
-<div id="building-the-package" class="section level2">
-<h2>Building the Package</h2>
-<p>We choose to build the package:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">suppressMessages</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, </a>
-<a class="sourceLine" id="cb33-2" title="2">                                  <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;build&quot;</span>, ml, </a>
-<a class="sourceLine" id="cb33-3" title="3">                                                       <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
-<pre><code>## Warning in eval(parse(text = make_list[[index]][[&quot;code&quot;]])): 
-## Spell check failed, see /tmp/RtmpLil5sg/veryImportantPackage/log/spell.Rout for details.</code></pre>
-<pre><code>##  [1] &quot;log/cleanr.Rout&quot;                   &quot;log/codetags.Rout&quot;                
-##  [3] &quot;log/covr.Rout&quot;                     &quot;log/lintr.Rout&quot;                   
-##  [5] &quot;log/news.Rout&quot;                     &quot;log/spell.Rout&quot;                   
-##  [7] &quot;log/testthat.Rout&quot;                 &quot;log/usage.Rout&quot;                   
-##  [9] &quot;log/vignettes.Rout&quot;                &quot;veryImportantPackage_0.1.0.tar.gz&quot;</code></pre>
-<p>We note the warning</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">cat</span>(git2r<span class="op">::</span><span class="kw">diff</span>(r, <span class="dt">as_char =</span> <span class="ot">TRUE</span>, <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">&quot;.Rbuildignore&quot;</span>)))</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>but we have so far only built the documentation from the <code>roxygen</code> comments:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>list.files(file.path(path, <span style="color: #FF0000">"log"</span>))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [1] "roxygen2.Rout"</code></pre>
+</div></div>
+<div class="paragraph"><p>So we get a <code>makelist</code> and look at its targets and aliases:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>ml &lt;- packager::get_package_makelist(is_cran = TRUE)
+cbind(lapply(ml, function(x) x[[<span style="color: #FF0000">"target"</span>]]),
+      lapply(ml, function(x) x[[<span style="color: #FF0000">"alias"</span>]]))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>##       [,1]                                               [,2]
+##  [1,] "log/roxygen2.Rout"                                "roxygen2"
+##  [2,] "log/spell.Rout"                                   "spell"
+##  [3,] "log/cleanr.Rout"                                  "cleanr"
+##  [4,] "log/lintr.Rout"                                   "lint"
+##  [5,] "log/covr.Rout"                                    "covr"
+##  [6,] "packager::get_pkg_archive_path(absolute = FALSE)" "build"
+##  [7,] "log/check.Rout"                                   "check"
+##  [8,] ".log.Rout"                                        ".log"
+##  [9,] "log/testthat.Rout"                                "testthat"
+## [10,] "log/vignettes.Rout"                               "vignettes"
+## [11,] "log/codetags.Rout"                                "codetags"
+## [12,] "log/news.Rout"                                    "news"
+## [13,] "log/usage.Rout"                                   "usage"
+## [14,] "log/winbuilder.Rout"                              "winbuilder"
+## [15,] "log/cran_comments.Rout"                           "cran_comments"
+## [16,] "log/check_as_cran.Rout"                           "check_as_cran"
+## [17,] "log/submit.Rout"                                  "submit"</code></pre>
+</div></div>
+<div class="sect2">
+<h3 id="_building_the_package">Building the Package</h3>
+<div class="paragraph"><p>We choose to build the package:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>suppressMessages(withr::with_dir(path,
+                                  print(fakemake::make(<span style="color: #FF0000">"build"</span>, ml,
+                                                       verbose = FALSE))))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in eval(parse(text = make_list[[index]][["code"]])):</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/Rtmpis8C5k/veryImportantPackage/log/spell.Rout for details.</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>##  [1] "log/cleanr.Rout"                   "log/codetags.Rout"
+##  [3] "log/covr.Rout"                     "log/lintr.Rout"
+##  [5] "log/news.Rout"                     "log/spell.Rout"
+##  [7] "log/testthat.Rout"                 "log/usage.Rout"
+##  [9] "log/vignettes.Rout"                "veryImportantPackage_0.1.0.tar.gz"</code></pre>
+</div></div>
+<div class="paragraph"><p>We note the warning</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(git2r::diff(r, as_char = TRUE, path = file.path(<span style="color: #FF0000">".Rbuildignore"</span>)))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## diff --git a/.Rbuildignore b/.Rbuildignore
 ## index 869d606..60acd7f 100644
 ## --- a/.Rbuildignore
@@ -615,24 +1196,41 @@ options(packager = pop)
 ##  ^log$
 ## +^doc$
 ## +^Meta$</code></pre>
-<p>and see that now there are untracked files in our package’s log directory and that some files changed.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>and see that now there are untracked files in our package&#8217;s
+log directory and that some files changed.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>git2r::status(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## Untracked files:
-##  Untracked:  log/build.Rout
-##  Untracked:  log/cleanr.Rout
-##  Untracked:  log/codetags.Rout
-##  Untracked:  log/covr.Rout
-##  Untracked:  log/lintr.Rout
-##  Untracked:  log/news.Rout
-##  Untracked:  log/spell.Rout
-##  Untracked:  log/testthat.Rout
-##  Untracked:  log/usage.Rout
-##  Untracked:  log/vignettes.Rout
-## 
+##      Untracked:  log/build.Rout
+##      Untracked:  log/cleanr.Rout
+##      Untracked:  log/codetags.Rout
+##      Untracked:  log/covr.Rout
+##      Untracked:  log/lintr.Rout
+##      Untracked:  log/news.Rout
+##      Untracked:  log/spell.Rout
+##      Untracked:  log/testthat.Rout
+##      Untracked:  log/usage.Rout
+##      Untracked:  log/vignettes.Rout
+##
 ## Unstaged changes:
-##  Modified:   .Rbuildignore
-##  Modified:   .gitignore</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">cat</span>(<span class="kw">diff</span>(r, <span class="dt">as_char =</span> <span class="ot">TRUE</span>, <span class="dt">path =</span> <span class="st">&quot;.Rbuildignore&quot;</span>))</a></code></pre></div>
+##      Modified:   .Rbuildignore
+##      Modified:   .gitignore</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(diff(r, as_char = TRUE, path = <span style="color: #FF0000">".Rbuildignore"</span>))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## diff --git a/.Rbuildignore b/.Rbuildignore
 ## index 869d606..60acd7f 100644
 ## --- a/.Rbuildignore
@@ -643,88 +1241,194 @@ options(packager = pop)
 ##  ^log$
 ## +^doc$
 ## +^Meta$</code></pre>
-<p>After inspecting the change, we commit:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb42-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make build&quot;</span>))</a></code></pre></div>
-<pre><code>## [3514782] 2020-11-16: make build</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>After inspecting the change, we commit:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>withr::with_dir(path, packager::git_add_commit(path = <span style="color: #FF0000">"."</span>, untracked = TRUE,
+                                               message = <span style="color: #FF0000">"make build"</span>))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [8a68545] 2020-12-02: make build</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>git2r::status(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## working directory clean</code></pre>
+</div></div>
 </div>
-<div id="checking-the-package" class="section level2">
-<h2>Checking the Package</h2>
-<p>So now we want the check the package:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">suppressMessages</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, </a>
-<a class="sourceLine" id="cb46-2" title="2">                                 <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;check&quot;</span>, ml, </a>
-<a class="sourceLine" id="cb46-3" title="3">                                                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
-<pre><code>## [1] &quot;log/cleanr.Rout&quot;                   &quot;log/covr.Rout&quot;                    
-## [3] &quot;log/lintr.Rout&quot;                    &quot;log/testthat.Rout&quot;                
-## [5] &quot;veryImportantPackage_0.1.0.tar.gz&quot; &quot;log/check.Rout&quot;</code></pre>
-<p>We again see new files and changes to old files.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+<div class="sect2">
+<h3 id="_checking_the_package">Checking the Package</h3>
+<div class="paragraph"><p>So now we want the check the package:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>suppressMessages(withr::with_dir(path,
+                                 print(fakemake::make(<span style="color: #FF0000">"check"</span>, ml,
+                                                      verbose = FALSE))))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [1] "log/cleanr.Rout"                   "log/covr.Rout"
+## [3] "log/lintr.Rout"                    "log/testthat.Rout"
+## [5] "veryImportantPackage_0.1.0.tar.gz" "log/check.Rout"</code></pre>
+</div></div>
+<div class="paragraph"><p>We again see new files and changes to old files.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>git2r::status(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## Untracked files:
-##  Untracked:  log/check.Rout
-## 
+##      Untracked:  log/check.Rout
+##
 ## Unstaged changes:
-##  Modified:   log/testthat.Rout</code></pre>
-<p>Note that the <code>RUnit</code> test files are run while checking the tarball, hence we see output from <code>RUnit</code> in our log directory.</p>
-<p>We assume that we passed the check:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">cat</span>(<span class="kw">tail</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)), <span class="dt">n =</span> <span class="dv">7</span>), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
-<pre><code>## 
+##      Modified:   log/build.Rout
+##      Modified:   log/lintr.Rout</code></pre>
+</div></div>
+<div class="paragraph"><p>Note that the <code>RUnit</code> test files are run while checking the tarball, hence we
+see output from <code>RUnit</code> in our log directory.</p></div>
+<div class="paragraph"><p>We assume that we passed the check:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(tail(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)), n = 7), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>##
 ## Status: 1 WARNING
 ## See
-##   ‘/tmp/RtmpLil5sg/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
+##   ‘/tmp/Rtmpis8C5k/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
 ## for details.</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">check_log &lt;-<span class="st"> </span><span class="kw">file.path</span>(path, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;check.Rout&quot;</span>)</a>
-<a class="sourceLine" id="cb52-2" title="2">status &lt;-<span class="st"> </span>packager<span class="op">::</span><span class="kw">get_check_status</span>(check_log)</a>
-<a class="sourceLine" id="cb52-3" title="3">RUnit<span class="op">::</span><span class="kw">checkEqualsNumeric</span>(status[[<span class="st">&quot;status&quot;</span>]][[<span class="st">&quot;errors&quot;</span>]], <span class="dv">0</span>)</a></code></pre></div>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>check_log &lt;- file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)
+status &lt;- packager::get_check_status(check_log)
+RUnit::checkEqualsNumeric(status[[<span style="color: #FF0000">"status"</span>]][[<span style="color: #FF0000">"errors"</span>]], 0)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## [1] TRUE</code></pre>
-<p>and commit again</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">untracked =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb54-2" title="2">                                               <span class="dt">message =</span> <span class="st">&quot;make check&quot;</span>))</a></code></pre></div>
-<pre><code>## [49d9c25] 2020-11-16: make check</code></pre>
-<p>If we choose to rerun the check without touching any files “down the make chain” (i.e. no files that any of our make targets depend on), we see there’s nothing to be done:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">system.time</span>(withr<span class="op">::</span><span class="kw">with_dir</span>(path, <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;check&quot;</span>, ml, <span class="dt">verbose =</span> <span class="ot">FALSE</span>))))</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>and commit again</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>withr::with_dir(path, packager::git_add_commit(path = <span style="color: #FF0000">"."</span>, untracked = TRUE,
+                                               message = <span style="color: #FF0000">"make check"</span>))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [6085b78] 2020-12-02: make check</code></pre>
+</div></div>
+<div class="paragraph"><p>If we choose to rerun the check without touching any files "down the make chain" (i.e. no files that any of our make targets depend on), we see there&#8217;s nothing to be done:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>system.time(withr::with_dir(path, print(fakemake::make(<span style="color: #FF0000">"check"</span>, ml, verbose = FALSE))))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## NULL</code></pre>
-<pre><code>##    user  system elapsed 
-##   0.551   0.000   0.553</code></pre>
-<p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <strong>This is why I wrote <code>packager</code> and <code>fakemake</code>.</strong></p>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>##    user  system elapsed
+##   0.568   0.004   0.573</code></pre>
+</div></div>
+<div class="paragraph"><p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and
+running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <em>This is why I wrote <code>packager</code> and <code>fakemake</code>.</em></p></div>
 </div>
-<div id="submitting-the-package" class="section level2">
-<h2>Submitting the Package</h2>
-<p>Now we would like to submit our package to <a href="https://cran.r-project.org/">CRAN</a> (which we will not do here, but we want to!) We provide comments to <a href="https://cran.r-project.org/">CRAN</a>:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">withr<span class="op">::</span><span class="kw">with_dir</span>(path, <span class="kw">print</span>(fakemake<span class="op">::</span><span class="kw">make</span>(<span class="st">&quot;cran_comments&quot;</span>, ml, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)))</a></code></pre></div>
-<pre><code>## R CMD check results</code></pre>
-<pre><code>## 0 errors | 1 warning  | 0 notes</code></pre>
-<pre><code>## Warning in get_gitlab_info(path = path, private_token = private_token): You need
-## a private token to access gitlab.</code></pre>
-<pre><code>## [1] &quot;log/cran_comments.Rout&quot;</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;cran-comments.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sect2">
+<h3 id="_submitting_the_package">Submitting the Package</h3>
+<div class="paragraph"><p>Now we would like to submit our package to <a href="https://cran.r-project.org/">CRAN</a> (which we will not do here, but we want to!)
+We provide comments to <a href="https://cran.r-project.org/">CRAN</a>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>withr::with_dir(path, print(fakemake::make(<span style="color: #FF0000">"cran_comments"</span>, ml, verbose = FALSE)))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## R CMD check results</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## 0 errors | 1 warning  | 0 notes</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in get_gitlab_info(path = path, private_token = private_token): You need</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">## a private token to access gitlab.</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [1] "log/cran_comments.Rout"</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"cran-comments.md"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## Dear CRAN Team,
 ## this is a resubmission of package 'veryImportantPackage'. I have added the following changes:
-## 
+##
 ## * Added a `NEWS.md` file to track changes to the package.
-## 
-## 
+##
+##
 ## Please upload to CRAN.
 ## Best, Your
-## 
+##
 ## # Package veryImportantPackage 0.1.0
-## 
-## Reporting is done by packager version 1.7.0
-## 
-## ## Test  environments 
-## - R Under development (unstable) (2020-09-23 r79248)
-##     Platform: x86_64-pc-linux-gnu (64-bit)
-##     Running under: Devuan GNU/Linux 3 (beowulf)
-##     NA
+##
+## Reporting is done by packager version 1.8.0
+##
+##
+## ## Test environments
+## - R Under development (unstable) (2020-11-20 r79451)
+##    Platform: x86_64-pc-linux-gnu (64-bit)
+##    Running under: Devuan GNU/Linux 3 (beowulf)
+##    NA
 ## - win-builder (devel)
-## 
+##
 ## ## Local test results
 ## - Testthat:
-##     OK: 1, Failed: 0, Warnings: 1, Skipped: 0
+##
 ## - Coverage by covr:
-##     
-## 
+##
+##
 ## ## Local meta results
 ## - lintr:
 ##     found 1 lints in 32 lines of code (a ratio of 0.0312).
@@ -734,55 +1438,131 @@ options(packager = pop)
 ##     found 0 issues.
 ## - devtools::spell_check:
 ##     found 2 unkown words.</code></pre>
-<p>After editing the contents we feel ready to submit:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">try</span>(packager<span class="op">::</span><span class="kw">submit</span>(path))</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>After editing the contents we feel ready to submit:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>try(packager::submit(path))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## Error in packager::submit(path) : You have uncommitted changes.</code></pre>
-<p>Oops: we need to commit git first:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">packager<span class="op">::</span><span class="kw">git_add_commit</span>(<span class="dt">path =</span> path, <span class="dt">untracked =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb68-2" title="2">                         <span class="dt">message =</span> <span class="st">&quot;prepare for CRAN&quot;</span>)</a></code></pre></div>
-<pre><code>## [4d7fdc7] 2020-11-16: prepare for CRAN</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">git2r<span class="op">::</span><span class="kw">status</span>(r)</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>Oops: we need to commit git first:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>packager::git_add_commit(path = path, untracked = TRUE,
+                         message = <span style="color: #FF0000">"prepare for CRAN"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [3169858] 2020-12-02: prepare for CRAN</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>git2r::status(r)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## working directory clean</code></pre>
-<p>Now we try and fail again, because this vignette is built in batch mode and there’s a security query which then fails:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw">try</span>(packager<span class="op">::</span><span class="kw">submit</span>(path))</a></code></pre></div>
-<pre><code>## Warning in packager::submit(path): You have no upstream!</code></pre>
+</div></div>
+<div class="paragraph"><p>Now we try and fail again, because this vignette is built in batch mode
+and there&#8217;s a security query which then fails:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>try(packager::submit(path))</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in packager::submit(path): You have no upstream!</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## Ready to submit?Error in utils::menu(qs[rand]) : menu() cannot be used non-interactively</code></pre>
-<p>Should you run this code interactively, you will be prompted for the security query (as you might be used from <code>devtools::release()</code>). Best you know <a href="https://cran.r-project.org/doc/manuals/R-exts.html">how to write R extensions</a> and <a href="https://cran.r-project.org/web/packages/policies.html">the CRAN policies</a>.</p>
-<p>Anyway, we might want to tag the current commit and commence developing our package:</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">packager<span class="op">::</span><span class="kw">git_tag</span>(<span class="dt">path =</span> path, <span class="dt">message =</span> <span class="st">&quot;A Tag&quot;</span>)</a></code></pre></div>
-<pre><code>## [4d7fdc] 0.1.0</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">packager<span class="op">::</span><span class="kw">use_dev_version</span>(<span class="dt">path =</span> path)</a></code></pre></div>
-<pre><code>## Package version bumped from '0.1.0' to '0.1.0.9000'</code></pre>
-<pre><code>## [ad44e97] 2020-11-16: Using Developement Version</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">desc<span class="op">::</span><span class="kw">desc_get</span>(<span class="st">&quot;Version&quot;</span>, <span class="dt">file =</span> path)</a></code></pre></div>
-<pre><code>##      Version 
-## &quot;0.1.0.9000&quot;</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;NEWS.md&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+</div></div>
+<div class="paragraph"><p>Should you run this code interactively, you will be prompted for the security query
+(as you might be used from <code>devtools::release()</code>).
+Best you know <a href="https://cran.r-project.org/doc/manuals/R-exts.html">how to write R extensions</a> and
+<a href="https://cran.r-project.org/web/packages/policies.html">the CRAN policies</a>.</p></div>
+<div class="paragraph"><p>Anyway, we might want to tag the current commit and commence developing our package:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>packager::git_tag(path = path, message = <span style="color: #FF0000">"A Tag"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [316985] 0.1.0</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>packager::use_dev_version(path = path)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Package version bumped from '0.1.0' to '0.1.0.9000'</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>## [c5b9140] 2020-12-02: Using Developement Version</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>desc::desc_get(<span style="color: #FF0000">"Version"</span>, file = path)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>##      Version
+## "0.1.0.9000"</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"NEWS.md"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="listingblock">
+<div class="content">
 <pre><code>## # veryImportantPackage 0.1.0.9000
-## 
+##
 ## * FIXME
-## 
+##
 ## # veryImportantPackage 0.1.0
-## 
+##
 ## * Added a `NEWS.md` file to track changes to the package.</code></pre>
-<p>This is close to the workflow I have been using for most of my packages, substituting <a href="https://CRAN.R-project.org/package=fakemake"><code>fakemake</code></a> with <a href="https://www.gnu.org/software/make/">GNU make</a> whenever possible.</p>
+</div></div>
+<div class="paragraph"><p>This is close to the workflow I have been using for most of my packages,
+substituting <a href="https://CRAN.R-project.org/package=fakemake"><code>fakemake</code></a>
+with <a href="https://www.gnu.org/software/make/">GNU make</a> whenever possible.</p></div>
 </div>
 </div>
-
-
-
-<!-- code folding -->
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated
+ 2020-12-02 13:30:46 CET
+</div>
+</div>
 </body>
 </html>

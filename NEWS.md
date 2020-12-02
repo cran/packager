@@ -1,3 +1,19 @@
+# packager 1.8.0
+* Added `rhub` checks.  
+  New internal functions
+    - `check_rhub()` to trigger checks on rhub for solaris and windows --
+       given that you've configured `rhub`.
+    - `get_rhub_latest()` to read summaries from rhub
+    - `get_local_rhub()` which is called by `provide_cran_comments()` to read 
+       output from `get_rhub_latest()` that was written to log/rhub.(log|Rout).  
+    So the workflow is
+    1. trigger rhub checks
+    1. wait a while
+    1. read summaries from rhub and save them to log/rhub.(log|Rout)
+    1. run `provide_cran_comments()` which will then incorporate the rhub check log.
+* Fixed number of `cleanr` issues reported by `provide_cran_comments()`.
+* Updated vignette to `rasciidoc`, which provides a fancy floating table of contents.
+
 # packager 1.7.0
 
 * Added argument `stop_on_devel = TRUE` to `submit()` that enables a check on 

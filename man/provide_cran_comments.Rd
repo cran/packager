@@ -15,8 +15,9 @@ provide_cran_comments(
 )
 }
 \arguments{
-\item{check_log}{Path to the check log relative to \code{path}. Typically
-file.path("log", "check.Rout").}
+\item{check_log}{Deprecated, will be removed in a future release. 
+The local R CMD check log is now supposed to live be
+`log/check.(log|Rout)`.}
 
 \item{path}{Path to the package directory (see
 \code{\link[devtools:as.package]{devtools::as.package}}).}
@@ -60,7 +61,7 @@ if (Sys.info()[["nodename"]] == "fvafrdebianCU") {
 } else {
     gitlab_token <- readLines(file.path("~", ".gitlab_private_token.txt"))
     comments <- provide_cran_comments(path = ".",
-                                      write_to_file = TRUE,
+                                      write_to_file = TRUE)#,
                                       private_token = gitlab_token)
 }
 cat(comments, sep = "")

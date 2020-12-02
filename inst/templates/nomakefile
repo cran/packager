@@ -3,8 +3,6 @@
 
 R = R-devel
 Rscript = Rscript-devel
-Rscript_release = Rscript-release
-R_release = R-release
 
 PKGNAME = $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
 PKGVERS = $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
@@ -32,25 +30,21 @@ tag_release:
 
 .PHONY: force_submit
 force_submit:  
-	$(R_release) -e "packager::submit(force = TRUE)"
+	$(R) -e "packager::submit(force = TRUE)"
 
 .PHONY: submit
 submit: 
 	echo "try(packager::submit(force = FALSE)); quit(save = \"no\")" > /tmp/rel.R
 	echo "source('/tmp/rel.R')" > ./.Rprofile
-	$(R_release)
+	$(R)
 	rm /tmp/rel.R ./.Rprofile
 
 .PHONY: dev_release
 dev_release: 
 	echo "library('utils'); devtools::release(check = FALSE)" > /tmp/rel.R
 	echo "source('/tmp/rel.R')" > ./.Rprofile
-	$(R_release)
+	$(R)
 	rm /tmp/rel.R ./.Rprofile
-
-.PHONY: rhub
-rhub:
-	$(Rscript_release) --vanilla -e 'rhub::check(path = ".", platform = "windows-x86_64-release")'
 
 .PHONY: build_win
 build_win:
@@ -85,7 +79,7 @@ $(PKGNAME)_$(PKGVERS).tar.gz: NEWS.md README.md DESCRIPTION LICENSE \
 	$(LOG_DIR)/testthat.log $(LOG_DIR)/covr.log $(LOG_DIR)/cleanr.log \
 	$(LOG_DIR)/lintr.log $(LOG_DIR)/cyclocomp.log $(LOG_DIR)/vignettes.log \
 	$(LOG_DIR)/usage.log 
-	$(R_release) --vanilla CMD build $(PKGSRC) > $(LOG_DIR)/build.log 2>&1 
+	$(R) --vanilla CMD build $(PKGSRC) > $(LOG_DIR)/build.log 2>&1 
 
 .PHONY: vignettes
 vignettes: $(LOG_DIR)/vignettes.log
@@ -124,8 +118,7 @@ remove:
 .PHONY: dev_install
 dev_install: $(LOG_DIR)/dev_install.log
 $(LOG_DIR)/dev_install.log: $(R_FILES)
-	$(Rscript) --vanilla -e 'devtools::install(pkg = ".", dependencies = FALSE)' > $(LOG_DIR)/dev_install.log 2>&1; \
-		$(Rscript_release) --vanilla -e 'devtools::install(pkg = ".", dependencies = FALSE)' >> $(LOG_DIR)/dev_install.log 2>&1
+	$(Rscript) --vanilla -e 'devtools::install(pkg = ".", dependencies = FALSE)' > $(LOG_DIR)/dev_install.log 2>&1; 
 
 
 .PHONY: viz
@@ -184,3 +177,14 @@ $(LOG_DIR)/spell.log: .log.log DESCRIPTION $(LOG_DIR)/roxygen2.log $(MAN_FILES) 
 cyclocomp: $(LOG_DIR)/cyclocomp.log
 $(LOG_DIR)/cyclocomp.log: .log.log $(LOG_DIR)/dependencies.log $(R_FILES)
 	$(Rscript) --vanilla -e 'tryCatch(print(packager::check_cyclomatic_complexity()), error = identity)' > $(LOG_DIR)/cyclocomp.log 2>&1 
+
+.PHONY: rhub_check
+rhub_check: $(LOG_DIR)/rhub_check.log
+$(LOG_DIR)/rhub_check.log: .log.log log/check.log 
+	$(Rscript) --vanilla -e 'res <- packager:::check_rhub(path = ".")' > $(LOG_DIR)/rhub_check.log 2>&1 
+
+.PHONY: rhub
+rhub: $(LOG_DIR)/rhub.log
+.PHONY: $(LOG_DIR)/rhub.log
+$(LOG_DIR)/rhub.log: .log.log $(LOG_DIR)/rhub_check.log
+	$(Rscript) --vanilla -e 'tryCatch(cat(capture.output(print(packager:::get_rhub_latest("."))), sep = "\n"), error = identity)' > $(LOG_DIR)/rhub.log 2>&1 
