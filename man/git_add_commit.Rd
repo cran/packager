@@ -7,8 +7,7 @@
 git_add_commit(
   path,
   message = "Uncommented Changes: Backing Up",
-  untracked = FALSE,
-  ...
+  untracked = FALSE
 )
 }
 \arguments{
@@ -17,11 +16,10 @@ git_add_commit(
 \item{message}{The commit message to use.}
 
 \item{untracked}{Add files not tracked yet before committing?}
-
-\item{...}{Arguments passed to \code{\link[git2r:status]{git2r::status}}.}
 }
 \value{
-The return value of \code{\link[git2r:commit]{git2r::commit}}.
+The return value of
+\code{\link[gert:git_commit_all]{gert::git_commit_all}}.
 }
 \description{
 Much like \command{git commit -am"M"}, where \command{M} is the

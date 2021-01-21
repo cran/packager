@@ -1,5 +1,5 @@
 ## convert vignettes from Rmd to rasciidoc
-rmd2rasciidoc <- function(in_file, 
+rmd2rasciidoc <- function(in_file,
                              out_file = sub("\\.Rmd$", ".Rasciidoc", in_file)) {
     if (file.exists(in_file)) {
         lines <- readLines(in_file)
@@ -12,7 +12,7 @@ rmd2rasciidoc <- function(in_file,
         body <- convert_code_blocks(body)
 
         code_block_starts <- grep("^//begin\\.rcode.*$", body)
-        code_block_stops <- grep("^//end\\.rcode.*$", body) 
+        code_block_stops <- grep("^//end\\.rcode.*$", body)
         rcode_block_index <- unlist(apply(cbind(code_block_starts, code_block_stops), 1, function(x) seq(x[1], x[2])))
 
         body <- convert_links(body)
@@ -34,7 +34,7 @@ rmd2rasciidoc <- function(in_file,
     }
     return(invisible(out_file))
 }
-convert_vignette <- function(in_file, 
+convert_vignette <- function(in_file,
                              out_file = sub("\\.Rmd$", ".Rasciidoc", in_file)) {
     res <- FALSE
     if (file.exists(in_file)) {
@@ -56,10 +56,10 @@ convert_package_vignettes <- function(path) {
     }
     add_desc_package(path, "Suggests", "rasciidoc")
     desc::desc_set("VignetteBuilder" = vignette_builder, file = path)
-    markdown_vignettes <- dir(file.path(path, "vignettes"), 
+    markdown_vignettes <- dir(file.path(path, "vignettes"),
                               full.names = TRUE,
                               pattern = ".*\\.Rmd$")
-    for (markdown_vignette in markdown_vignettes) 
+    for (markdown_vignette in markdown_vignettes)
         convert_vignette(markdown_vignette)
 }
 # helper functions
@@ -73,13 +73,13 @@ convert_sections <- function(lines) {
     return(l)
 }
 
-convert_code_blocks <- function(lines) 
-    sub("^```$", "//end.rcode", 
+convert_code_blocks <- function(lines)
+    sub("^```$", "//end.rcode",
         sub("^``` *\\{r(.*)\\}", "//begin.rcode\\1", lines))
 convert_title <- function(lines) {
     line <- grep("^title:", lines, value = TRUE)
-    line <- paste("=", sub("^\"", "", 
-                           sub("\"$", "", 
+    line <- paste("=", sub("^\"", "",
+                           sub("\"$", "",
                                sub("^title: *(.*)", "\\1", line))))
     return(line)
 }

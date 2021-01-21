@@ -17,7 +17,7 @@ submit <- function(path = ".", stop_on_git = TRUE, stop_on_devel = TRUE,
     if (uses_git(path) && isTRUE(stop_on_git)) {
         if (is_git_uncommitted(path = path) )
             throw("You have uncommitted changes.")
-        if (is.null(get_git_upstream(path))) {
+        if (is.na(get_git_upstream(path))) {
             warning("You have no upstream!")
         } else {
             if (! git_sync_status(path = path))
@@ -37,12 +37,11 @@ submit <- function(path = ".", stop_on_git = TRUE, stop_on_devel = TRUE,
         upload_cran(pkg = path, built_path = built_path,
                     cran_submission_url = csu)
         if (uses_git(path)) {
-            r <- git2r::repository(path = path)
-            m <- paste0("- Tag commit ", git2r::reflog(r)[[1]][["sha"]],
+            m <- paste0("- Tag commit ", get_git_commit(path = path),
                        " as ", desc::desc_get_version(),
                        ", once package is on CRAN using", "\n\t",
                        "git tag -a ", desc::desc_get_version(), " ",
-                       git2r::reflog(r)[[1]][["sha"]], " -m 'CRAN release'"
+                       get_git_commit(path = path), " -m 'CRAN release'"
                       )
             m <- paste0(m, "\n",
                    "  and checkout the developement version using ",

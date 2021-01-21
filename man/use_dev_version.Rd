@@ -22,7 +22,7 @@ This is much like
 conventions keep changing.
 }
 \note{
-From \code{\link[usethis:use_version]{usethis::use_dev_version}}, 
+From \code{\link[usethis:use_version]{usethis::use_dev_version}},
 the name was \code{use_dev_version}, but \code{use_devel_version} seems
 more natural. But it is just a link.
 }

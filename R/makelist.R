@@ -48,10 +48,15 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
                      prerequisites = c(list_files("R")),
                      prerequisite_to = build_target)
     ml <- fat(makelist = ml, 
+                     target = file.path("log", "news_rd.Rout"),
+                     code = "print(packager::provide_news_rd())",
+                     prerequisites = file.path("log", "news.Rout"),
+                     prerequisite_to = build_target)
+    ml <- fat(makelist = ml, 
                      target = file.path("log", "news.Rout"),
                      code = "print(packager::check_news())",
                      prerequisites = c("DESCRIPTION", "NEWS.md"),
-                     prerequisite_to = build_target)
+                     prerequisite_to = file.path("log", "news_rd.Rout"))
     ml <- fat(makelist = ml, 
                      target = file.path("log", "usage.Rout"),
                      code = "print(packager::check_usage())",
@@ -61,8 +66,8 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
     ml <- fat(makelist = ml, 
               target = file.path("log", "runit.Rout"),
               code =  paste0("pkg <- packager::as.package(\".\"); ",
-                             "source(file.path(pkg[[\"path\"]], \"tests\", ",
-                             "\"runit.R\"))"),
+                             "callr::rscript(file.path(pkg[[\"path\"]],
+                             \"tests\", ", "\"runit.R\"))"),
               prerequisites = c(list_files("R"), list_files("inst"), 
                                 list_files("tests")),
               prerequisite_to = build_target)
@@ -123,10 +128,21 @@ get_basic_makelist <- function() {
                                   "recursive = TRUE), ",
                                   "value = TRUE, ",
                                   "pattern = \"^R/|^inst/|^tests/\")")
+    deps_code = paste0("packager::install_deps(path = \".\", verbose = TRUE, ",
+                       "repos = \"https://cloud.r-project.org/\");",
+                       " packager::install_deps(path = system.file(", 
+                       "\"DESCRIPTION\", package = \"packager\"),", 
+                       " verbose = TRUE,",
+                       " repos = \"https://cloud.r-project.org/\")")
     pl <- list(list(alias = "roxygen2",
                     target = file.path("log", "roxygen2.Rout"),
                     code = roxygen_code,
-                    prerequisites = list_files("R")),
+                    prerequisites = c(file.path("log", "dependencies.Rout"),
+                                      list_files("R"))),
+               list(alias= "dependencies",
+                    target = file.path("log", "dependencies.Rout"),
+                    code = deps_code,
+                    prerequisites = "DESCRIPTION"),
                list(alias = "spell",
                     target = file.path("log", "spell.Rout"),
                     code = spell_code,

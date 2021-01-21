@@ -40,8 +40,8 @@ test_use_git_ignore <- function() {
 }
 
 test_use_git <- function() {
-    expectation <- TRUE
     path <- file.path(tempdir(), "prutp")
+    expectation <- path
     dir.create(path)
     on.exit(unlink(path, recursive = TRUE))
     result <- packager:::use_git(path = path)

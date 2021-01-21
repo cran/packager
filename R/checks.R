@@ -106,15 +106,23 @@ check_news <- function(path = ".") {
 #' @family maintenance functions
 #' @export
 #' @examples
-#' dir <- system.file("templates", package = "packager")
-#' check_codetags(dir)
+#' dir <- system.file("runit_tests", package = "packager")
+#' r <- check_codetags(dir)
+#' print(r)
 check_codetags <- function(path = ".", exclude_pattern = "\\.Rcheck/",
                            include_pattern = "\\.[Rr]$|\\.[Rr]md$",
                            pattern =  "XXX:|FIXME:|TODO:") {
-    hits <- grep_directory(path = path, exclude_pattern = exclude_pattern,
-                           include_pattern = include_pattern,
-                           pattern =  pattern)
-    return(hits)
+    r <- fritools::search_files(path = path, what = pattern, 
+                                pattern = include_pattern,
+                                exclude = exclude_pattern,
+                                recursive = TRUE)
+    if (nrow(r) == 0) {
+        res <- NULL
+    } else {
+        res <- summary(r, type = "matches")
+        res <- paste(res[["file"]], res[["matches"]], sep = ": ")
+    }
+    return(res)
 }
 
 
@@ -183,13 +191,13 @@ check_archive_as_cran <- function(path) {
 #' @keywords internal
 #' @param path Path to the log file.
 #' @return A list :\describe{
-#'     \item{status}{ A list of 
+#'     \item{status}{ A list of
 #'     \describe{
 #'         \item{notes}{The number of \code{NOTE}s}
 #'         \item{warnings}{The number of \code{WARNING}s}
 #'         \item{error}{The number of \code{ERROR}s}
 #'     }}
-#'     \item{log}{A list of 
+#'     \item{log}{A list of
 #'     \describe{
 #'         \item{notes}{The log entries for \code{NOTE}s}
 #'         \item{warnings}{The log entries for \code{WARNING}s}

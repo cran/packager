@@ -7,7 +7,7 @@
 remove_lines(
   file_path = file.path(".", ".gitignore"),
   pattern,
-  overwrite = !isFALSE(getOption("packager")[["force"]])
+  overwrite = !fritools::is_false(getOption("packager")[["force"]])
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ remove_lines(
 Used for its side effects, returns the lines to be left in the file.
 }
 \description{
-Delete lines from a files programmatically, for example from
+Delete lines from a file programmatically, for example from
 \file{.gitignore}.
 }
 \examples{

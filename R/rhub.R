@@ -61,6 +61,6 @@ get_rhub_latest <- function(path = ".") {
         latest_id <- rhub[rhub[["platform_name"]] == platform, ][1, ][["id"]]
         check <- rhub::get_check(latest_id)
         checks[[platform]] <- check
-    } 
+    }
     return(checks)
 }

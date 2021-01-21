@@ -86,37 +86,6 @@ test_news <- function() {
     RUnit::checkException(packager::check_news(path))
 }
 
-test_git_tag <- function() {
-    path <- file.path(tempdir(), "prutp")
-    on.exit(unlink(path, recursive = TRUE))
-    usethis::create_package(path)
-
-    # no repo
-    RUnit::checkException(packager::git_tag(path = path))
-
-    # initial repo
-    packager:::use_git(path)
-    result <- packager::git_tag(path = path)
-    RUnit::checkIdentical("0.0.0.9000", getElement(result, "name"))
-    RUnit::checkIdentical("CRAN release", getElement(result, "message"))
-    desc::desc_bump_version("minor", file = path)
-
-    # uncommitted changes
-    RUnit::checkException(packager::git_tag(path = path))
-
-    # commited changes
-    git_add_commit(path = path)
-    result <- packager::git_tag(path = path)
-    RUnit::checkIdentical("0.1.0", getElement(result, "name"))
-    RUnit::checkIdentical("CRAN release", getElement(result, "message"))
-
-    # version number lower than in tags
-    desc::desc_set(Version = "0.0.3", file = path)
-    git_add_commit(path = path)
-    RUnit::checkException(packager::git_tag(path = path))
-
-}
-
 test_githuburl <- function() {
     path <- file.path(tempdir(), "prutp")
     on.exit(unlink(path, recursive = TRUE))
@@ -167,5 +136,5 @@ test_githuburl <- function() {
     add_github_url_to_desc(path = path, default_gh_user = user)
     result <- desc::desc_get_urls(file = path)
     RUnit::checkIdentical(expectation, result)
-
 }
+

@@ -11,13 +11,13 @@ get_check_status(path)
 }
 \value{
 A list :\describe{
-    \item{status}{ A list of 
+    \item{status}{ A list of
     \describe{
         \item{notes}{The number of \code{NOTE}s}
         \item{warnings}{The number of \code{WARNING}s}
         \item{error}{The number of \code{ERROR}s}
     }}
-    \item{log}{A list of 
+    \item{log}{A list of
     \describe{
         \item{notes}{The log entries for \code{NOTE}s}
         \item{warnings}{The log entries for \code{WARNING}s}

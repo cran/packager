@@ -15,7 +15,7 @@ provide_cran_comments(
 )
 }
 \arguments{
-\item{check_log}{Deprecated, will be removed in a future release. 
+\item{check_log}{Deprecated, will be removed in a future release.
 The local R CMD check log is now supposed to live be
 `log/check.(log|Rout)`.}
 

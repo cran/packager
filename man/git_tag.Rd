@@ -15,7 +15,7 @@ git_tag(path = ".", tag_uncommited = FALSE, message = "CRAN release")
 }
 \value{
 \code{\link{FALSE}} or the value of
-\code{\link[git2r:tag]{git2r::tag}}.
+\code{\link[gert:git_tag_list]{gert::git_tag_list}}.
 }
 \description{
 This is basically the same as \command{git tag -a T -m M} where T is the

@@ -1,5 +1,5 @@
 #' Sort Fields `Import`, `Depends` and `Suggests`  \file{DESCRIPTION}
-#' 
+#'
 #' @param file see
 #' \code{\link[desc:desc_get_deps]{desc::desc_get_deps}}).
 #' @return \code{\link{NULL}}, but called for its side effect.

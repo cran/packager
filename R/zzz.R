@@ -1,5 +1,9 @@
 .onLoad <- function(libname, pkgname) {
-    probably_me <- identical(whoami::fullname(fallback = "Foo Bar"), "fvafrcu")
+    probably_me <- identical(fritools::call_safe(whoami::fullname,
+                                                 dependency = "whoami",
+                                                 args = list(fallback = "Foo"),
+                                                 fallback = "Foo"),
+                             "fvafrcu")
     if (probably_me) {
         adc <- utils::person(given = "Andreas Dominik",
                              family = "Cullmann",

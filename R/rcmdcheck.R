@@ -5,10 +5,10 @@ write_info <- function(prefix = "=== packager info:") {
     return(invisible(NULL))
 }
 
-write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".", 
-                            args = "--as-cran", 
+write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".",
+                            args = "--as-cran",
                             build_args = args[-which(args == "--as-cran")]) {
-    obj <- rcmdcheck::rcmdcheck(path = path, args = args, 
+    obj <- rcmdcheck::rcmdcheck(path = path, args = args,
                                 build_args = build_args)
     invisible(utils::capture.output(info <- deparse(dput(obj))))
     cat(paste0(prefix, info), sep = "\n")
@@ -21,7 +21,7 @@ write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".",
 #' \code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck}} are tagged and
 #' \code{\link{cat}}ed so we can evaluate them from reading logs (on
 #' \verb{gitlab}, for example).
-#' @template package_path 
+#' @template package_path
 #' @param args Arguments passed to
 #' \code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck}}.
 #' @param build_args Arguments passed to
@@ -29,7 +29,7 @@ write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".",
 #' @export
 #' @keywords internal
 #' @return \code{\link[=invisible]{Invisibly}  \link{NULL}}.
-rcmdcheck_and_log <- function(path = ".", args = "--as-cran", 
+rcmdcheck_and_log <- function(path = ".", args = "--as-cran",
                               build_args = args[-which(args == "--as-cran")]) {
     write_info()
     check <- write_rcmdcheck(path = path, args = args, build_args = build_args)

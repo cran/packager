@@ -21,7 +21,7 @@
 # Pass force to pkgbuild::build(), move messages to submit.
 build_cran <- function(path, args = NULL, force = FALSE) {
     message("Building")
-    built_path <- pkgbuild::build(path, tempdir(), manual = TRUE, 
+    built_path <- pkgbuild::build(path, tempdir(), manual = TRUE,
                                   clean_doc = force,
                                   args = args)
     return(built_path)
@@ -55,14 +55,12 @@ render_template <- function(name, data = list()) {
 use_readme_rmd <- function(path = ".", ...) {
   pkg <- as.package(path)
   if (uses_git(path)) {
-    pkg[["git_user"]] <- tryCatch(git2r::default_signature(path)[["name"]],
+    pkg[["git_user"]] <- tryCatch(sub(" <.*>$", "",
+                                      gert::git_signature_default(path)),
       error = function(e) return(NULL)
     )
   }
 
-  if (uses_github(pkg$path)) {
-    pkg$github <- github_info(pkg$path)
-  }
   pkg$Rmd <- TRUE
   use_template("README.Rmd",
     save_as = "README.Rmd", data = pkg,
@@ -87,7 +85,7 @@ use_news_md <- function(pkg = ".", ...) {
   invisible(NULL)
 }
 
-use_intro <- function(path = ".", ..., details = NA, 
+use_intro <- function(path = ".", ..., details = NA,
                       use_rasciidoc_vignette = FALSE) {
   checkmate::assert_directory_exists(path)
   checkmate::qassert(use_rasciidoc_vignette, "B1")
@@ -95,9 +93,6 @@ use_intro <- function(path = ".", ..., details = NA,
   if (is.na(details)) details <- NULL # NA would get printed into vignette.
   pkg <- as.package(path)
   pkg$details <- details
-  if (uses_github(pkg$path)) {
-    pkg$github <- github_info(pkg$path)
-  }
   pkg$date <- format(Sys.time(), "%Y-%m-%d, %H:%M:%S")
   vignette_name <- paste0(
     "An_Introduction_to_",
@@ -128,22 +123,19 @@ use_travis <- function(path = ".", ...) {
   return(invisible(NULL))
 }
 
-# devtools' version does not pass ceiling to git2r::discover_repository,
-# thus failing, if any .git found in the parents of the package path.
-# It also works only for R packages, which does not make much sense to me.
+# devtools' version works only for R packages, which does not make much sense to
+# me.
 use_git <- function(path = ".", message = "Initial commit") {
-  if (!is.null(git2r::discover_repository(path, ceiling = 0))) {
+  if (is_git_repository(path)) {
     message("* Git is already initialized")
     return(invisible())
   }
   message("* Initialising repo")
-  r <- git2r::init(path)
+  r <- gert::git_init(path)
   use_git_ignore(c(".Rproj.user", ".Rhistory", ".RData"), path = path)
   message("* Adding files and committing")
-  paths <- unlist(git2r::status(r))
-  git2r::add(r, paths)
-  git_commit(r, message)
-  invisible(TRUE)
+  git_add_commit(path = r, untracked = TRUE, message = message)
+  invisible(path)
 }
 
 # Modified copy of devtools' unexported version
@@ -189,7 +181,7 @@ check_suggested <- function(pkg, version = NULL, compare = NA) {
     version <- dep$version
     compare <- dep$compare
   }
-  if (!is_installed(pkg) || !check_dep_version(
+  if (!fritools::is_r_package_installed(pkg) || !check_dep_version(
     pkg, version,
     compare
   )) {
@@ -239,39 +231,4 @@ is_yes <- function(...) {
   qs <- c(sample(yeses, 1), sample(nos, 2))
   rand <- sample(length(qs))
   utils::menu(qs[rand]) == which(rand == 1)
-}
-
-
-# sanitize the return value. Should be TRUE if in sync.
-# In devtools, there's a wrapper, `git_check_sync_status` that just does this.
-git_sync_status <- function(path = ".", check_ahead = TRUE,
-                            check_behind = TRUE) {
-  r <- git2r::repository(path, discover = TRUE)
-
-  r_head <- git2r::repository_head(r)
-  if (!methods::is(r_head, "git_branch")) {
-    stop("HEAD is not a branch", call. = FALSE)
-  }
-
-  upstream <- git2r::branch_get_upstream(r_head)
-  if (is.null(upstream)) {
-    stop("No upstream branch", call. = FALSE)
-  }
-
-  git2r::fetch(r, git2r::branch_remote_name(upstream))
-
-  c1 <- git2r::lookup(r, git2r::branch_target(r_head))
-  c2 <- git2r::lookup(r, git2r::branch_target(upstream))
-  ab <- git2r::ahead_behind(c1, c2)
-
-  # Begin Exclude Linting
-  #   if (ab[1] > 0)
-  #     message(ab[1], " ahead of remote")
-  #   if (ab[2] > 0)
-  #     message(ab[2], " behind remote")
-  # End Exclude Linting
-  is_ahead <- ab[[1]] != 0
-  is_behind <- ab[[2]] != 0
-  check <- (check_ahead && is_ahead) || (check_behind && is_behind)
-  return(!check)
 }

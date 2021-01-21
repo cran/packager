@@ -19,10 +19,11 @@ get_options(package_name, ..., remove_names = FALSE, flatten_list = TRUE)
 A (possibly named) list or a vector.
 }
 \description{
-A convenience function for \code{\link{getOption}}.
+See \code{\link[fritools:get_options]{fritools:get_options}}
 }
 \seealso{
 Other option functions: 
 \code{\link{set_options}()}
 }
 \concept{option functions}
+\keyword{internal}

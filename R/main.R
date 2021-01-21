@@ -36,10 +36,8 @@ create <- function(path, force = TRUE, ...) {
     # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
     if (isTRUE(force)) unlink(path, recursive = TRUE)
     usethis::create_package(path = path, rstudio = FALSE, open = FALSE)
-    r <- git2r::init(path = path)
-    paths <- unlist(git2r::status(r))
-    git2r::add(r, paths)
-    git_commit(r, "Initial Commit")
+    r <- gert::git_init(path = path)
+    git_add_commit(path = r, message = "Initial Commit", untracked = TRUE)
     unpatch_r_version(path = path)
     desc::desc_set_version("0.1.0", file = file.path(path, "DESCRIPTION"),
                            normalize = FALSE)
@@ -84,7 +82,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     checkmate::qassert(fakemake, c("S1", 0, "B1"))
     # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
     usethis::proj_set(path)
-    r <- git2r::init(path = path)
+    r <- gert::git_init(path = path)
     usethis::use_build_ignore("^.*\\.tar\\.gz$", escape = FALSE)
     usethis::use_build_ignore(paste0(as.package(path)[["package"]],
                                       ".Rcheck"))
@@ -114,16 +112,14 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
 
     usethis::use_build_ignore(".log.Rout")
     use_directory("log", pkg = path, ignore = TRUE)
-    if (!(is.null(fakemake) || isFALSE(fakemake))) {
+    if (!(is.null(fakemake) || fritools::is_false(fakemake))) {
         ml <- get_package_makelist(is_cran = TRUE)
         withr::with_dir(path, print(fakemake::make(name = fakemake,
                                                    make_list = ml, 
                                                    verbose = FALSE)))
     }
-    paths <- unlist(git2r::status(r))
     if (isTRUE(git_add_and_commit)) {
-            git2r::add(r, paths)
-            git_commit(r, "Packager Changes")
+        git_add_commit(path = r, message = "Packager Changes", untracked = TRUE)
     }
     sanitize_usethis_git_hook(path)
     use_git_check_version_not_tagged(path)

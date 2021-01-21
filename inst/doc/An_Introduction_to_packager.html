@@ -811,14 +811,6 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>path &lt;- file.path(tempdir(), <span style="color: #FF0000">"myFirstPackage"</span>)
 packager::create(path, fakemake = <span style="color: #FF0000">"check"</span>)</tt></pre></div></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in eval(parse(text = make_list[[index]][["code"]])):</span></span>
-<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/Rtmpis8C5k/myFirstPackage/log/spell.Rout for details.</span></span>
-</tt></pre></div></div>
 <div class="paragraph"><p>The package is built, tested, checked and committed into git:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -848,25 +840,25 @@ http://www.gnu.org/software/src-highlite -->
 summary(r)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## Local:    master /tmp/Rtmpis8C5k/myFirstPackage
-## Head:     [ef466b5] 2020-12-02: Packager Changes
+<pre><code>## Local:    master /tmp/RtmpZsq8c6/myFirstPackage
+## Head:     [28446dd] 2021-01-21: Packager Changes
 ##
 ## Branches:         1
 ## Tags:             0
-## Commits:         16
+## Commits:         17
 ## Contributors:     1
 ## Stashes:          0
-## Ignored files:    6
+## Ignored files:    5
 ## Untracked files:  0
 ## Unstaged files:   0
 ## Staged files:     0
 ##
 ## Latest commits:
-## [ef466b5] 2020-12-02: Packager Changes
-## [09d9891] 2020-12-02: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [4a06b9b] 2020-12-02: Adding `make.R` from template `make.R` of package` packager`.
-## [54b6c42] 2020-12-02: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [899b9ff] 2020-12-02: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+## [28446dd] 2021-01-21: Packager Changes
+## [b172019] 2021-01-21: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [1040075] 2021-01-21: Adding `make.R` from template `make.R` of package` packager`.
+## [5da7dbb] 2021-01-21: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [8f551ab] 2021-01-21: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -891,7 +883,9 @@ http://www.gnu.org/software/src-highlite -->
 <pre><code>## DESCRIPTION does not contain 'Language' field. Defaulting to 'en-US'.
 ##   WORD      FOUND IN
 ## RStudio   README.Rmd:8,9
-## gitlab    README.Rmd:43</code></pre>
+## gitlab    README.Rmd:43
+##
+## Spell check failed, see /tmp/RtmpZsq8c6/myFirstPackage/log/spell.Rout for details.</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -901,9 +895,9 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>tail(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "Status: 1 WARNING"
+<pre><code>## [1] ""
 ## [2] "See"
-## [3] "  ‘/tmp/Rtmpis8C5k/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
+## [3] "  ‘/tmp/RtmpZsq8c6/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
 ## [4] "for details."
 ## [5] ""
 ## [6] ""</code></pre>
@@ -947,7 +941,7 @@ http://www.gnu.org/software/src-highlite -->
 ##     knitr,
 ##     rmarkdown,
 ##     pkgload,
-##     testthat,
+##     testthat (&gt;= 3.0.0),
 ##     RUnit,
 ##     devtools,
 ##     rprojroot
@@ -956,7 +950,8 @@ http://www.gnu.org/software/src-highlite -->
 ## Encoding: UTF-8
 ## LazyData: true
 ## Roxygen: list(markdown = TRUE)
-## RoxygenNote: 7.1.1</code></pre>
+## RoxygenNote: 7.1.1
+## Config/testthat/edition: 3</code></pre>
 </div></div>
 <div class="paragraph"><p>We could set the package information on the existing package, but we rather create a
 new one now.
@@ -1009,7 +1004,7 @@ http://www.gnu.org/software/src-highlite -->
 ##     knitr,
 ##     rmarkdown,
 ##     pkgload,
-##     testthat,
+##     testthat (&gt;= 3.0.0),
 ##     RUnit,
 ##     devtools,
 ##     rprojroot
@@ -1018,7 +1013,8 @@ http://www.gnu.org/software/src-highlite -->
 ## Encoding: UTF-8
 ## LazyData: true
 ## Roxygen: list(markdown = TRUE)
-## RoxygenNote: 7.1.1</code></pre>
+## RoxygenNote: 7.1.1
+## Config/testthat/edition: 3</code></pre>
 </div></div>
 <div class="paragraph"><p>The package&#8217;s man page is set up accordingly:</p></div>
 <div class="listingblock">
@@ -1079,12 +1075,12 @@ http://www.gnu.org/software/src-highlite -->
 summary(r)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## Local:    master /tmp/Rtmpis8C5k/veryImportantPackage
-## Head:     [f29b73b] 2020-12-02: Packager Changes
+<pre><code>## Local:    master /tmp/RtmpZsq8c6/veryImportantPackage
+## Head:     [d63cb55] 2021-01-21: Packager Changes
 ##
 ## Branches:         1
 ## Tags:             0
-## Commits:         16
+## Commits:         17
 ## Contributors:     1
 ## Stashes:          0
 ## Ignored files:    0
@@ -1093,11 +1089,11 @@ summary(r)</tt></pre></div></div>
 ## Staged files:     0
 ##
 ## Latest commits:
-## [f29b73b] 2020-12-02: Packager Changes
-## [4136c89] 2020-12-02: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
-## [03f4ec4] 2020-12-02: Adding `make.R` from template `make.R` of package` packager`.
-## [d73f2a5] 2020-12-02: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
-## [ecc8d0e] 2020-12-02: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
+## [d63cb55] 2021-01-21: Packager Changes
+## [dbf980b] 2021-01-21: Adding `man-roxygen/return_invisibly_null.R` from template `return_invisibly_null.R` of package` packager`.
+## [7181947] 2021-01-21: Adding `make.R` from template `make.R` of package` packager`.
+## [a45ef26] 2021-01-21: Adding `inst/runit_tests/runit-throw.R` from template `runit-throw.R` of package` packager`.
+## [d30f902] 2021-01-21: Adding `tests/runit.R` from template `runit.R` of package` packager`.</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1118,7 +1114,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>list.files(file.path(path, <span style="color: #FF0000">"log"</span>))</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "roxygen2.Rout"</code></pre>
+<pre><code>## [1] "dependencies.Rout" "roxygen2.Rout"</code></pre>
 </div></div>
 <div class="paragraph"><p>So we get a <code>makelist</code> and look at its targets and aliases:</p></div>
 <div class="listingblock">
@@ -1133,22 +1129,24 @@ cbind(lapply(ml, function(x) x[[<span style="color: #FF0000">"target"</span>]]),
 <div class="content">
 <pre><code>##       [,1]                                               [,2]
 ##  [1,] "log/roxygen2.Rout"                                "roxygen2"
-##  [2,] "log/spell.Rout"                                   "spell"
-##  [3,] "log/cleanr.Rout"                                  "cleanr"
-##  [4,] "log/lintr.Rout"                                   "lint"
-##  [5,] "log/covr.Rout"                                    "covr"
-##  [6,] "packager::get_pkg_archive_path(absolute = FALSE)" "build"
-##  [7,] "log/check.Rout"                                   "check"
-##  [8,] ".log.Rout"                                        ".log"
-##  [9,] "log/testthat.Rout"                                "testthat"
-## [10,] "log/vignettes.Rout"                               "vignettes"
-## [11,] "log/codetags.Rout"                                "codetags"
-## [12,] "log/news.Rout"                                    "news"
-## [13,] "log/usage.Rout"                                   "usage"
-## [14,] "log/winbuilder.Rout"                              "winbuilder"
-## [15,] "log/cran_comments.Rout"                           "cran_comments"
-## [16,] "log/check_as_cran.Rout"                           "check_as_cran"
-## [17,] "log/submit.Rout"                                  "submit"</code></pre>
+##  [2,] "log/dependencies.Rout"                            "dependencies"
+##  [3,] "log/spell.Rout"                                   "spell"
+##  [4,] "log/cleanr.Rout"                                  "cleanr"
+##  [5,] "log/lintr.Rout"                                   "lint"
+##  [6,] "log/covr.Rout"                                    "covr"
+##  [7,] "packager::get_pkg_archive_path(absolute = FALSE)" "build"
+##  [8,] "log/check.Rout"                                   "check"
+##  [9,] ".log.Rout"                                        ".log"
+## [10,] "log/testthat.Rout"                                "testthat"
+## [11,] "log/vignettes.Rout"                               "vignettes"
+## [12,] "log/codetags.Rout"                                "codetags"
+## [13,] "log/news_rd.Rout"                                 "news_rd"
+## [14,] "log/news.Rout"                                    "news"
+## [15,] "log/usage.Rout"                                   "usage"
+## [16,] "log/winbuilder.Rout"                              "winbuilder"
+## [17,] "log/cran_comments.Rout"                           "cran_comments"
+## [18,] "log/check_as_cran.Rout"                           "check_as_cran"
+## [19,] "log/submit.Rout"                                  "submit"</code></pre>
 </div></div>
 <div class="sect2">
 <h3 id="_building_the_package">Building the Package</h3>
@@ -1162,20 +1160,13 @@ http://www.gnu.org/software/src-highlite -->
                                   print(fakemake::make(<span style="color: #FF0000">"build"</span>, ml,
                                                        verbose = FALSE))))</tt></pre></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in eval(parse(text = make_list[[index]][["code"]])):</span></span>
-<span style="font-style: italic"><span style="color: #9A1900">## Spell check failed, see /tmp/Rtmpis8C5k/veryImportantPackage/log/spell.Rout for details.</span></span>
-</tt></pre></div></div>
-<div class="listingblock">
 <div class="content">
 <pre><code>##  [1] "log/cleanr.Rout"                   "log/codetags.Rout"
 ##  [3] "log/covr.Rout"                     "log/lintr.Rout"
-##  [5] "log/news.Rout"                     "log/spell.Rout"
-##  [7] "log/testthat.Rout"                 "log/usage.Rout"
-##  [9] "log/vignettes.Rout"                "veryImportantPackage_0.1.0.tar.gz"</code></pre>
+##  [5] "log/news.Rout"                     "log/news_rd.Rout"
+##  [7] "log/spell.Rout"                    "log/testthat.Rout"
+##  [9] "log/usage.Rout"                    "log/vignettes.Rout"
+## [11] "veryImportantPackage_0.1.0.tar.gz"</code></pre>
 </div></div>
 <div class="paragraph"><p>We note the warning</p></div>
 <div class="listingblock">
@@ -1187,10 +1178,10 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## diff --git a/.Rbuildignore b/.Rbuildignore
-## index 869d606..60acd7f 100644
+## index 6d25250..67847cb 100644
 ## --- a/.Rbuildignore
 ## +++ b/.Rbuildignore
-## @@ -15,3 +15,5 @@
+## @@ -17,3 +17,5 @@
 ##  ^man-roxygen/return_invisibly_null\.R$
 ##  ^\.log\.Rout$
 ##  ^log$
@@ -1208,12 +1199,14 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## Untracked files:
+##      Untracked:  inst/NEWS.rd
 ##      Untracked:  log/build.Rout
 ##      Untracked:  log/cleanr.Rout
 ##      Untracked:  log/codetags.Rout
 ##      Untracked:  log/covr.Rout
 ##      Untracked:  log/lintr.Rout
 ##      Untracked:  log/news.Rout
+##      Untracked:  log/news_rd.Rout
 ##      Untracked:  log/spell.Rout
 ##      Untracked:  log/testthat.Rout
 ##      Untracked:  log/usage.Rout
@@ -1232,10 +1225,10 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## diff --git a/.Rbuildignore b/.Rbuildignore
-## index 869d606..60acd7f 100644
+## index 6d25250..67847cb 100644
 ## --- a/.Rbuildignore
 ## +++ b/.Rbuildignore
-## @@ -15,3 +15,5 @@
+## @@ -17,3 +17,5 @@
 ##  ^man-roxygen/return_invisibly_null\.R$
 ##  ^\.log\.Rout$
 ##  ^log$
@@ -1252,7 +1245,7 @@ http://www.gnu.org/software/src-highlite -->
                                                message = <span style="color: #FF0000">"make build"</span>))</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [8a68545] 2020-12-02: make build</code></pre>
+<pre><code>## [1] "dc4b1b48dc954bbfa205c1b4974c1504dcba5867"</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1312,7 +1305,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><code>##
 ## Status: 1 WARNING
 ## See
-##   ‘/tmp/Rtmpis8C5k/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
+##   ‘/tmp/RtmpZsq8c6/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
 ## for details.</code></pre>
 </div></div>
 <div class="listingblock">
@@ -1337,7 +1330,7 @@ http://www.gnu.org/software/src-highlite -->
                                                message = <span style="color: #FF0000">"make check"</span>))</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [6085b78] 2020-12-02: make check</code></pre>
+<pre><code>## [1] "0976ae52700c0104f8e73547557fb0ea3628d75d"</code></pre>
 </div></div>
 <div class="paragraph"><p>If we choose to rerun the check without touching any files "down the make chain" (i.e. no files that any of our make targets depend on), we see there&#8217;s nothing to be done:</p></div>
 <div class="listingblock">
@@ -1353,7 +1346,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>##    user  system elapsed
-##   0.568   0.004   0.573</code></pre>
+##   0.839   0.001   0.844</code></pre>
 </div></div>
 <div class="paragraph"><p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and
 running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <em>This is why I wrote <code>packager</code> and <code>fakemake</code>.</em></p></div>
@@ -1383,14 +1376,6 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-style: italic"><span style="color: #9A1900">## 0 errors | 1 warning  | 0 notes</span></span>
 </tt></pre></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in get_gitlab_info(path = path, private_token = private_token): You need</span></span>
-<span style="font-style: italic"><span style="color: #9A1900">## a private token to access gitlab.</span></span>
-</tt></pre></div></div>
-<div class="listingblock">
 <div class="content">
 <pre><code>## [1] "log/cran_comments.Rout"</code></pre>
 </div></div>
@@ -1401,44 +1386,20 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"cran-comments.md"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>## Dear CRAN Team,
-## this is a resubmission of package 'veryImportantPackage'. I have added the following changes:
-##
-## * Added a `NEWS.md` file to track changes to the package.
-##
-##
-## Please upload to CRAN.
-## Best, Your
-##
-## # Package veryImportantPackage 0.1.0
-##
-## Reporting is done by packager version 1.8.0
-##
-##
-## ## Test environments
-## - R Under development (unstable) (2020-11-20 r79451)
-##    Platform: x86_64-pc-linux-gnu (64-bit)
-##    Running under: Devuan GNU/Linux 3 (beowulf)
-##    NA
-## - win-builder (devel)
-##
-## ## Local test results
-## - Testthat:
-##
-## - Coverage by covr:
-##
-##
-## ## Local meta results
-## - lintr:
-##     found 1 lints in 32 lines of code (a ratio of 0.0312).
-## - cleanr:
-##     found 0 dreadful things about your code.
-## - codetools::checkUsagePackage:
-##     found 0 issues.
-## - devtools::spell_check:
-##     found 2 unkown words.</code></pre>
-</div></div>
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in file(con, "r"): cannot open file '/tmp/RtmpZsq8c6/</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">## veryImportantPackage/cran-comments.md': No such file or directory</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Error in file(con, "r"): cannot open the connection</span></span>
+</tt></pre></div></div>
 <div class="paragraph"><p>After editing the contents we feel ready to submit:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1447,8 +1408,15 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>try(packager::submit(path))</tt></pre></div></div>
 <div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in packager::submit(path): You have no upstream!</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
 <div class="content">
-<pre><code>## Error in packager::submit(path) : You have uncommitted changes.</code></pre>
+<pre><code>## Ready to submit?Error in utils::menu(qs[rand]) : menu() cannot be used non-interactively</code></pre>
 </div></div>
 <div class="paragraph"><p>Oops: we need to commit git first:</p></div>
 <div class="listingblock">
@@ -1460,7 +1428,7 @@ http://www.gnu.org/software/src-highlite -->
                          message = <span style="color: #FF0000">"prepare for CRAN"</span>)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [3169858] 2020-12-02: prepare for CRAN</code></pre>
+<pre><code>## [1] "cf6e689819a8605ae0f56d44f0c3974294a32ebd"</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1503,8 +1471,18 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>packager::git_tag(path = path, message = <span style="color: #FF0000">"A Tag"</span>)</tt></pre></div></div>
 <div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## h6 unix</span></span>
+</tt></pre></div></div>
+<div class="listingblock">
 <div class="content">
-<pre><code>## [316985] 0.1.0</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   name  ref             commit
+##   &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;
+## 1 0.1.0 refs/tags/0.1.0 63ca0632a785305c87461cadf92b9d6d1533522d</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1521,7 +1499,7 @@ http://www.gnu.org/software/src-highlite -->
 </tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [c5b9140] 2020-12-02: Using Developement Version</code></pre>
+<pre><code>## [1] "a3b95a1a7c0ec07e2126bbd9468ce30568eb0e78"</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1561,7 +1539,7 @@ with <a href="https://www.gnu.org/software/make/">GNU make</a> whenever possible
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2020-12-02 13:30:46 CET
+ 2021-01-21 13:10:55 CET
 </div>
 </div>
 </body>

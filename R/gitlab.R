@@ -1,3 +1,16 @@
+use_gitlab_ci <- function(path = ".",
+                         force = is_force(),
+                         ignore = TRUE) {
+    pkg <- as.package(path)
+    use_template("dot_gitlab-ci.yml", ".gitlab-ci.yml", ignore = ignore,
+        force = force, pkg = pkg)
+    use_directory(".gitlab-ci", ignore = TRUE, pkg = pkg)
+    use_template(file.path("dot_gitlab-ci", "gitlab-com.R"),
+                 file.path(".gitlab-ci", "gitlab-com.R"),
+                 ignore = ignore, force = force, pkg = pkg)
+    return(invisible(NULL))
+}
+
 is_check <- function(x) {
     is_check_stage <- identical(getElement(x, "stage"), "check")
     is_check_job <- identical(getElement(x, "name"), "packager")
@@ -38,7 +51,7 @@ get_gitlab_log <- function(user, project, private_token, ...) {
     if (is.null(private_token)) {
         job <- NULL
     } else {
-        url <- paste0("https://gitlab.com/api/v4/users/", user, "/projects", 
+        url <- paste0("https://gitlab.com/api/v4/users/", user, "/projects",
                       "?per_page=100")
         names(private_token) <- "PRIVATE-TOKEN"
         r <- httr::GET(url, httr::add_headers(.headers = private_token), ...)
@@ -59,4 +72,46 @@ get_gitlab_log <- function(user, project, private_token, ...) {
             job <- unlist(strsplit(job, split = "\n"))
     }
     return(job)
+}
+
+#' Provide a \verb{gitlab} \acronym{URL} for a Given Path
+#'
+#' @template package_path
+#' @return a character string giving a \verb{github} \acronym{URL}.
+#' @keywords internal
+#' @export
+#' @examples
+#' path <- file.path(tempdir(), "myPackage")
+#' unlink(path, recursive = TRUE)
+#' usethis::create_package(path, open = FALSE)
+#' try(provide_gitlab_url(path))
+#' gert::git_init(path)
+#' provide_gitlab_url(path)
+#' invisible(desc::desc_set(Package = "bar", file = path))
+#' provide_gitlab_url(path)
+provide_gitlab_url <- function(path = ".") {
+    url <- get_git_url(get_remote_url(path))
+    if (is.null(url)) {
+        if (!uses_git(path)) {
+            throw(paste(path, "is not a git repository"))
+        } else {
+            directory <- basename(gert::git_find(path))
+            if (is_r_package(path)) {
+                package_name <- strip_off_attributes(desc::desc_get("Package",
+                                                                    file = path)
+                )
+                if (package_name != directory) {
+                    warning("The package's name and root directory differ, ",
+                            "sticking with the name as retrieved from file ",
+                            "DESCRIPTION.")
+                    directory <- package_name
+                }
+            }
+            git_signature <- get_git_signature(path, verbose = TRUE)
+                name <- getElement(gert::git_signature_parse(git_signature),
+                                   "name")
+            url <- paste("https://gitlab.com", name, directory, sep = "/")
+        }
+    }
+    return(url)
 }

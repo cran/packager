@@ -25,9 +25,15 @@ if (! dir.exists(unit_dir)) {
     stop("Can not find RUnit test directory ", unit_dir,
          ". Try to (re)install the package first.")
 }
+
+test_file_regexp <- if (isTRUE(fritools::is_running_on_gitlab_com())) {
+    "^test.*\\.[rR]$"
+} else {
+    "^test.*\\.[rR]$"
+}
 package_suite <- RUnit::defineTestSuite("packager_unit_test",
                                         dirs = unit_dir,
-                                        testFileRegexp = "^.*\\.[rR]",
+                                        testFileRegexp = test_file_regexp,
                                         testFuncRegexp = "^test_+")
 test_result <- RUnit::runTestSuite(package_suite)
 RUnit::printTextProtocol(test_result, showDetails = TRUE, fileName = "")

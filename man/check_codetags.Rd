@@ -30,8 +30,9 @@ You do use code tags
 This function searches for files under a directory containing such tags.
 }
 \examples{
-dir <- system.file("templates", package = "packager")
-check_codetags(dir)
+dir <- system.file("runit_tests", package = "packager")
+r <- check_codetags(dir)
+print(r)
 }
 \seealso{
 Other maintenance functions: 

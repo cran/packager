@@ -1,3 +1,21 @@
+# packager 1.9.0
+
+* Now importing package `fritools`.
+* Call package `whoami` only if system dependency `whoami` is available or the
+  system running is windows.
+* Switched from git2r to gert.
+* Updated the `makelist` returned  by `get_package_makelist()` to 
+    - install the current and packager's dependencies and suggested packages. 
+    - report RUnit testing correctly.
+* Added simple wrappers for calls to R CMD. `callr`, calling `processx::run`
+  seemed too bloated for such simple tasks.
+* Added function `provide_news_rd()` which will derive file `inst/NEWS.rd` from
+  file `NEWS.md`. The former will be shown in the package's help index, so it's
+  more prominent to people using that index than the latter which will only be
+  shown by `utils::news()` if the latter is not available.
+  The new function is incorporated in the package's Makelist and it's template
+  for a Makfile.
+
 # packager 1.8.0
 * Added `rhub` checks.  
   New internal functions
@@ -273,8 +291,8 @@
 
 # packager 0.6.0
 
-Wrapped the travis-cli interface into tryCatch to be able to use my Makefile as
-template on systems where travis-cli will fail.
+* Wrapped the travis-cli interface into tryCatch to be able to use my Makefile as
+  template on systems where travis-cli will fail.
 
 # packager 0.5.0
 
@@ -287,7 +305,7 @@ names.
 
 # packager 0.4.1
 
-Fixed adding github url to DESCRIPTION.
+* Fixed adding github url to DESCRIPTION.
 
 # packager 0.4.0
 
@@ -296,25 +314,25 @@ Fixed adding github url to DESCRIPTION.
 
 # packager 0.3.1
 
-provide\_cran\_comments(name = ) now defaults to NA, using the DESCRIPTION's
-maintainer's given name.
+* provide\_cran\_comments(name = ) now defaults to NA, using the DESCRIPTION's
+ maintainer's given name.
 
 # packager 0.3.0
 
-Resetting RUnit tests.
+* Resetting RUnit tests.
 
 # packager 0.2.2
 
-Vignette defaults are now set from details and description passed to 
-set\_package\_info.
+* Vignette defaults are now set from details and description passed to 
+ set\_package\_info.
 
 # packager 0.2.1
 
-Added bugfix for get\_news().
+* Added bugfix for get\_news().
 
 # packager 0.2.0
 
-Added function to add github url to DESCRIPTION.
+* Added function to add github url to DESCRIPTION.
 
 # packager 0.1.0
 

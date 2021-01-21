@@ -4,10 +4,12 @@
 \alias{install_deps}
 \title{Install Dependencies From a Package's DESCRIPTION}
 \usage{
-install_deps(path = ".", ...)
+install_deps(path = ".", verbose = FALSE, ...)
 }
 \arguments{
 \item{path}{Path to the package.}
+
+\item{verbose}{Be verbose?}
 
 \item{...}{passed to
 \code{\link[remotes:install_version]{remotes::install_version}}.}

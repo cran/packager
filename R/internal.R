@@ -1,26 +1,3 @@
-get_git_upstream <- function(path) {
-    r <- git2r::repository(path, discover = TRUE)
-    up <- git2r::branch_get_upstream(git2r::repository_head(r))
-    return(up)
-}
-
-isFALSE <- function(x) {
-    # I still use R 3.3.3 for testing, isFALSE() was defined in R 3.5.0
-    if (exists('isFALSE', where='package:base', mode='function')) {
-        base::isFALSE(x)
-    } else {
-        is.logical(x) && length(x) == 1L && !is.na(x) && !x
-    }
-}
-
-strip_off_attributes <- function(x) {
-    attributes(x) <- NULL
-    return(x)
-}
-
-is_null_or_true <- function(x) isTRUE(x) || is.null(x)
-is_force <- function() return(is_null_or_true(getOption("packager")[["force"]]))
-
 get_news <- function(path = ".") {
     root <- tryCatch(rprojroot::find_root(rprojroot::is_r_package,
                                           path = path),
@@ -31,8 +8,8 @@ get_news <- function(path = ".") {
     news <- readLines(file.path(root, "NEWS.md"))
     version_pattern <- paste0("^", " ", description[1, "Version"])
     news_by_version <- unlist(strsplit(paste(news,
-                                             collapse = "\n"), 
-                                       split = paste("#", 
+                                             collapse = "\n"),
+                                       split = paste("#",
                                                      description[1, "Package"])
                                        ))
     news <- grep(version_pattern, news_by_version, value = TRUE)
@@ -86,11 +63,16 @@ update_description <- function(path = ".",
                                ) {
     if (is.null(author_at_r)) {
         warning("Argument 'author_at_r' is missing, using default.")
-        name <- whoami::fullname(fallback = "Foo Bar")
+        name <- fritools::call_safe(whoami::fullname, dependency = "whoami",
+                                    args = list(fallback = "Foo Bar"),
+                                    fallback = "Foo Bar")
         name <- unlist(strsplit(name, split = " "))
         family <- name[length(name)]
         given <- setdiff(name, family)
-        email <- whoami::email_address(fallback = "foobar@nowhere.com")
+        email <- fritools::call_safe(whoami::email_address,
+                                     dependency = "whoami",
+                                     args = list(fallback = "foo@nowhere.com"),
+                                     fallback = "foobar@nowhere.com")
         author_at_r <- utils::person(family = family, given = given,
                                      email = email, role = c("aut", "cre"))
     }
@@ -98,8 +80,8 @@ update_description <- function(path = ".",
     if (! is.null(title))
         d$set(Title = title)
     if (! is.null(description)) {
-        description <- 
-            sub("(.*)\\\\pkg\\{(.*)\\}(.*)", "\\1 package \"\\2\"\\3", 
+        description <-
+            sub("(.*)\\\\pkg\\{(.*)\\}(.*)", "\\1 package \"\\2\"\\3",
                 description)
         d$set(Description = description)
     }
@@ -136,27 +118,6 @@ unpatch_r_version <- function(path = ".") {
     return(invisible(NULL))
 }
 
-grep_directory <- function(path, pattern, include_pattern = NULL,
-                           exclude_pattern = NULL) {
-    hits <- NULL
-    if (is.null(include_pattern)) {
-        files <- list.files(path, full.names = TRUE, recursive = TRUE)
-    } else {
-        files <- list.files(path, full.names = TRUE, recursive = TRUE,
-                            pattern = include_pattern)
-    }
-    if (! is.null(exclude_pattern))
-        files <- grep(exclude_pattern, files, value = TRUE, invert = TRUE)
-    for (f in files) {
-        l <- readLines(f)
-        if (any(grepl(l, pattern = pattern, perl = TRUE))) {
-            found <- paste(f, sep = ": ",
-                         grep(l, pattern = pattern, perl = TRUE, value = TRUE))
-            hits <- c(hits, found)
-        }
-    }
-    return(hits)
-}
 
 remove_Rproj <- function(path = rprojroot::find_root(rprojroot::is_r_package)) {
                          file_name <- list.files(path,
@@ -170,12 +131,12 @@ warn_and_stop <- function(...) {
     throw(...)
 }
 
-use_runit <- function(path = ".", force = is_force(), 
+use_runit <- function(path = ".", force = is_force(),
                       ignore = TRUE, source_package = "packager", ...) {
     file <- "runit.R"
     file_path <- file.path("tests", file)
     use_template(file, save_as = file_path, data = as.package(path),
-                 pkg = as.package(path)[["path"]], force = force, 
+                 pkg = as.package(path)[["path"]], force = force,
                 ...)
 }
 
@@ -238,7 +199,7 @@ use_devtools <- function(path = ".") {
 }
 
 get_remote_url <- function(path = ".", discover = TRUE) {
-    res <- tryCatch(git2r::remote_url(repo = path),
+    res <- tryCatch(gert::git_remote_list(repo = path)[["url"]],
                      error = identity
                      )
     if (inherits(res, "error")) {
@@ -274,23 +235,6 @@ get_git_url <- function(x,
     }
     return(res)
 }
-
-
-use_gitlab_ci <- function(path = ".",
-                         force = is_force(),
-                         ignore = TRUE) {
-    pkg <- as.package(path)
-    use_template("dot_gitlab-ci.yml", ".gitlab-ci.yml", ignore = ignore,
-        force = force, pkg = pkg)
-    return(invisible(NULL))
-}
-
-update_make <- function(path) {
-    use_runit(path = path, force = TRUE)
-    use_makefile(path = path, force = TRUE)
-    provide_make(path = path, force = TRUE)
-}
-
 
 provide_man_roxygen <- function(path, force = is_force(), ...) {
     use_directory("man-roxygen", pkg = path, ignore = TRUE)

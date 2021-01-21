@@ -4,16 +4,16 @@
 #' function provides a template based on your R version, your
 #' \command{R CMD check} output and
 #' the package's \file{NEWS.md}.
-#' @template package_path 
+#' @template package_path
 #' @param initial Is this an initial submission?
-#' @param check_log Deprecated, will be removed in a future release. 
+#' @param check_log Deprecated, will be removed in a future release.
 #'        The local R CMD check log is now supposed to live be
 #'        `log/check.(log|Rout)`.
 #' @param name The name to sign with, if NA, the given name of the package
 #' maintainer as stated in file DESCRIPTION is used.
 #' @param write_to_file Do write the comment to \file{cran-comment.md}?
 #' @param private_token Provide a private token to access
-#' \url{https://about.gitlab.com}. 
+#' \url{https://about.gitlab.com}.
 #' @param proxy A proxy to use.
 #' @note By default this function writes to disk as side effect.
 #' @return Character vector containing the \acronym{CRAN} comments, which are
@@ -68,22 +68,22 @@ provide_cran_comments <- function(check_log = NULL,
     comments <- c("Dear CRAN Team,\n")
     if (isTRUE(initial)) {
         comments <- c(comments, "this is the initial commit of package '",
-                      pkg[["package"]], "'.\n\n", 
+                      pkg[["package"]], "'.\n\n",
                       "XXX: Describe what it does.\n\n",
                       "Please consider uploading it to CRAN.\n")
 
     } else {
         comments <- c(comments, "this is a resubmission of package '",
-                      pkg[["package"]], 
+                      pkg[["package"]],
                       "'. I have added the following changes:\n",
                       news,
                       "Please upload to CRAN.\n")
     }
     comments <- c(comments, "Best, ", name, "\n\n")
     comments <- c(comments, "# Package ", pkg[["package"]], " ",
-                  pkg[["version"]], 
+                  pkg[["version"]],
                   "\n\nReporting is done by packager version ",
-                  as.character(desc::desc_get_version(system.file("DESCRIPTION", 
+                  as.character(desc::desc_get_version(system.file("DESCRIPTION",
                                                      package = "packager"))),
                   "\n")
     comments <- c(comments, get_local_check(path))
@@ -109,8 +109,8 @@ provide_cran_comments <- function(check_log = NULL,
 }
 
 pick_log_file <- function(path, basename, extension = "(log|Rout)") {
-    candidates <- list.files(file.path(path, "log"), 
-                             pattern =  paste0(basename, "\\.", extension, "$"), 
+    candidates <- list.files(file.path(path, "log"),
+                             pattern =  paste0(basename, "\\.", extension, "$"),
                              full.names = TRUE)
     newest <- candidates[order(file.mtime(candidates), decreasing = TRUE)][1]
     return(newest)
@@ -127,7 +127,7 @@ get_local_check <- function(path) {
         check_output  <- "ERROR: No check log found!"
     }
     comments <- c(comments, "- ", paste(c(here, check_output),
-                                       collapse = "\n   ")) 
+                                       collapse = "\n   "))
     return(comments)
 }
 
@@ -135,26 +135,26 @@ get_local_tests <- function(path) {
     comments <- c("\n## Local test results\n")
     if (!is.na(log_file <- pick_log_file(path, "runit"))) {
         lines <- readLines(log_file)
-        result <- grep(pattern = "test functions?.*errors.*failures", 
+        result <- grep(pattern = "test functions?.*errors.*failures",
                        x = lines, value = TRUE)
         checks_lines <- grep("\\([0-9]* checks\\)", lines, value = TRUE)
         checks <- sub("^.*\\((.* checks).*$", "\\1", checks_lines)
-        num_checks <- sum(as.numeric(sapply(strsplit(checks, split = " "), 
+        num_checks <- sum(as.numeric(sapply(strsplit(checks, split = " "),
                                             function(x) x[[1]])))
-        comments <- c(comments, "- RUnit:\n    ", result, " in ", num_checks, 
+        comments <- c(comments, "- RUnit:\n    ", result, " in ", num_checks,
                       " checks.", "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "testthat"))) {
-        result <- grep(pattern = paste0("^(OK|Failed|Warnings|Skipped):"), 
+        result <- grep(pattern = paste0("^(OK|Failed|Warnings|Skipped):"),
                        x = readLines(log_file), value = TRUE)
-        comments <- c(comments, "- Testthat:\n    ", 
+        comments <- c(comments, "- Testthat:\n    ",
                       paste(sub("\\s+", " ", result), collapse = ", "), "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "covr"))) {
         pkg <- as.package(path)
-        result <- grep(pattern = paste0("^", pkg[["package"]], " Coverage:"), 
+        result <- grep(pattern = paste0("^", pkg[["package"]], " Coverage:"),
                        x = readLines(log_file), value = TRUE)
-        comments <- c(comments, "- Coverage by covr:\n    ", result, 
+        comments <- c(comments, "- Coverage by covr:\n    ", result,
                       "\n")
     }
     return(comments)
@@ -170,42 +170,42 @@ get_local_meta <- function(path) {
         } else {
             result <- "no issues."
         }
-        comments <- c(comments, "- Cyclocomp:", paste("\n    ", result), 
+        comments <- c(comments, "- Cyclocomp:", paste("\n    ", result),
                       "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "lintr"))) {
         lines <- readLines(log_file)
         lints_in_R <- sum(grepl("R/", lines))
-        lines_in_R <- sum(sapply(lapply(list.files(file.path(path, "R"), 
-                                                   full.names = TRUE), 
+        lines_in_R <- sum(sapply(lapply(list.files(file.path(path, "R"),
+                                                   full.names = TRUE),
                                         readLines), length))
-        comments <- c(comments, "- lintr:\n    ", 
-                      paste0("found ", lints_in_R, " lints in ", lines_in_R, 
-                            " lines of code (a ratio of ", 
-                            round(lints_in_R / lines_in_R, 4), ")."),  
+        comments <- c(comments, "- lintr:\n    ",
+                      paste0("found ", lints_in_R, " lints in ", lines_in_R,
+                            " lines of code (a ratio of ",
+                            round(lints_in_R / lines_in_R, 4), ")."), 
                       "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "cleanr"))) {
         lines <- readLines(log_file)
         lines <- grep("found", lines, value = TRUE)
-        comments <- c(comments, "- cleanr:\n    ", 
-                      paste("found", max(length(lines) - 1, 0), 
-                            "dreadful things about your code."),  
+        comments <- c(comments, "- cleanr:\n    ",
+                      paste("found", max(length(lines) - 1, 0),
+                            "dreadful things about your code."), 
                       "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "usage"))) {
         lines <- readLines(log_file)
-        comments <- c(comments, "- codetools::checkUsagePackage:\n    ", 
-                      paste("found", max(length(lines) - 1, 0), 
-                            "issues."),  
+        comments <- c(comments, "- codetools::checkUsagePackage:\n    ",
+                      paste("found", max(length(lines) - 1, 0),
+                            "issues."), 
                       "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "spell"))) {
         lines <- readLines(log_file)
         result <- sum(!grepl("^ ", grep(":[1-9]", lines, value = TRUE)))
-        comments <- c(comments, "- devtools::spell_check:\n    ", 
-                      paste("found", result, 
-                            "unkown words."),  
+        comments <- c(comments, "- devtools::spell_check:\n    ",
+                      paste("found", result,
+                            "unkown words."), 
                       "\n")
     }
     return(comments)
@@ -235,10 +235,10 @@ get_gitlab_info <- function(path = ".", private_token, ...) {
                                            private_token, ...),
                             error = function(e) return(NULL))
             if (!is.null(log)) {
-                info <- eval_from_log(file = log, 
+                info <- eval_from_log(file = log,
                                       pattern = "=== packager info:")
                 info <- info(info)
-                rcmdcheck <- eval_from_log(log, 
+                rcmdcheck <- eval_from_log(log,
                                            pattern = "=== packager rcmdcheck:")
                 if (is.null(rcmdcheck)) {
                     status <- "FAILED"

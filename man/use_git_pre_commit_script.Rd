@@ -17,8 +17,8 @@ Provide a pre-commit.d/ in ./git/hooks, a pre-commit hook that executes
 scripts from that directory and copy the \emph{script_file} there.
 }
 \details{
-\code{\link[git2r:commit]{git2r::commit}} somehow ignores hooks,
- so this works only for proper git.
+This might work only for proper git, not for packages like \pkg{gert} or
+\pkg{git2r}.
 }
 \seealso{
 Other infrastructure functions: 

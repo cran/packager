@@ -17,24 +17,11 @@ set_options(package_name, ..., overwrite = TRUE)
 invisible(TRUE)
 }
 \description{
-A convenience function for \code{\link{options}}.
-}
-\examples{
-options("cleanr" = NULL)
-defaults <- list(max_file_width = 80, max_file_length = 300,
-                 max_lines = 65, max_lines_of_code = 50,
-                 max_num_arguments = 5, max_nesting_depth = 3,
-                 max_line_width = 80, check_return = TRUE)
-
-set_options("cleanr", defaults)
-getOption("cleanr")
-set_options("cleanr", list(max_line_width = 3,
-            max_lines = "This is nonsense!"))
-set_options("cleanr", check_return = NULL, max_lines = 4000)
-get_options("cleanr")
+See \code{\link[fritools:set_options]{fritools:set_options}}
 }
 \seealso{
 Other option functions: 
 \code{\link{get_options}()}
 }
 \concept{option functions}
+\keyword{internal}

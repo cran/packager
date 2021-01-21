@@ -75,7 +75,7 @@ build: $(PKGNAME)_$(PKGVERS).tar.gz
 $(PKGNAME)_$(PKGVERS).tar.gz: NEWS.md README.md DESCRIPTION LICENSE \
 	$(LOG_DIR)/roxygen2.log $(R_FILES) $(MAN_FILES) $(TESTTHAT_FILES) \
 	$(RUNIT_FILES) $(VIGNETTES_FILES) $(INST_FILES) $(LOG_DIR)/spell.log \
-	$(LOG_DIR)/check_codetags.log $(LOG_DIR)/news.log $(LOG_DIR)/runit.log \
+	$(LOG_DIR)/check_codetags.log $(LOG_DIR)/news_rd.log $(LOG_DIR)/runit.log \
 	$(LOG_DIR)/testthat.log $(LOG_DIR)/covr.log $(LOG_DIR)/cleanr.log \
 	$(LOG_DIR)/lintr.log $(LOG_DIR)/cyclocomp.log $(LOG_DIR)/vignettes.log \
 	$(LOG_DIR)/usage.log 
@@ -146,7 +146,7 @@ $(LOG_DIR)/lintr.log: .log.log $(R_FILES) $(VIGNETTES_FILES) $(LOG_DIR)/dependen
 .PHONY: coverage
 coverage: $(LOG_DIR)/covr.log 
 $(LOG_DIR)/covr.log: .log.log $(R_FILES) $(TESTTHAT_FILES) $(RUNIT_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log
-	$(Rscript) --vanilla -e 'co <- covr::package_coverage(path = ".", function_exclusions = "\\.onLoad"); covr::zero_coverage(co); print(co)' > $(LOG_DIR)/covr.log 2>&1 
+	export RUN_R_TESTS="TRUE"; $(Rscript) --vanilla -e 'co <- covr::package_coverage(path = ".", function_exclusions = "\\.onLoad"); covr::zero_coverage(co); print(co)' > $(LOG_DIR)/covr.log 2>&1 
 
 .PHONY: testthat
 testthat: $(LOG_DIR)/testthat.log 
@@ -156,12 +156,17 @@ $(LOG_DIR)/testthat.log: .log.log $(R_FILES) $(TESTTHAT_FILES) $(INST_FILES) $(L
 .PHONY: runit
 runit: $(LOG_DIR)/runit.log
 $(LOG_DIR)/runit.log: .log.log $(R_FILES) $(RUNIT_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log $(LOG_DIR)/dev_install.log
-	$(Rscript) --vanilla tests/runit.R > $(LOG_DIR)/runit.log 2>&1 
+	export RUN_R_TESTS="TRUE"; $(Rscript) --vanilla tests/runit.R > $(LOG_DIR)/runit.log 2>&1 
 	
 .PHONY: news
 news: $(LOG_DIR)/news.log
 $(LOG_DIR)/news.log: .log.log DESCRIPTION NEWS.md $(LOG_DIR)/dependencies.log
 	$(Rscript) --vanilla -e 'packager::check_news()' > $(LOG_DIR)/news.log 2>&1 
+
+.PHONY: news_rd
+news: $(LOG_DIR)/news_rd.log
+$(LOG_DIR)/news_rd.log: .log.log $(LOG_DIR)/news.log $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'packager::provide_news_rd()' > $(LOG_DIR)/news_rd.log 2>&1 
 
 .PHONY: codetags
 codetags: $(LOG_DIR)/check_codetags.log 

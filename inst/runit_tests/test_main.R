@@ -43,15 +43,5 @@ test_create_rmd <- function() {
     # FIXME: I cannot test on fakemake = "check" as this fails with strange
     # conditions. So I ran it 
     # in create()'s examples, now it is located in test/testthat/test-main.R
-
-    #% check for the git pre-commit hook
-    packager::git_tag(path = d, message = "Test")
-    # modify something
-    unlink(file.path(d, "TODO.md"))
-    status <- withr::with_dir(d, system2("git", args = "commit -am'foo'"))
-    RUnit::checkTrue(!isTRUE(status))
-    # git2r ignores the hooks: 
-    git <- git2r::commit(d, message = "foo", all = TRUE)
-    RUnit::checkIdentical(class(git), "git_commit")
 }
 if (interactive()) test_create_rmd() 

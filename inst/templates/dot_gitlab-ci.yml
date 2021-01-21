@@ -6,9 +6,10 @@ stages:
     - deploy
 
 before_script:
-    - R --vanilla -e 'install.packages("remotes", repos = "https://cloud.r-project.org/")'
-    - R --vanilla -e 'remotes::install_git("https://gitlab.com/fvafrCU/packager")'
+    - if [ -e .gitlab-ci/gitlab-com.R ]; then R < .gitlab-ci/gitlab-com.R; fi
+    - R --vanilla -e 'install.packages("packager", repos = "https://cloud.r-project.org/")'
     - R --vanilla -e 'packager::install_deps(path = ".", repos = "http://ftp5.gwdg.de/pub/misc/cran/")'
+    - if [ -e .gitlab-ci/apt-script.cl ]; then ./.gitlab-ci/apt-script.cl; fi
 
 build_and_check:
   stage: build

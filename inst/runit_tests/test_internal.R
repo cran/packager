@@ -32,20 +32,6 @@ test_get_news <- function() {
     RUnit::checkIdentical(result, expectation)
 }
 
-test_grep_directory <- function() {
-    path <- tempfile()
-    dir.create(path)
-    writeLines(c("foo", "bar"), file.path(path, "foo_bar.txt"))
-    writeLines(c("foo", "bar"), file.path(path, "foo_bar1.txt"))
-    writeLines(c("foo", "bar"), file.path(path, "foo_bar2.txt"))
-    writeLines(c("bar", "bar"), file.path(path, "barbar.txt"))
-    writeLines(c("foo", "foobar", "bar"), file.path(path, "foobar.txt"))
-    writeLines(c("foo", "foo"), file.path(path, "foofoo.txt"))
-    result <- packager:::grep_directory(path = path, pattern = "^fo.b.r$")
-    expectation <- paste0(file.path(path, "foobar.txt"), ": foobar")
-    RUnit::checkIdentical(result, expectation)
-}
-
 test_git <- function() {
     path <- provide_fake_package() # Exclude Linting  
     on.exit(unlink(path, recursive = TRUE))

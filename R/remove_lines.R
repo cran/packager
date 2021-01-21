@@ -1,6 +1,6 @@
 #' Remove Lines From a File
 #'
-#' Delete lines from a files programmatically, for example from
+#' Delete lines from a file programmatically, for example from
 #' \file{.gitignore}.
 #'
 #' @param file_path Path to the file.
@@ -18,7 +18,7 @@
 #' cat(readLines(temp_file), sep = "\n")
 remove_lines <- function(file_path = file.path(".", ".gitignore"),
                          pattern,
-                         overwrite = !isFALSE(getOption("packager")[["force"]])) {
+                         overwrite = !fritools::is_false(getOption("packager")[["force"]])) {
     content  <- readLines(file_path)
     if (length(pattern) == 1L) {
         idx <- grepl(pattern, content)
