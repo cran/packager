@@ -20,6 +20,15 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
     ml <- get_basic_makelist()
     build_index <- which(sapply(ml, function(x) x["alias"] == "build"))
     build_target  <- ml[[build_index]][["target"]]
+    cyclocomp_code <- paste0("print(tryCatch(", 
+                             "packager::check_cyclomatic_complexity(\".\")",
+                             ", error = identity))")
+    ml <- fat(makelist = ml, 
+                     target = file.path("README.md"),
+                     sink = file.path("log", "readme.Rout"),
+                     code = "knitr::knit(\"README.Rmd\")",
+                     prerequisites = file.path("README.Rmd"),
+                     prerequisite_to = build_target)
     ml <- fat(makelist = ml, 
                      target = file.path("log", "testthat.Rout"),
                      code = "devtools::test(\".\")",
@@ -28,9 +37,7 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
                      prerequisite_to = build_target)
     ml <- fat(makelist = ml, 
                      target = file.path("log", "cyclocomp.Rout"),
-                     code = paste0("print(tryCatch(", 
-                                   "packager::check_cyclomatic_complexity(\".\")",
-                                   ", error = identity))"),
+                     code = cyclocomp_code,
                      prerequisites = c(list_files("R"), 
                                        file.path("log", "roxygen2.Rout")),
                      prerequisite_to = build_target)
@@ -42,7 +49,7 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
                                         list_files("vignettes")),
                      prerequisite_to = build_target)
     ml <- fat(makelist = ml, 
-                     target = file.path("log", "codetags.Rout"),
+                     target = file.path("log", "check_codetags.Rout"),
                      code = paste0("tryCatch(print(packager::check_codetags())",
                                    ", error = identity)"),
                      prerequisites = c(list_files("R")),
@@ -64,42 +71,57 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
                                         list_files("vignettes")),
                      prerequisite_to = build_target)
     ml <- fat(makelist = ml, 
+              target = file.path("log", "dev_install.Rout"),
+              code =  "devtools::install()",
+              prerequisites = c(list_files("R"), list_files("inst"), 
+                                list_files("tests")))
+    ml <- fat(makelist = ml, 
               target = file.path("log", "runit.Rout"),
               code =  paste0("pkg <- packager::as.package(\".\"); ",
-                             "callr::rscript(file.path(pkg[[\"path\"]],
-                             \"tests\", ", "\"runit.R\"))"),
-              prerequisites = c(list_files("R"), list_files("inst"), 
-                                list_files("tests")),
+                             "callr::rscript(file.path(pkg[[\"path\"]],",
+                             "\"tests\", ", "\"runit.R\"))"),
+              prerequisites = file.path("log", "dev_install.Rout"),
               prerequisite_to = build_target)
     ml <- fat(makelist = ml, 
                      target = file.path("log", "winbuilder.Rout"),
                      code = "devtools::check_win_devel()",
                      prerequisites = NULL,
                      prerequisite_to = NULL)
+    if (isTRUE(is_cran)) {
+        ml <- frt(ml, file.path("log", "check.Rout"))  
+        ml <- fat(ml,
+                  target = file.path("log", "check.Rout"),
+                  code = "packager::check_archive_as_cran(packager::get_pkg_archive_path())",
+                  prerequisites = "packager::get_pkg_archive_path(absolute = FALSE)")
+    }
     ml <- fat(makelist = ml, 
-                     target = file.path("log", "cran_comments.Rout"),
+                     target = file.path("log", "install.Rout"),
+                     code = "fritools::r_cmd_install(path = \".\")",
+                     prerequisites = file.path("log", "check.Rout"),
+                     prerequisite_to = NULL)
+    ml <- fat(makelist = ml, 
+                     target = "cran-comments.md",
+                     alias = "cran_comments",
+                     sink = file.path("log", "cran_comments.Rout"),
                      code = paste0("packager::provide_cran_comments(",
                                    "check_log = file.path(\"log\", \"check.Rout\"), ",
                                    "private_token = ", deparse(gitlab_token), 
                                    ")"),
-                     prerequisites = file.path("log", "check.Rout"),
+                     prerequisites = file.path("log", "install.Rout"),
                      prerequisite_to = NULL)
-    ml <- fat(ml,
-                     target = file.path("log", "check_as_cran.Rout"),
-                     code = "packager::check_archive_as_cran(packager::get_pkg_archive_path())",
-                     prerequisites = "packager::get_pkg_archive_path(absolute = FALSE)")
     ml <- fat(ml, 
-                     target = file.path("log", "submit.Rout"),
-                     code = paste0("is_clean <- ! packager:::is_git_uncommitted(\".\");",
-                                   "packager::submit(path = \".\", ",
-                                   "force = TRUE, stop_on_git = ! is_clean)"
-                                   ),
-                     prerequisites = c(file.path("log", "check_as_cran.Rout"),
-                                       file.path("log", "cran_comments.Rout")),
-                     )
+              target = file.path("log", "submit.Rout"),
+              code = paste0("is_clean <- ! packager:::is_git_uncommitted(\".\");",
+                            "packager::submit(path = \".\", ",
+                            "force = TRUE, stop_on_git = ! is_clean)"
+                            ),
+              prerequisites = file.path("log", "cran_comments.Rout")
+              )
     if (isTRUE(is_cran)) {
-        ml <- frt(frt(ml, file.path("log", "runit.Rout")),  
+        ml <- frt(frt(frt(ml, file.path("log", "runit.Rout")),  
+                      file.path("log", "dev_install.Rout")),
                   file.path("log", "cyclocomp.Rout"))
+
     }
     return(add_detach(add_log(ml)))
 }
@@ -113,7 +135,7 @@ get_basic_makelist <- function() {
                          "))")
     spell_code <- paste0("spell <- devtools::spell_check(); ",
                         "if (length(spell) > 0) {print(spell); ",
-                        "warning(\"\nSpell check failed, see \",",
+                        "warning(\"Spell check failed, see \",",
                         "file.path(getwd(), \"log\", \"spell.Rout\"),",
                         "\" for details.\")}")
     # detach package after covr attached it. Required by R-devel 4.0.0 on
@@ -122,7 +144,7 @@ get_basic_makelist <- function() {
     covr_code <- paste0("co <- covr::package_coverage(path = \".\"); ",
                        "print(covr::zero_coverage(co)); print(co); ")
     build_code <- paste0("print(pkgbuild::build(path = \".\", ", 
-                        "dest_path = \".\", vignettes = FALSE))")
+                        "dest_path = \".\", vignettes = TRUE))")
     r_codes <- paste0("grep(list.files(\".\", ",
                                   "pattern = \".*\\\\.[rR]$\", ",
                                   "recursive = TRUE), ",
@@ -166,7 +188,7 @@ get_basic_makelist <- function() {
                     code = build_code,
                     sink = "log/build.Rout",
                     prerequisites = c(list_files("R"), list_files("man"),
-                                      "DESCRIPTION",
+                                      "DESCRIPTION", "LICENSE",
                                       "file.path(\"log\", \"lintr.Rout\")",
                                       "file.path(\"log\", \"cleanr.Rout\")",
                                       "file.path(\"log\", \"spell.Rout\")",

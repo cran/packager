@@ -3,29 +3,19 @@ if (interactive()) pkgload::load_all(".")
 test_add_commit <- function() {
     path <- tempfile()
     dir.create(path)
-    r <- git2r::init(path)
+    gert::git_init(path = path)
     writeLines("hello, world!", file.path(path, "f"))
-    expectation <- structure(list(staged = structure(list(),
-                                                     .Names = character(0)),
-                                  unstaged = structure(list(),
-                                                       .Names = character(0)),
-                                  untracked = structure(list(untracked = "f"),
-                                                        .Names = "untracked")),
-                             .Names = c("staged", "unstaged", "untracked"),
-                             class = "git_status")
-    result <- git2r::status(r)
+    expectation <- structure(list(file = "f", status = "new", staged = FALSE),
+                             row.names = c(NA, -1L),
+                             class = c("tbl_df", "tbl", "data.frame"))
+    result <- gert::git_status(repo = path)
     RUnit::checkIdentical(expectation, result)
     RUnit::checkException(git_add_commit(path = path))
     git_add_commit(path = path, untracked = TRUE)
-    expectation <- structure(list(staged = structure(list(),
-                                                    .Names = character(0)),
-                                 unstaged = structure(list(),
-                                                      .Names = character(0)),
-                                 untracked = structure(list(),
-                                                       .Names = character(0))),
-                            .Names = c("staged", "unstaged", "untracked"),
-                            class = "git_status")
-    result <- git2r::status(r)
+    expectation <- structure(list(file = character(0), status = character(0),
+                                  staged = logical(0)), row.names = integer(0), 
+                             class = c("tbl_df", "tbl", "data.frame"))
+    result <- gert::git_status(repo = path)
     RUnit::checkIdentical(expectation, result)
 }
 
@@ -118,8 +108,9 @@ test_githuburl <- function() {
 
     unlink(path, recursive = TRUE)
     usethis::create_package(path)
-    repo <- git2r::init(path)
-    git2r::remote_add(repo, "github", url)
+    gert::git_init(path = path)
+    gert::git_remote_add(repo = path, name = "github",
+                         url = url)
     result <- add_github_url_to_desc(path = path, default_gh_user = NA)
     RUnit::checkTrue(result)
     RUnit::checkIdentical(url, desc::desc_get_urls(path))

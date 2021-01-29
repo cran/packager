@@ -26,33 +26,33 @@ devel: build_win use_dev_version tag_release submit force_submit rhub
 
 .PHONY: tag_release
 tag_release:
-	$(R) --vanilla -e 'packager::git_tag(message = " ")'
+	$(R) --vanilla -e 'packager::git_tag(message = " ")' > $(LOG_DIR)/git_tag.log 2>&1 
 
 .PHONY: force_submit
 force_submit:  
-	$(R) -e "packager::submit(force = TRUE)"
+	$(R) -e "packager::submit(force = TRUE)" > $(LOG_DIR)/submit.log 2>&1 
 
 .PHONY: submit
 submit: 
 	echo "try(packager::submit(force = FALSE)); quit(save = \"no\")" > /tmp/rel.R
 	echo "source('/tmp/rel.R')" > ./.Rprofile
-	$(R)
+	$(R)  > $(LOG_DIR)/submission.log 2>&1 
 	rm /tmp/rel.R ./.Rprofile
 
 .PHONY: dev_release
 dev_release: 
 	echo "library('utils'); devtools::release(check = FALSE)" > /tmp/rel.R
 	echo "source('/tmp/rel.R')" > ./.Rprofile
-	$(R)
+	$(R)  > $(LOG_DIR)/devtools_release.log 2>&1 
 	rm /tmp/rel.R ./.Rprofile
 
 .PHONY: build_win
 build_win:
-	$(Rscript) --vanilla -e 'devtools::check_win_devel()'
+	$(Rscript) --vanilla -e 'devtools::check_win_devel()' > $(LOG_DIR)/win_builder.log 2>&1 
 
 .PHONY: use_dev_version
 use_dev_version:
-	$(Rscript) --vanilla -e 'packager::use_dev_version()'
+	$(Rscript) --vanilla -e 'packager::use_dev_version()' > $(LOG_DIR)/use_dev.log 2>&1 
 
 # install
 cran-comments.md:  $(LOG_DIR)/install.log
@@ -90,20 +90,19 @@ index.hml: README.md
 	pandoc  README.md -o index.html
 
 README.md: README.Rmd R/$(PKGNAME)-package.R
-	$(Rscript) --vanilla -e 'knitr::knit("README.Rmd")'
+	$(Rscript) --vanilla -e 'knitr::knit("README.Rmd")'  > $(LOG_DIR)/readme.log 2>&1 
 
 $(LOG_DIR)/roxygen2.log: .log.log $(R_FILES)
-	$(R) --vanilla -e 'roxygen2::roxygenize(".")' > $(LOG_DIR)/roxygen2.log 2>&1 
+	$(R) --vanilla -e 'print(roxygen2::roxygenize("."))' > $(LOG_DIR)/roxygen2.log 2>&1 
 
 .log.log: 
-	$(Rscript) --vanilla -e 'packager::use_build_ignore(".log.log")'
-	$(Rscript) --vanilla -e 'packager::use_directory("log", ignore = TRUE)' > .log.log
+	$(Rscript) --vanilla -e 'packager::use_build_ignore(".log.log"); packager::use_directory("log", ignore = TRUE)' > .log.log
 
 
 .PHONY: dependencies
 dependencies: $(LOG_DIR)/dependencies.log
 $(LOG_DIR)/dependencies.log: Makefile .log.log
-	$(Rscript) --vanilla -e 'deps <- unlist(strsplit("$(DEPS)", split = " ")); for (dep in deps) if (! require(dep, character.only = TRUE)) install.packages(dep, repos = "https://cran.uni-muenster.de/")' > $(LOG_DIR)/dependencies.log 2>&1 
+	$(Rscript) --vanilla -e 'packager::install_deps(path = ".", verbose = TRUE, repos = "https://cloud.r-project.org/"); packager::install_deps(path = system.file("DESCRIPTION", package = "packager"), verbose = TRUE, repos = "https://cloud.r-project.org/")' > $(LOG_DIR)/dependencies.log 2>&1 
 
 # utils
 utils: clean remove viz dev_install
@@ -161,7 +160,7 @@ $(LOG_DIR)/runit.log: .log.log $(R_FILES) $(RUNIT_FILES) $(INST_FILES) $(LOG_DIR
 .PHONY: news
 news: $(LOG_DIR)/news.log
 $(LOG_DIR)/news.log: .log.log DESCRIPTION NEWS.md $(LOG_DIR)/dependencies.log
-	$(Rscript) --vanilla -e 'packager::check_news()' > $(LOG_DIR)/news.log 2>&1 
+	$(Rscript) --vanilla -e 'print(packager::check_news())' > $(LOG_DIR)/news.log 2>&1 
 
 .PHONY: news_rd
 news: $(LOG_DIR)/news_rd.log

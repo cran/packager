@@ -189,3 +189,21 @@ get_git_commit <- function(path) {
     commit <- branches[branches[["name"]] == current, "commit"]
     return(commit)
 }
+
+
+#' Show a Git Diff for a File
+#' 
+#' @param x The path to the file relative to the repository given by
+#' \code{path}.
+#' @param path The path to the git repository.
+#' @param verbose Be verbose? This is the main purpose of this tiny little
+#' wrapper!
+#' @return The git diff.
+#' @export
+git_diff <- function(x, path, verbose = TRUE) {
+    d <- gert::git_diff_patch(repo = path)
+    i <- grepl(paste0("a/", x), d)
+    res <- d[i]
+    if (isTRUE(verbose)) cat(d[i], sep = "\n")
+    return(invisible(res))
+}

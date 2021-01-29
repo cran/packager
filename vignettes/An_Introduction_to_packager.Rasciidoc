@@ -39,9 +39,8 @@ packager::create(path, fakemake = "check")
 The package is built, tested, checked and committed into git:
 //begin.rcode
 list.files(path, recursive = FALSE)
-r <- git2r::repository(path)
-summary(r)
-git2r::status(r)
+gert::git_status(repo = path)
+gert::git_log(repo = path)
 //end.rcode
 We can look at some of the files 
 (the directory +myFirstPackage.Rcheck+ might be of interest):
@@ -50,7 +49,7 @@ cat(readLines(file.path(path, "log", "spell.Rout")), sep = "\n")
 tail(readLines(file.path(path, "log", "check.Rout")), sep = "\n")
 //end.rcode
 
-And we see what+s left to do:
+And we see what is left to do:
 //begin.rcode
 cat(readLines(file.path(path, "TODO.md")), sep = "\n")
 //end.rcode
@@ -120,9 +119,8 @@ in one of my startup files to set the author information globally.
 
 Our brand new package +r devtools::as.package(path)[["package"]]+ is checked into git already:
 //begin.rcode
-r <- git2r::repository(path)
-summary(r)
-git2r::status(r)
+gert::git_status(repo = path)
+gert::git_log(repo = path)
 //end.rcode
 
 but we have so far only built the documentation from the +roxygen+ comments:
@@ -145,22 +143,19 @@ suppressMessages(withr::with_dir(path,
                                                        verbose = FALSE))))
 //end.rcode
 
-We note the warning 
-//begin.rcode
-cat(git2r::diff(r, as_char = TRUE, path = file.path(".Rbuildignore")))
-//end.rcode
 
-and see that now there are untracked files in our package's 
+
+We see that now there are untracked files in our package's 
 log directory and that some files changed.
 //begin.rcode
-git2r::status(r)
-cat(diff(r, as_char = TRUE, path = ".Rbuildignore"))
+gert::git_status(repo = path)
+git_diff(x = ".Rbuildignore", path = path)
 //end.rcode
 After inspecting the change, we commit:
 //begin.rcode
 withr::with_dir(path, packager::git_add_commit(path = ".", untracked = TRUE,
                                                message = "make build"))
-git2r::status(r)
+gert::git_status(repo = path)
 //end.rcode
 
 === Checking the Package
@@ -174,7 +169,7 @@ suppressMessages(withr::with_dir(path,
 //end.rcode
 We again see new files and changes to old files.
 //begin.rcode
-git2r::status(r)
+gert::git_status(repo = path)
 //end.rcode
 Note that the +RUnit+ test files are run while checking the tarball, hence we
 see output from +RUnit+ in our log directory.
@@ -222,7 +217,7 @@ Oops: we need to commit git first:
 //begin.rcode
 packager::git_add_commit(path = path, untracked = TRUE, 
                          message = "prepare for CRAN")
-git2r::status(r)
+gert::git_status(repo = path)
 
 //end.rcode
 

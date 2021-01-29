@@ -57,9 +57,11 @@ test_url <- function() {
     path <- file.path(tempdir(), "prutp")
     dir.create(path)
     on.exit(unlink(path, recursive = TRUE))
-    repo <- git2r::init(path)
-    git2r::remote_add(repo, "github", "https://github.com/fvafrCU/prutp")
-    git2r::remote_add(repo, "local", "./some_path/git/prutp")
+    gert::git_init(path)
+    gert::git_remote_add(repo = path, name = "github",
+                         url = "https://github.com/fvafrCU/prutp")
+    gert::git_remote_add(repo = path, name = "local",
+                         url = "./some_path/git/prutp")
     ##% package's url
     expectation <- "https://github.com/fvafrCU/prutp"
     result <- grep(value = TRUE, "github", packager:::get_remote_url(path))
@@ -86,7 +88,8 @@ test_url <- function() {
     RUnit::checkIdentical(result, expectation)
 
     ##% multiple url
-    git2r::remote_add(repo, "github1", "https://github.com/fvafrCU/fakepackage")
+    gert::git_remote_add(repo = path, name = "github1",
+                         url = "https://github.com/fvafrCU/fakepackage")
 
     ###% return all url
     expectation <- c("https://github.com/fvafrCU/prutp",
@@ -113,8 +116,9 @@ test_travis <- function() {
     path <- file.path(tempdir(), "prutp")
     dir.create(path)
     on.exit(unlink(path, recursive = TRUE))
-    repo <- git2r::init(path)
-    git2r::remote_add(repo, "github", "https://github.com/fvafrCU/packager")
+    gert::git_init(path)
+    gert::git_remote_add(repo = path, name = "github",
+                         url = "https://github.com/fvafrCU/packager")
     if (Sys.info()[["nodename"]] %in% c("h5", "h6")) {
         RUnit::checkException(packager:::travis_cli(path))
     }

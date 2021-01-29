@@ -1,14 +1,40 @@
+# packager 1.10.0
+
+* Updated the `makelist` returned  by `get_package_makelist()` to 
+    - install,
+    - dev\_install before running RUnit tests,
+    - knit README.md from README.Rmd,
+    - rename the target from `log/cran_comments.Rout` (which is now the sink) to
+     `cran-comments.md`, as the later _is_ the target file.
+    - make build depend on file LICENSE,
+    - build with vignettes instead of without vignettes.
+  So now 
+  ```
+  fakemake::make("cran-comments.md", get_package_makelist())
+  ```
+  and
+  ```
+  system(paste("make -f", system.file("templates", "nomakefile", package = "packager"), "cran-comments.md"))
+  ```
+  
+  will run identical make chains.
+  Added internal function `compare_make()` to ensure for this.
+* Switched vignette and unit tests from `git2r` to `gert`, so now `git2r` is not
+  suggested anymore.
+* Added git wrapper `git_diff()`.
+* Renamed makelist target from `codetags.Rout` to `check_codetags.Rout`
+  according to the function's name.
+* `extract_vignette_codes()` now extracts to `inst/vignette_codes/`.
+
 # packager 1.9.0
 
 * Now importing package `fritools`.
 * Call package `whoami` only if system dependency `whoami` is available or the
   system running is windows.
-* Switched from git2r to gert.
+* Switched from `git2r` to `gert`.
 * Updated the `makelist` returned  by `get_package_makelist()` to 
     - install the current and packager's dependencies and suggested packages. 
     - report RUnit testing correctly.
-* Added simple wrappers for calls to R CMD. `callr`, calling `processx::run`
-  seemed too bloated for such simple tasks.
 * Added function `provide_news_rd()` which will derive file `inst/NEWS.rd` from
   file `NEWS.md`. The former will be shown in the package's help index, so it's
   more prominent to people using that index than the latter which will only be
@@ -93,7 +119,7 @@
 * Now using rasciidoc vignettes.
   Pass `use_rasciidoc_vignette = FALSE` to `create()` or `infect()` to stick
   with the original rmarkdown vignette.
-* Added an function internal function extract\_vignette\_codes() to extract R
+* Added an function internal function `extract_vignette_codes()` to extract R
   code from different vignettes.
 
 # packager 1.1.0

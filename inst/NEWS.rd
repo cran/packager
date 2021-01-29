@@ -1,19 +1,46 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.10.0}{
+\itemize{
+\item Updated the \code{makelist} returned  by \code{get_package_makelist()} to
+\itemize{
+\item install,
+\item dev\_install before running RUnit tests,
+\item knit README.md from README.Rmd,
+\item rename the target from \code{log/cran_comments.Rout} (which is now the sink) to
+\code{cran-comments.md}, as the later \emph{is} the target file.
+\item make build depend on file LICENSE,
+\item build with vignettes instead of without vignettes.
+So now
+}\preformatted{fakemake::make("cran-comments.md", get_package_makelist())
+}
+
+and\preformatted{system(paste("make -f", system.file("templates", "nomakefile", package = "packager"), "cran-comments.md"))
+}
+
+will run identical make chains.
+Added internal function \code{compare_make()} to ensure for this.
+\item Switched vignette and unit tests from \code{git2r} to \code{gert}, so now \code{git2r} is not
+suggested anymore.
+\item Added git wrapper \code{git_diff()}.
+\item Renamed makelist target from \code{codetags.Rout} to \code{check_codetags.Rout}
+according to the function's name.
+\item \code{extract_vignette_codes()} now extracts to \verb{inst/vignette_codes/}.
+}
+}
+
 \section{Changes in version 1.9.0}{
 \itemize{
 \item Now importing package \code{fritools}.
 \item Call package \code{whoami} only if system dependency \code{whoami} is available or the
 system running is windows.
-\item Switched from git2r to gert.
+\item Switched from \code{git2r} to \code{gert}.
 \item Updated the \code{makelist} returned  by \code{get_package_makelist()} to
 \itemize{
 \item install the current and packager's dependencies and suggested packages.
 \item report RUnit testing correctly.
 }
-\item Added simple wrappers for calls to R CMD. \code{callr}, calling \code{processx::run}
-seemed too bloated for such simple tasks.
 \item Added function \code{provide_news_rd()} which will derive file \code{inst/NEWS.rd} from
 file \code{NEWS.md}. The former will be shown in the package's help index, so it's
 more prominent to people using that index than the latter which will only be
@@ -118,7 +145,7 @@ of file DESCRIPTION.
 \item Now using rasciidoc vignettes.
 Pass \code{use_rasciidoc_vignette = FALSE} to \code{create()} or \code{infect()} to stick
 with the original rmarkdown vignette.
-\item Added an function internal function extract\_vignette\_codes() to extract R
+\item Added an function internal function \code{extract_vignette_codes()} to extract R
 code from different vignettes.
 }
 }

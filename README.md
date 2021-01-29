@@ -18,7 +18,6 @@ Please read the
 [vignette](https://fvafrCU.gitlab.io/packager/doc/An_Introduction_to_packager.html).
 <!-- 
 [vignette](https://CRAN.R-project.org/package=packager/vignettes/An_Introduction_to_packager.html).
-
 -->
 
 Or, after installation, the help page:
@@ -26,6 +25,7 @@ Or, after installation, the help page:
 ```r
 help("packager-package", package = "packager")
 ```
+
 
 ```
 #> Helps Me Create, Build and Maintain Packages

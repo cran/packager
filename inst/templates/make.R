@@ -26,4 +26,4 @@ if (! exists("target_name")) {
 }
 if (devtools::as.package(".")[["package"]] == "packager") pkgload::load_all()
 makelist <- packager::get_package_makelist()
-print(fakemake::make(target_name, makelist, verbose = TRUE))
+print(fakemake::make(target_name, makelist, verbose = interactive()))

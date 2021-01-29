@@ -7,14 +7,15 @@
 #' @template return_invisibly_null
 extract_vignette_codes <- function(path = ".") {
     dir <- as.package(".")[["path"]]
-    dir.create(file.path(dir, "inst", "doc"))
+    output_dir <- file.path(dir, "inst", "vignettes_code")
+    dir.create(output_dir)
     lapply(tools::pkgVignettes(dir = dir)[["docs"]],
            function(x) {
                if (grepl("\\.Rnw$$", x)) {
-                   withr::with_dir(file.path(dir, "inst", "doc"), utils::Stangle(x))
+                   withr::with_dir(output_dir, utils::Stangle(x))
                } else {
                    knitr::purl(x,
-                               output = file.path(dir, "inst", "doc",
+                               output = file.path(output_dir,
                                                   sub("\\.[rR](md|asciidoc)$$",
                                                       ".R", basename(x))
                                                   ),

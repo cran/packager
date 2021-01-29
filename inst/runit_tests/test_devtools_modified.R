@@ -28,7 +28,7 @@ test_use_git_ignore <- function() {
     path <- file.path(tempdir(), "prutp")
     dir.create(path)
     on.exit(unlink(path, recursive = TRUE))
-    git2r::init(path)
+    gert::git_init(path)
     ignores <- c("foo", "bar")
     result <- packager:::use_git_ignore(path = path, ignores = ignores)
     RUnit::checkIdentical(result, expectation)
