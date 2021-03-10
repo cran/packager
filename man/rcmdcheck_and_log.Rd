@@ -6,8 +6,8 @@
 \usage{
 rcmdcheck_and_log(
   path = ".",
-  args = "--as-cran",
-  build_args = args[-which(args == "--as-cran")]
+  args = c(build_args, "--as-cran"),
+  build_args = NULL
 )
 }
 \arguments{

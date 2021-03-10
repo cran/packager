@@ -1,7 +1,7 @@
 #' Use the BSD-2-Clause License
 #'
 #' It's my favorite and \pkg{devtools} provides
-#' \code{\link{use_mit_license}} only.
+#' \code{use_mit_license} only.
 #' @template package_path
 #' @return Invisibly \code{\link{NULL}}.
 #' @keywords internal

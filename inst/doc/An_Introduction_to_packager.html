@@ -805,19 +805,12 @@ I do this because this is a vignette and its codes are run on
 <div class="sectionbody">
 <div class="paragraph"><p>To create a new package I use:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>path &lt;- file.path(tempdir(), <span style="color: #FF0000">"myFirstPackage"</span>)
-packager::create(path, fakemake = <span style="color: #FF0000">"check"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
+<div class="listingblock">
+<div class="content"></div></div>
 <div class="paragraph"><p>The package is built, tested, checked and committed into git:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>list.files(path, recursive = FALSE)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>##  [1] "DESCRIPTION"                 "LICENSE"
@@ -833,53 +826,44 @@ http://www.gnu.org/software/src-highlite -->
 ## [21] "vignettes"</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_status(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 0 x 3
 ## # … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_log(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## # A tibble: 17 x 6
+<pre><code>## # A tibble: 20 x 6
 ##    commit        author     time                files merge message
 ##  * &lt;chr&gt;         &lt;chr&gt;      &lt;dttm&gt;              &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;
-##  1 dd8734a864aa… fvafrcu &lt;… 2021-01-29 12:23:05    28 FALSE "Packager Changes\n"
-##  2 ec7874693959… fvafrcu &lt;… 2021-01-29 12:21:54     2 FALSE "Adding `man-roxyge…
-##  3 10c64734d584… fvafrcu &lt;… 2021-01-29 12:21:54     2 FALSE "Adding `make.R` fr…
-##  4 aee45a777f5b… fvafrcu &lt;… 2021-01-29 12:21:54     1 FALSE "Adding `inst/runit…
-##  5 6fbff01ca8cf… fvafrcu &lt;… 2021-01-29 12:21:54     1 FALSE "Adding `tests/runi…
-##  6 4017320ff8e3… fvafrcu &lt;… 2021-01-29 12:21:54     1 FALSE "Adding `tests/test…
-##  7 5d6392ee6493… fvafrcu &lt;… 2021-01-29 12:21:54     1 FALSE "Adding `R/throw.R`…
-##  8 abc72e5ff177… fvafrcu &lt;… 2021-01-29 12:21:53     2 FALSE "Adding `devel.R` f…
-##  9 5ea0ef960da9… fvafrcu &lt;… 2021-01-29 12:21:53     2 FALSE "Adding `.gitlab-ci…
-## 10 f5cd5026a571… fvafrcu &lt;… 2021-01-29 12:21:53     2 FALSE "Adding `.gitlab-ci…
-## 11 7b067363ff11… fvafrcu &lt;… 2021-01-29 12:21:53     2 FALSE "Adding `.travis.ym…
-## 12 ca1400691650… fvafrcu &lt;… 2021-01-29 12:21:53     2 FALSE "Adding `README.Rmd…
-## 13 32693ac66439… fvafrcu &lt;… 2021-01-29 12:21:53     1 FALSE "Adding `NEWS.md` f…
-## 14 95ac7771776c… fvafrcu &lt;… 2021-01-29 12:21:53     1 FALSE "Adding `vignettes/…
-## 15 29328e701293… fvafrcu &lt;… 2021-01-29 12:21:53     2 FALSE "Adding `Makefile` …
-## 16 08169ae99d17… fvafrcu &lt;… 2021-01-29 12:21:53     1 FALSE "Clean DESCRIPTION\…
-## 17 ba7f53339b1b… fvafrcu &lt;… 2021-01-29 12:21:53     2 FALSE "Initial Commit\n"</code></pre>
+##  1 548d8f8f7988… fvafrcu &lt;… 2021-03-10 12:30:30    27 FALSE "Packager Changes\n"
+##  2 d94c91a1b22c… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `man-roxyge…
+##  3 2a017f7a3579… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `man-roxyge…
+##  4 f4eeea4bcda9… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `R/zzz.R` f…
+##  5 1d2a54bc7f44… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `make.R` fr…
+##  6 ef98c3080007… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Adding `inst/runit…
+##  7 0b71a8b08cd4… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Adding `tests/runi…
+##  8 e2a5a291a614… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Adding `tests/test…
+##  9 db1061a0317d… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Adding `R/throw.R`…
+## 10 754676ed1d54… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Adding `tests/test…
+## 11 798941c687a5… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `devel.R` f…
+## 12 43e447e144d4… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `.gitlab-ci…
+## 13 443879d651a2… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `.gitlab-ci…
+## 14 b2cf97493248… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `.travis.ym…
+## 15 42d869bb923d… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `README.Rmd…
+## 16 2606c72d992b… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Adding `NEWS.md` f…
+## 17 4d929e71fc98… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Adding `vignettes/…
+## 18 9583997f79d0… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Adding `Makefile` …
+## 19 1fb0b67f0c88… fvafrcu &lt;… 2021-03-10 12:29:34     1 FALSE "Clean DESCRIPTION\…
+## 20 c64539c1442a… fvafrcu &lt;… 2021-03-10 12:29:34     2 FALSE "Initial Commit\n"</code></pre>
 </div></div>
 <div class="paragraph"><p>We can look at some of the files
 (the directory <code>myFirstPackage.Rcheck</code> might be of interest):</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"spell.Rout"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## DESCRIPTION does not contain 'Language' field. Defaulting to 'en-US'.
@@ -888,30 +872,22 @@ http://www.gnu.org/software/src-highlite -->
 ##           README.md:8,9
 ## gitlab    README.Rmd:43
 ##           README.md:43
-## Spell check failed, see /tmp/Rtmph8NLyT/myFirstPackage/log/spell.Rout for details.</code></pre>
+## Spell check failed, see /tmp/Rtmp5mtHX6/myFirstPackage/log/spell.Rout for details.</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>tail(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## [1] ""
 ## [2] "See"
-## [3] "  ‘/tmp/Rtmph8NLyT/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
+## [3] "  ‘/tmp/Rtmp5mtHX6/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
 ## [4] "for details."
 ## [5] ""
 ## [6] ""</code></pre>
 </div></div>
 <div class="paragraph"><p>And we see what is left to do:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"TODO.md"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## - make sure https://gitlab.com/fvafrcu/myFirstPackage exists!</code></pre>
@@ -920,11 +896,7 @@ http://www.gnu.org/software/src-highlite -->
 <h3 id="_customizing">Customizing</h3>
 <div class="paragraph"><p>We see that the package&#8217;s DESCRIPTION is filled with default values.</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"DESCRIPTION"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## Package: myFirstPackage
@@ -935,59 +907,40 @@ http://www.gnu.org/software/src-highlite -->
 ##            family = "Cullmann",
 ##            role = c("aut", "cre"),
 ##            email = "fvafrcu@mailbox.org")
-## Description: What the package does (one paragraph).
+## Author: Who wrote it
+## Description: More about what it does (maybe more than one line)
 ## License: BSD_2_clause + file LICENSE
 ## URL: https://gitlab.com/fvafrcu/myFirstPackage
 ## Depends:
 ##     R (&gt;= 4.1.0)
 ## Suggests:
 ##     knitr,
-##     rmarkdown,
 ##     pkgload,
-##     testthat (&gt;= 3.0.0),
+##     testthat,
+##     rmarkdown,
 ##     RUnit,
-##     devtools,
 ##     rprojroot
 ## VignetteBuilder:
 ##     knitr
 ## Encoding: UTF-8
-## LazyData: true
-## Roxygen: list(markdown = TRUE)
 ## RoxygenNote: 7.1.1
-## Config/testthat/edition: 3</code></pre>
+## Imports:
+##     fritools (&gt;= 1.3.0)</code></pre>
 </div></div>
 <div class="paragraph"><p>We could set the package information on the existing package, but we rather create a
 new one now.
 So we get rid of our first package</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>unlink(path, recursive = TRUE)
-<span style="font-weight: bold"><span style="color: #0000FF">if</span></span> (<span style="color: #FF0000">"myFirstPackage"</span> <span style="color: #990000">%in%</span> .packages()) detach(<span style="color: #FF0000">"package:myFirstPackage"</span>,
-                                              unload = TRUE)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="paragraph"><p>and customize the package creation
 (but we skip the process of testing, building and checking for the sake of CPU
  time, we just build the docs):</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>package_title &lt;- <span style="color: #FF0000">"veryImportantPackage"</span>
-path &lt;- file.path(tempdir(), package_title)
-a  &lt;- utils::person(given = <span style="color: #FF0000">"Your"</span>, family = <span style="color: #FF0000">"Name"</span>, email = <span style="color: #FF0000">"some@whe.re"</span>,
-                    role = c(<span style="color: #FF0000">"aut"</span>, <span style="color: #FF0000">"cre"</span>))
-packager::create(path, author_at_r = a, title = package_title,
-                 description = <span style="color: #FF0000">"This is very important."</span>,
-                 details = <span style="color: #FF0000">"At least to me."</span>, fakemake = <span style="color: #FF0000">"roxygen2"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"DESCRIPTION"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
+<div class="listingblock">
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## Package: veryImportantPackage
@@ -998,6 +951,7 @@ http://www.gnu.org/software/src-highlite -->
 ##            family = "Name",
 ##            role = c("aut", "cre"),
 ##            email = "some@whe.re")
+## Author: Who wrote it
 ## Description: This is very important.
 ## License: BSD_2_clause + file LICENSE
 ## URL: https://gitlab.com/fvafrcu/veryImportantPackage
@@ -1005,35 +959,23 @@ http://www.gnu.org/software/src-highlite -->
 ##     R (&gt;= 4.1.0)
 ## Suggests:
 ##     knitr,
-##     rmarkdown,
 ##     pkgload,
-##     testthat (&gt;= 3.0.0),
+##     testthat,
+##     rmarkdown,
 ##     RUnit,
-##     devtools,
 ##     rprojroot
 ## VignetteBuilder:
 ##     knitr
 ## Encoding: UTF-8
-## LazyData: true
-## Roxygen: list(markdown = TRUE)
 ## RoxygenNote: 7.1.1
-## Config/testthat/edition: 3</code></pre>
+## Imports:
+##     fritools (&gt;= 1.3.0)</code></pre>
 </div></div>
 <div class="paragraph"><p>The package&#8217;s man page is set up accordingly:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>pkgload::load_all(path)
-help(paste0(package_title, <span style="color: #FF0000">"-package"</span>))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Loading veryImportantPackage</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## veryImportantPackage
@@ -1050,17 +992,7 @@ http://www.gnu.org/software/src-highlite -->
 </div></div>
 <div class="paragraph"><p>I use</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>adc &lt;- utils::person(given = <span style="color: #FF0000">"Andreas Dominik"</span>,
-                      family = <span style="color: #FF0000">"Cullmann"</span>,
-                      email = <span style="color: #FF0000">"fvafrcu@mailbox.org"</span>,
-                      role = c(<span style="color: #FF0000">"aut"</span>, <span style="color: #FF0000">"cre"</span>))
-pop &lt;- as.list(getOption(<span style="color: #FF0000">"packager"</span>))
-pop[[<span style="color: #FF0000">"whoami"</span>]] &lt;- adc
-options(packager = pop)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="paragraph"><p>in one of my startup files to set the author information globally.</p></div>
 </div>
 </div>
@@ -1070,65 +1002,50 @@ options(packager = pop)</tt></pre></div></div>
 <div class="sectionbody">
 <div class="paragraph"><p>Our brand new package veryImportantPackage is checked into git already:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_status(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 0 x 3
 ## # … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_log(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## # A tibble: 17 x 6
+<pre><code>## # A tibble: 20 x 6
 ##    commit        author     time                files merge message
 ##  * &lt;chr&gt;         &lt;chr&gt;      &lt;dttm&gt;              &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;
-##  1 8adec18119ac… fvafrcu &lt;… 2021-01-29 12:23:07    12 FALSE "Packager Changes\n"
-##  2 e3c3e889f4ae… fvafrcu &lt;… 2021-01-29 12:23:06     2 FALSE "Adding `man-roxyge…
-##  3 b09e2efd7e3a… fvafrcu &lt;… 2021-01-29 12:23:06     2 FALSE "Adding `make.R` fr…
-##  4 50bb566cdd85… fvafrcu &lt;… 2021-01-29 12:23:06     1 FALSE "Adding `inst/runit…
-##  5 240b4e3788d9… fvafrcu &lt;… 2021-01-29 12:23:06     1 FALSE "Adding `tests/runi…
-##  6 abf04ed8129c… fvafrcu &lt;… 2021-01-29 12:23:06     1 FALSE "Adding `tests/test…
-##  7 a070059bd63a… fvafrcu &lt;… 2021-01-29 12:23:06     1 FALSE "Adding `R/throw.R`…
-##  8 a7c6c4a25fb1… fvafrcu &lt;… 2021-01-29 12:23:06     2 FALSE "Adding `devel.R` f…
-##  9 526c456eddcc… fvafrcu &lt;… 2021-01-29 12:23:06     2 FALSE "Adding `.gitlab-ci…
-## 10 c8c8528151bf… fvafrcu &lt;… 2021-01-29 12:23:06     2 FALSE "Adding `.gitlab-ci…
-## 11 a9648d672e1d… fvafrcu &lt;… 2021-01-29 12:23:06     2 FALSE "Adding `.travis.ym…
-## 12 78deb40e0545… fvafrcu &lt;… 2021-01-29 12:23:06     2 FALSE "Adding `README.Rmd…
-## 13 7029951824ab… fvafrcu &lt;… 2021-01-29 12:23:06     1 FALSE "Adding `NEWS.md` f…
-## 14 49008d9464f7… fvafrcu &lt;… 2021-01-29 12:23:06     1 FALSE "Adding `vignettes/…
-## 15 20c1785f1ef3… fvafrcu &lt;… 2021-01-29 12:23:05     2 FALSE "Adding `Makefile` …
-## 16 53c7a03819c4… fvafrcu &lt;… 2021-01-29 12:23:05     1 FALSE "Clean DESCRIPTION\…
-## 17 d0022a3058aa… fvafrcu &lt;… 2021-01-29 12:23:05     2 FALSE "Initial Commit\n"</code></pre>
+##  1 390f7bd5bf71… fvafrcu &lt;… 2021-03-10 12:30:31    11 FALSE "Packager Changes\n"
+##  2 2fbe8fa1aafd… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `man-roxyge…
+##  3 4ca599712214… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `man-roxyge…
+##  4 c0f36339275f… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `R/zzz.R` f…
+##  5 563015792127… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `make.R` fr…
+##  6 7a338c86fa03… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Adding `inst/runit…
+##  7 416644723d9e… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Adding `tests/runi…
+##  8 a32cdde0b8ee… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Adding `tests/test…
+##  9 771aad350003… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Adding `R/throw.R`…
+## 10 4d4b7511cc68… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Adding `tests/test…
+## 11 8b6be6db7e15… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `devel.R` f…
+## 12 51963e26bc1e… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `.gitlab-ci…
+## 13 5bbde466f8b7… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `.gitlab-ci…
+## 14 680598aef6e7… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `.travis.ym…
+## 15 b5994a3cdbb2… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `README.Rmd…
+## 16 006a12f15a4d… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Adding `NEWS.md` f…
+## 17 93598251651c… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Adding `vignettes/…
+## 18 e45f240a02aa… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Adding `Makefile` …
+## 19 95bc657338e2… fvafrcu &lt;… 2021-03-10 12:30:31     1 FALSE "Clean DESCRIPTION\…
+## 20 ab7888465e4e… fvafrcu &lt;… 2021-03-10 12:30:31     2 FALSE "Initial Commit\n"</code></pre>
 </div></div>
 <div class="paragraph"><p>but we have so far only built the documentation from the <code>roxygen</code> comments:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>list.files(file.path(path, <span style="color: #FF0000">"log"</span>))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## [1] "dependencies.Rout" "roxygen2.Rout"</code></pre>
 </div></div>
 <div class="paragraph"><p>So we get a <code>makelist</code> and look at its targets and aliases:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>ml &lt;- packager::get_package_makelist(is_cran = TRUE)
-cbind(lapply(ml, function(x) x[[<span style="color: #FF0000">"target"</span>]]),
-      lapply(ml, function(x) x[[<span style="color: #FF0000">"alias"</span>]]))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>##       [,1]                                               [,2]
@@ -1157,13 +1074,7 @@ cbind(lapply(ml, function(x) x[[<span style="color: #FF0000">"target"</span>]]),
 <h3 id="_building_the_package">Building the Package</h3>
 <div class="paragraph"><p>We choose to build the package:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>suppressMessages(withr::with_dir(path,
-                                  print(fakemake::make(<span style="color: #FF0000">"build"</span>, ml,
-                                                       verbose = FALSE))))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>##  [1] "README.md"                         "log/check_codetags.Rout"
@@ -1176,11 +1087,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="paragraph"><p>We see that now there are untracked files in our package&#8217;s
 log directory and that some files changed.</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_status(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 17 x 3
@@ -1205,36 +1112,18 @@ http://www.gnu.org/software/src-highlite -->
 ## 17 log/vignettes.Rout      new      FALSE</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>git_diff(x = <span style="color: #FF0000">".Rbuildignore"</span>, path = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Error in git_diff(x = ".Rbuildignore", path = path): unused arguments (x = ".Rbuildignore", path = path)</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="paragraph"><p>After inspecting the change, we commit:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>withr::with_dir(path, packager::git_add_commit(path = <span style="color: #FF0000">"."</span>, untracked = TRUE,
-                                               message = <span style="color: #FF0000">"make build"</span>))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "20d7cfd45657c20f7afbadc38b0d93aa31fde7a3"</code></pre>
+<pre><code>## [1] "9343b9507657e883981c595123b384f5b48e7be8"</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_status(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 0 x 3
@@ -1245,13 +1134,7 @@ http://www.gnu.org/software/src-highlite -->
 <h3 id="_checking_the_package">Checking the Package</h3>
 <div class="paragraph"><p>So now we want the check the package:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>suppressMessages(withr::with_dir(path,
-                                 print(fakemake::make(<span style="color: #FF0000">"check"</span>, ml,
-                                                      verbose = FALSE))))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## [1] "log/cleanr.Rout"                   "log/covr.Rout"
@@ -1260,11 +1143,7 @@ http://www.gnu.org/software/src-highlite -->
 </div></div>
 <div class="paragraph"><p>We again see new files and changes to old files.</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_status(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 4 x 3
@@ -1279,50 +1158,31 @@ http://www.gnu.org/software/src-highlite -->
 see output from <code>RUnit</code> in our log directory.</p></div>
 <div class="paragraph"><p>We assume that we passed the check:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>cat(tail(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)), n = 7), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>##
-## Status: 1 NOTE
+<pre><code>## Status: 2 NOTEs
+##
 ## See
-##   ‘/tmp/Rtmph8NLyT/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
+##   ‘/tmp/Rtmp5mtHX6/veryImportantPackage/veryImportantPackage.Rcheck/00check.log’
 ## for details.</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>check_log &lt;- file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)
-status &lt;- packager::get_check_status(check_log)
-RUnit::checkEqualsNumeric(status[[<span style="color: #FF0000">"status"</span>]][[<span style="color: #FF0000">"errors"</span>]], 0)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## [1] TRUE</code></pre>
 </div></div>
 <div class="paragraph"><p>and commit again</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>withr::with_dir(path, packager::git_add_commit(path = <span style="color: #FF0000">"."</span>, untracked = TRUE,
-                                               message = <span style="color: #FF0000">"make check"</span>))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "3774b56851aac29e0c138c8833f8627215ccb0f1"</code></pre>
+<pre><code>## [1] "6d5c50fa58630bc8a6ec43a39516e468a5f30256"</code></pre>
 </div></div>
 <div class="paragraph"><p>If we choose to rerun the check without touching any files "down the make chain" (i.e. no files that any of our make targets depend on), we see there&#8217;s nothing to be done:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>system.time(withr::with_dir(path, print(fakemake::make(<span style="color: #FF0000">"check"</span>, ml, verbose = FALSE))))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## NULL</code></pre>
@@ -1330,7 +1190,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>##    user  system elapsed
-##   0.902   0.000   0.930</code></pre>
+##   0.955   0.004   0.972</code></pre>
 </div></div>
 <div class="paragraph"><p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and
 running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <em>This is why I wrote <code>packager</code> and <code>fakemake</code>.</em></p></div>
@@ -1340,75 +1200,39 @@ running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmd
 <div class="paragraph"><p>Now we would like to submit our package to <a href="https://cran.r-project.org/">CRAN</a> (which we will not do here, but we want to!)
 We provide comments to <a href="https://cran.r-project.org/">CRAN</a>:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>withr::with_dir(path, print(fakemake::make(<span style="color: #FF0000">"cran_comments"</span>, ml, verbose = FALSE)))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## R CMD check results</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## 0 errors | 0 warnings | 1 note</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## [1] "log/install.Rout" "cran-comments.md"</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"cran-comments.md"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## Make target auto-generated by fakemake.</code></pre>
 </div></div>
 <div class="paragraph"><p>After editing the contents we feel ready to submit:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>try(packager::submit(path))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in packager::submit(path): You have no upstream!</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## Ready to submit?Error in utils::menu(qs[rand]) : menu() cannot be used non-interactively</code></pre>
 </div></div>
 <div class="paragraph"><p>Oops: we need to commit git first:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>packager::git_add_commit(path = path, untracked = TRUE,
-                         message = <span style="color: #FF0000">"prepare for CRAN"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "f5444d113467299304c7c131131af307f2bdcfb3"</code></pre>
+<pre><code>## [1] "9656248c8342b02cda053e84a74eca32d47751ec"</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>gert::git_status(repo = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 0 x 3
@@ -1417,18 +1241,9 @@ http://www.gnu.org/software/src-highlite -->
 <div class="paragraph"><p>Now we try and fail again, because this vignette is built in batch mode
 and there&#8217;s a security query which then fails:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>try(packager::submit(path))</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Warning in packager::submit(path): You have no upstream!</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## Ready to submit?Error in utils::menu(qs[rand]) : menu() cannot be used non-interactively</code></pre>
@@ -1439,59 +1254,33 @@ Best you know <a href="https://cran.r-project.org/doc/manuals/R-exts.html">how t
 <a href="https://cran.r-project.org/web/packages/policies.html">the CRAN policies</a>.</p></div>
 <div class="paragraph"><p>Anyway, we might want to tag the current commit and commence developing our package:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>packager::git_tag(path = path, message = <span style="color: #FF0000">"A Tag"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## h6 unix</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 1 x 3
 ##   name  ref             commit
 ##   &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;
-## 1 0.1.0 refs/tags/0.1.0 53f9c227bc71beaade7fdbd4e794cd481f4388ad</code></pre>
+## 1 0.1.0 refs/tags/0.1.0 77417e38b5307f99abb9fc5eddde403e6385890d</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>packager::use_dev_version(path = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">## Package version bumped from '0.1.0' to '0.1.0.9000'</span></span>
-</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "caf2e601904a35ddab6d2c134ef2f6f3beb3e593"</code></pre>
+<pre><code>## [1] "f5008edcaf62f0775bcc5bb8ba7527f41b9731eb"</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>desc::desc_get(<span style="color: #FF0000">"Version"</span>, file = path)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>##      Version
 ## "0.1.0.9000"</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"NEWS.md"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
+<div class="content"></div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>## # veryImportantPackage 0.1.0.9000
@@ -1513,7 +1302,7 @@ with <a href="https://www.gnu.org/software/make/">GNU make</a> whenever possible
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-01-29 12:24:19 CET
+ 2021-03-10 12:31:52 CET
 </div>
 </div>
 </body>

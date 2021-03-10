@@ -61,7 +61,7 @@ if (Sys.info()[["nodename"]] == "fvafrdebianCU") {
 } else {
     gitlab_token <- readLines(file.path("~", ".gitlab_private_token.txt"))
     comments <- provide_cran_comments(path = ".",
-                                      write_to_file = TRUE)#,
+                                      write_to_file = TRUE,
                                       private_token = gitlab_token)
 }
 cat(comments, sep = "")

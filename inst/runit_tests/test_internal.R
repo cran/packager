@@ -2,9 +2,7 @@ if (interactive()) pkgload::load_all(".")
 
 provide_fake_package <- function() {
     path <- file.path(tempdir(), "prutp")
-    tryCatch(suppressMessages(usethis::create_package(path, open = FALSE)),
-                              error = identity
-    )
+    path <- packager:::package_skeleton(path, force = TRUE)
     return(path)
 }
 
@@ -25,27 +23,29 @@ test_is_force <- function() {
 test_get_news <- function() {
     path <- provide_fake_package() # Exclude Linting  
     on.exit(unlink(path, recursive = TRUE))
-    withr::with_dir(path, usethis::use_news_md(open = FALSE))
+    packager:::use_news_md(pkg = path, git_commit = FALSE)
     result <- packager:::get_news(path)
     expectation <-
-        "\n* Added a `NEWS.md` file to track changes to the package."
+        "\n* Added a `NEWS.md` file to track changes to the package.\n\n\n"
     RUnit::checkIdentical(result, expectation)
 }
 
 test_git <- function() {
     path <- provide_fake_package() # Exclude Linting  
-    on.exit(unlink(path, recursive = TRUE))
-    RUnit::checkTrue(! packager:::is_git_clone(path),
-                          msg = "Not a git repo.")
-    RUnit::checkException(packager:::is_git_uncommitted(path),
-                          msg = "Not a git repo, no commits.")
-    packager:::use_git(path = path)
-    RUnit::checkTrue(packager:::is_git_clone(path))
-    RUnit::checkTrue(! packager:::is_git_uncommitted(path),
-                     msg = "All should be commited.")
-    cat("foo", file = file.path(path, "DESCRIPTION"), append = TRUE)
-    RUnit::checkTrue(packager:::is_git_uncommitted(path),
-                     msg = "Uncommited changes.")
+    if (!inherits(path, "error")) {
+        on.exit(unlink(path, recursive = TRUE))
+        RUnit::checkTrue(! packager:::is_git_clone(path),
+                         msg = "Not a git repo.")
+        RUnit::checkException(packager:::is_git_uncommitted(path),
+                              msg = "Not a git repo, no commits.")
+        packager:::use_git(path = path)
+        RUnit::checkTrue(packager:::is_git_clone(path))
+        RUnit::checkTrue(! packager:::is_git_uncommitted(path),
+                         msg = "All should be commited.")
+        cat("foo", file = file.path(path, "DESCRIPTION"), append = TRUE)
+        RUnit::checkTrue(packager:::is_git_uncommitted(path),
+                         msg = "Uncommited changes.")
+    }
 }
 
 test_warn_and_stop <- function()

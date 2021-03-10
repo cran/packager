@@ -1,6 +1,17 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.11.0}{
+\itemize{
+\item Gitlab logs for cran-comments.md are now checked for the appropriate version.
+\item Added more templates for man-roxygen.
+\item Devel versions for \code{check_news()} only match first order sections (lines
+starting with \verb{# }). So we can keep documentation of changes in devel versions
+in the subsections.
+\item Substituted imports from \code{usethis} and \code{withr}.
+}
+}
+
 \section{Changes in version 1.10.0}{
 \itemize{
 \item Updated the \code{makelist} returned  by \code{get_package_makelist()} to

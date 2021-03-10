@@ -27,9 +27,6 @@ default details are inserted. Set to NULL to have no details at all.}
 
 \item{...}{Arguments to be passed to internal function
 \code{packager:::use_intro}.}
-
-\item{use_rasciidoc_vignette}{Set to FALSE to sticks with the classic
-markdown vignette.}
 }
 \value{
 \code{\link[base:invisible]{Invisibly}}

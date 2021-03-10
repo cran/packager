@@ -143,17 +143,20 @@ use_runit <- function(path = ".", force = is_force(),
 provide_throw <- function(path = ".",
                           force = is_force(),
                           ...) {
-    usethis::use_testthat()
     pkg <- as.package(path)
+    use_testthat(path = pkg[["path"]])
 
     file <- "throw.R"
     file_path <- file.path("R", file)
     use_template(file, save_as = file_path, data = pkg,
                  ignore = FALSE, pkg = pkg[["path"]], force = force, ...)
 
-    suppressMessages(usethis::use_package("RUnit", type = "Suggests"))
-    suppressMessages(usethis::use_package("devtools", type = "Suggests"))
-    suppressMessages(usethis::use_package("rprojroot", type = "Suggests"))
+    suppressMessages(use_dependency("RUnit", type = "Suggests",
+                                    path = pkg[["path"]]))
+    suppressMessages(use_dependency("pkgload", type = "Suggests",
+                                    path = pkg[["path"]]))
+    suppressMessages(use_dependency("rprojroot", type = "Suggests",
+                                    path = pkg[["path"]]))
     file <- "test-throw.R"
     file_path <- file.path("tests", "testthat", file)
     use_template(file, save_as = file_path, data = pkg,
@@ -239,9 +242,12 @@ get_git_url <- function(x,
 provide_man_roxygen <- function(path, force = is_force(), ...) {
     use_directory("man-roxygen", pkg = path, ignore = TRUE)
     pkg <- as.package(path)
-    file <- "return_invisibly_null.R"
-    file_path <- file.path("man-roxygen", file)
-    use_template(file, save_as = file_path, data = pkg,
-                 ignore = TRUE, pkg = pkg[["path"]], force = force, ...)
+    files <- list.files(system.file("templates", "man-roxygen",
+                                    package = "packager"))
+    file_paths <- file.path("man-roxygen", files)
+    for (file_path in file_paths) {
+        use_template(file_path, save_as = file_path, data = pkg,
+                     ignore = TRUE, pkg = pkg[["path"]], force = force, ...)
+    }
 
 }

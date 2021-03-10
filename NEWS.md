@@ -1,3 +1,12 @@
+# packager 1.11.0
+
+* Gitlab logs for cran-comments.md are now checked for the appropriate version.
+* Added more templates for man-roxygen.
+* Devel versions for `check_news()` only match first order sections (lines
+  starting with `# `). So we can keep documentation of changes in devel versions
+  in the subsections.
+* Substituted imports from `usethis` and `withr`.
+
 # packager 1.10.0
 
 * Updated the `makelist` returned  by `get_package_makelist()` to 

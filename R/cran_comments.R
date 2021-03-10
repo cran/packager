@@ -33,7 +33,7 @@
 #' } else {
 #'     gitlab_token <- readLines(file.path("~", ".gitlab_private_token.txt"))
 #'     comments <- provide_cran_comments(path = ".",
-#'                                       write_to_file = TRUE)#,
+#'                                       write_to_file = TRUE,
 #'                                       private_token = gitlab_token)
 #' }
 #' cat(comments, sep = "")
@@ -110,7 +110,8 @@ provide_cran_comments <- function(check_log = NULL,
 
 pick_log_file <- function(path, basename, extension = "(log|Rout)") {
     candidates <- list.files(file.path(path, "log"),
-                             pattern =  paste0(basename, "\\.", extension, "$"),
+                             pattern =  paste0("^", basename, "\\.", extension,
+                                               "$"),
                              full.names = TRUE)
     newest <- candidates[order(file.mtime(candidates), decreasing = TRUE)][1]
     return(newest)
@@ -119,6 +120,8 @@ pick_log_file <- function(path, basename, extension = "(log|Rout)") {
 get_local_check <- function(path) {
     comments <- c("\n\n## Test environments\n")
     here <- info(session = NULL)
+    # TODO: run parse_check_info for here (keep the inital here!)
+    # and loop over alle check(\\.-) files
     if (!is.na(log_file <- pick_log_file(path, "check"))) {
         check_output <- parse_check_results(log_file)
         check_output <- utils::capture.output(print.check_results(check_output),
@@ -129,6 +132,12 @@ get_local_check <- function(path) {
     comments <- c(comments, "- ", paste(c(here, check_output),
                                        collapse = "\n   "))
     return(comments)
+}
+parse_check_info <- function(path) {
+    lines <- readLines(path)
+    info <- grep(value = TRUE, x = lines,
+                 pattern = "^\\* using (R|platform|options)")
+    return(info)
 }
 
 get_local_tests <- function(path) {
@@ -182,7 +191,7 @@ get_local_meta <- function(path) {
         comments <- c(comments, "- lintr:\n    ",
                       paste0("found ", lints_in_R, " lints in ", lines_in_R,
                             " lines of code (a ratio of ",
-                            round(lints_in_R / lines_in_R, 4), ")."), 
+                            round(lints_in_R / lines_in_R, 4), ")."),
                       "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "cleanr"))) {
@@ -190,14 +199,14 @@ get_local_meta <- function(path) {
         lines <- grep("found", lines, value = TRUE)
         comments <- c(comments, "- cleanr:\n    ",
                       paste("found", max(length(lines) - 1, 0),
-                            "dreadful things about your code."), 
+                            "dreadful things about your code."),
                       "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "usage"))) {
         lines <- readLines(log_file)
         comments <- c(comments, "- codetools::checkUsagePackage:\n    ",
                       paste("found", max(length(lines) - 1, 0),
-                            "issues."), 
+                            "issues."),
                       "\n")
     }
     if (!is.na(log_file <- pick_log_file(path, "spell"))) {
@@ -205,7 +214,7 @@ get_local_meta <- function(path) {
         result <- sum(!grepl("^ ", grep(":[1-9]", lines, value = TRUE)))
         comments <- c(comments, "- devtools::spell_check:\n    ",
                       paste("found", result,
-                            "unkown words."), 
+                            "unkown words."),
                       "\n")
     }
     return(comments)
@@ -235,20 +244,36 @@ get_gitlab_info <- function(path = ".", private_token, ...) {
                                            private_token, ...),
                             error = function(e) return(NULL))
             if (!is.null(log)) {
-                info <- eval_from_log(file = log,
-                                      pattern = "=== packager info:")
-                info <- info(info)
-                rcmdcheck <- eval_from_log(log,
-                                           pattern = "=== packager rcmdcheck:")
-                if (is.null(rcmdcheck)) {
-                    status <- "FAILED"
+                tmp <- grep_log(file = log,
+                                pattern = "^\\* this is.*version",
+                                strip = FALSE)
+                tmp <- gsub("\u2018", "'", gsub("\u2019", "'", tmp))
+                pkg_info <- unlist(strsplit(tmp, split = "'"))[c(2,4)]
+                gitlab_version <- pkg_info[2]
+                current_version <- as.package(path)[["version"]]
+                if (identical(gitlab_version, current_version)) {
+
+                    info <- eval_from_log(file = log,
+                                          pattern = "=== packager info:")
+                    info <- info(info)
+                    rcmdcheck <- eval_from_log(log,
+                                               pattern =
+                                                   "=== packager rcmdcheck:")
+                    if (is.null(rcmdcheck)) {
+                        status <- "FAILED"
+                    } else {
+                        status <- grep("^Status",
+                                       strsplit(rcmdcheck[["stdout"]],
+                                                split = "\n")[[1]],
+                                       value = TRUE)
+                    }
+                    info <- c(info, paste(c("Package:", "Version:"), pkg_info),
+                              status)
                 } else {
-                    status <- grep("^Status",
-                                   strsplit(rcmdcheck[["stdout"]],
-                                            split = "\n")[[1]],
-                                   value = TRUE)
+                    warning("gitlab version `",  gitlab_version, 
+                            "` not matching current version `", current_version,
+                            "`!")
                 }
-                info <- c(info, status)
             }
         }
     }

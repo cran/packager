@@ -1,13 +1,12 @@
 #' Create a Package Template
 #'
-#' This is just a wrapper to create a package using
-#' \code{\link[usethis:create_package]{usethis::create_package}} and
+#' This is just a wrapper to create a package and
 #' infect it using \code{\link{infect}}.
 #'
 #'
-#' @param path See \code{\link[usethis:create_package]{usethis::create_package}}.
+#' @param path The package to create.
 #' @param force Recursively \code{\link{unlink}} \code{path} before calling
-#' \code{\link[usethis:create_package]{usethis::create_package}(path)}?
+#' creating the package?
 #' @param ... Arguments to be passed to \code{\link{infect}}.
 #' @template return_invisibly_null
 #' @export
@@ -33,9 +32,8 @@
 create <- function(path, force = TRUE, ...) {
     checkmate::qassert(force, "B1")
     checkmate::qassert(path, "S1")
-    # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
     if (isTRUE(force)) unlink(path, recursive = TRUE)
-    usethis::create_package(path = path, rstudio = FALSE, open = FALSE)
+    package_skeleton(path = path, force = force)
     r <- gert::git_init(path = path)
     git_add_commit(path = r, message = "Initial Commit", untracked = TRUE)
     unpatch_r_version(path = path)
@@ -43,7 +41,6 @@ create <- function(path, force = TRUE, ...) {
                            normalize = FALSE)
     git_add_commit(path, "Clean DESCRIPTION")
     infect(path = path, ...)
-    usethis::proj_set(NULL)
     return(invisible(NULL))
 }
 
@@ -80,16 +77,14 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     checkmate::qassert(git_add_and_commit, "B1")
     checkmate::assert_directory_exists(path)
     checkmate::qassert(fakemake, c("S1", 0, "B1"))
-    # TODO: use old_proj <- usethis::proj_sitrep() and restore on exit.
-    usethis::proj_set(path)
     r <- gert::git_init(path = path)
-    usethis::use_build_ignore("^.*\\.tar\\.gz$", escape = FALSE)
-    usethis::use_build_ignore(paste0(as.package(path)[["package"]],
-                                      ".Rcheck"))
-    usethis::use_build_ignore("cran-comments.md")
-    usethis::use_build_ignore(".Rprofile")
-    usethis::use_build_ignore("TODO.md")
-    usethis::use_build_ignore("index.html")
+    use_build_ignore("^.*\\.tar\\.gz$", escape = FALSE, pkg = path)
+    use_build_ignore(paste0(as.package(path)[["package"]],
+                             ".Rcheck"), pkg = path)
+    use_build_ignore("cran-comments.md", pkg = path)
+    use_build_ignore(".Rprofile", pkg = path)
+    use_build_ignore("TODO.md", pkg = path)
+    use_build_ignore("index.html", pkg = path)
     use_git_ignore(".Rprofile", path = path)
     use_git_ignore("*.tar.gz", path = path)
     use_git_ignore(paste0(as.package(path)[["package"]],
@@ -104,26 +99,27 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     set_desc_url(provide_gitlab_url(path = path), path = path, overwrite = TRUE,
                  do_remind = TRUE, do_commit = FALSE)
     use_bsd2clause_license(path = path)
-    withr::with_dir(path, usethis::use_testthat())
+    use_testthat(path = path)
+
     provide_throw(path = path)
     provide_make(path = path)
+    provide_zzz(path = path)
     provide_man_roxygen(path = path)
 
 
-    usethis::use_build_ignore(".log.Rout")
+    use_build_ignore(".log.Rout", pkg = path)
     use_directory("log", pkg = path, ignore = TRUE)
     if (!(is.null(fakemake) || fritools::is_false(fakemake))) {
         ml <- get_package_makelist(is_cran = TRUE)
-        withr::with_dir(path, print(fakemake::make(name = fakemake,
-                                                   make_list = ml, 
-                                                   verbose = FALSE)))
+        fritools::with_dir(path, print(fakemake::make(name = fakemake,
+                                                      make_list = ml, 
+                                                      verbose = FALSE)))
     }
     if (isTRUE(git_add_and_commit)) {
         git_add_commit(path = r, message = "Packager Changes", untracked = TRUE)
     }
     sanitize_usethis_git_hook(path)
     use_git_check_version_not_tagged(path)
-    usethis::proj_set(NULL)
     return(invisible(NULL))
 }
 
@@ -141,8 +137,6 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
 #' default details are inserted. Set to NULL to have no details at all.
 #' @param ... Arguments to be passed to internal function
 #' \code{packager:::use_intro}.
-#' @param use_rasciidoc_vignette Set to FALSE to sticks with the classic
-#' markdown vignette.
 #' @return \code{\link[base:invisible]{Invisibly}}
 #' a list of results of setting the xxx-package.R and the DESCRIPTION.
 #' @keywords internal

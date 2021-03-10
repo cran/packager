@@ -7,10 +7,10 @@
 create(path, force = TRUE, ...)
 }
 \arguments{
-\item{path}{See \code{\link[usethis:create_package]{usethis::create_package}}.}
+\item{path}{The package to create.}
 
 \item{force}{Recursively \code{\link{unlink}} \code{path} before calling
-\code{\link[usethis:create_package]{usethis::create_package}(path)}?}
+creating the package?}
 
 \item{...}{Arguments to be passed to \code{\link{infect}}.}
 }
@@ -19,8 +19,7 @@ create(path, force = TRUE, ...)
 \code{\link[base:NULL]{NULL}}.
 }
 \description{
-This is just a wrapper to create a package using
-\code{\link[usethis:create_package]{usethis::create_package}} and
+This is just a wrapper to create a package and
 infect it using \code{\link{infect}}.
 }
 \examples{

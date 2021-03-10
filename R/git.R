@@ -192,7 +192,7 @@ get_git_commit <- function(path) {
 
 
 #' Show a Git Diff for a File
-#' 
+#'
 #' @param x The path to the file relative to the repository given by
 #' \code{path}.
 #' @param path The path to the git repository.

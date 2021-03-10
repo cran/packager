@@ -224,7 +224,7 @@ add_detach <- function(makelist) {
 add_log <- function(x) {
     fat <- fakemake::add_target
     fat(x, target = ".log.Rout",
-        code = c("usethis::use_directory(\"log\", ignore = TRUE)"),
+        code = c("packager::use_directory(\"log\", ignore = TRUE)"),
            prerequisite_to = TRUE, prerequisites = NULL)
 }
 

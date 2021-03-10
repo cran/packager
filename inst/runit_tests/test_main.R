@@ -3,10 +3,10 @@ test_create_rmd <- function() {
     if (!identical(environment(), .GlobalEnv)) {
         old_opts <- options(warn = 1)
         on.exit(old_opts)
-        on.exit(unlink(d, recursive = TRUE))
     }
     d <- file.path(tempdir(), "prutp")
-    if (interactive()) unlink(d, recursive = TRUE)
+    on.exit(unlink(d, recursive = TRUE))
+    unlink(d, recursive = TRUE)
     # use the classic Rmd-vignette
     if (!require("roxygen2")) { 
         # https://cran.r-project.org/doc/manuals/R-exts.html, 
@@ -39,6 +39,17 @@ test_create_rmd <- function() {
     # checking on file contents does not work as covr and RUnit give
     # different digest::sha1()-values.
     result <- files
+    if (interactive()) {
+        expected[!(expected %in% result)]
+        dir(file.path(d, "log"))
+        readLines(file.path(d, "DESCRIPTION"))
+        readLines(file.path(d, "NAMESPACE"))
+        readLines(file.path(d, "log", "roxygen2.Rout"))
+        ml <- get_package_makelist(is_cran = TRUE)
+        withr::with_dir(d, print(fakemake::make(name = "roxygen2",
+                                                   make_list = ml, 
+                                                   verbose = FALSE)))
+    }
     RUnit::checkTrue(all(expected %in% result))
     # FIXME: I cannot test on fakemake = "check" as this fails with strange
     # conditions. So I ran it 

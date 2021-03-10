@@ -10,7 +10,7 @@
 #' @keywords internal
 #' @family option functions
 set_options <- function(package_name, ..., overwrite = TRUE) {
-    fritools::set_options(..., package_name = package_name, 
+    fritools::set_options(..., package_name = package_name,
                           overwrite = overwrite)
 }
 

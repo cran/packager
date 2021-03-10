@@ -1,13 +1,5 @@
 if (interactive()) pkgload::load_all(".")
 
-provide_fake_package <- function() {
-    path <- file.path(tempdir(), "prutp")
-    tryCatch(suppressMessages(usethis::create_package(path, quiet = TRUE)),
-                              error = identity
-    )
-    return(path)
-}
-
 test_union_write <- function() {
     path <- file.path(tempfile())
     on.exit(unlink(path))

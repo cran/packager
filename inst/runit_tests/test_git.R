@@ -32,7 +32,7 @@ test_git_tag_create <- function() {
     if (run_test) {
         path <- file.path(tempdir(), "prutp")
         on.exit(unlink(path, recursive = TRUE))
-        usethis::create_package(path)
+        packager:::package_skeleton(path)
 
         # no repo
         RUnit::checkException(packager:::git_tag_create(path = path,
@@ -58,7 +58,7 @@ test_git_tag <- function() {
     if (run_test) {
         path <- file.path(tempdir(), "prutp")
         on.exit(unlink(path, recursive = TRUE))
-        usethis::create_package(path)
+        packager:::package_skeleton(path)
 
         # no repo
         RUnit::checkException(packager::git_tag(path = path))
@@ -66,7 +66,7 @@ test_git_tag <- function() {
         # initial repo
         packager:::use_git(path)
         result <- packager::git_tag(path = path)
-        RUnit::checkIdentical("0.0.0.9000", getElement(result, "name"))
+        RUnit::checkIdentical("1.0", getElement(result, "name"))
         desc::desc_bump_version("minor", file = path)
 
         # uncommitted changes
@@ -75,10 +75,10 @@ test_git_tag <- function() {
         # commited changes
         git_add_commit(path = path)
         result <- packager::git_tag(path = path)
-        RUnit::checkIdentical("0.1.0", getElement(result, "name"))
+        RUnit::checkIdentical("1.1", getElement(result, "name"))
 
         # version number lower than in tags
-        desc::desc_set(Version = "0.0.3", file = path)
+        desc::desc_set(Version = "0.3", file = path)
         git_add_commit(path = path)
         RUnit::checkException(packager::git_tag(path = path))
     }

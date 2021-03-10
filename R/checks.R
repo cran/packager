@@ -74,7 +74,7 @@ check_news <- function(path = ".") {
     package <- grep("^Package: ", description, value = TRUE)
     package_name <- trimws(strsplit(package, split = ":")[[1]][2])
     news.md <- readLines(file.path(root, "NEWS.md"))
-    devel_versions <- grep("[0-9]+\\.[0-9]+\\.[0-9]+\\.9000", news.md,
+    devel_versions <- grep("^# .*[0-9]+\\.[0-9]+\\.[0-9]+\\.9000", news.md,
                            value = TRUE)
     if (length(devel_versions) > 0) {
         devel_numbers <- sapply(devel_versions,
@@ -112,7 +112,7 @@ check_news <- function(path = ".") {
 check_codetags <- function(path = ".", exclude_pattern = "\\.Rcheck/",
                            include_pattern = "\\.[Rr]$|\\.[Rr]md$",
                            pattern =  "XXX:|FIXME:|TODO:") {
-    r <- fritools::search_files(path = path, what = pattern, 
+    r <- fritools::search_files(path = path, what = pattern,
                                 pattern = include_pattern,
                                 exclude = exclude_pattern,
                                 recursive = TRUE)

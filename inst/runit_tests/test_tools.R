@@ -19,15 +19,6 @@ test_add_commit <- function() {
     RUnit::checkIdentical(expectation, result)
 }
 
-provide_fake_package <- function() {
-    path <- file.path(tempdir(), "prutp")
-    tryCatch(suppressMessages(usethis::create_package(path, quiet = TRUE)),
-                              error = identity
-    )
-    return(path)
-}
-
-
 notest_cyclocomp <- function() {
     # somehow fails on install...
     path <- file.path(tempdir(), "prutp")
@@ -47,8 +38,16 @@ notest_cyclocomp <- function() {
 
 test_news <- function() {
     path <- file.path(tempdir(), "prutp")
+    if (interactive()) {
+        tempdir <- tempfile()
+        dir.create(tempdir)
+        wd <- setwd(tempdir)
+        pkgload::load_all("~/packager")
+    }
+    unlink(path, recursive = TRUE)
     on.exit(unlink(path, recursive = TRUE))
     packager::create(path, fakemake = FALSE)
+    if (interactive()) traceback()
     result <- packager::check_news(path)
     RUnit::checkTrue(result)
 
@@ -74,12 +73,17 @@ test_news <- function() {
     # actual version not covered in NEWS.md
     writeLines(c("# prutp 0.2.1"), news_file)
     RUnit::checkException(packager::check_news(path))
+    if (interactive()) {
+        unlink(path, recursive = TRUE)
+        setwd(wd)
+    }
 }
 
 test_githuburl <- function() {
     path <- file.path(tempdir(), "prutp")
     on.exit(unlink(path, recursive = TRUE))
-    usethis::create_package(path)
+    unlink(path, recursive = TRUE)
+    packager:::package_skeleton(path)
     user <- "foobar"
 
 
@@ -89,8 +93,6 @@ test_githuburl <- function() {
         expectation <- FALSE
         result <- add_github_url_to_desc(path = path)
         RUnit::checkIdentical(expectation, result)
-    } else {
-        # FIXME: on travis??
     }
 
     #% No git remote set
@@ -107,7 +109,7 @@ test_githuburl <- function() {
     }
 
     unlink(path, recursive = TRUE)
-    usethis::create_package(path)
+    packager:::package_skeleton(path)
     gert::git_init(path = path)
     gert::git_remote_add(repo = path, name = "github",
                          url = url)

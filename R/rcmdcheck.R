@@ -29,8 +29,8 @@ write_rcmdcheck <- function(prefix = "=== packager rcmdcheck:", path = ".",
 #' @export
 #' @keywords internal
 #' @return \code{\link[=invisible]{Invisibly}  \link{NULL}}.
-rcmdcheck_and_log <- function(path = ".", args = "--as-cran",
-                              build_args = args[-which(args == "--as-cran")]) {
+rcmdcheck_and_log <- function(path = ".", args = c(build_args, "--as-cran"),
+                              build_args = NULL) {
     write_info()
     check <- write_rcmdcheck(path = path, args = args, build_args = build_args)
     if (! identical(check$errors, character(0))) {
