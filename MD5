@@ -1,7 +1,7 @@
-2c18e089af39684b467df7a94be8d3c3 *DESCRIPTION
+1f46ee806d6d8f1ea07d5b27b0682a68 *DESCRIPTION
 2e562f598285368f0874203edd598c65 *LICENSE
 2fe843013020cc3687bc020d83ad7bf6 *NAMESPACE
-0aaa0768c63f15f872427a2e88137ad3 *NEWS.md
+99cbfe56a5fbedcda292c2d09074b330 *NEWS.md
 967c5c82256ee6fee399c3c068b05cbf *R/checks.R
 79b65a5c125d40d468e1951575edddf7 *R/compare.R
 69543a35a30d95bfda61542f1a8100d8 *R/convert_vignette.R
@@ -32,7 +32,7 @@ fc1c0b275caa9289863ded541b57c93d *R/remotes_modified.R
 f0172341efa6ef590bb69ab50f6e901b *R/remove_lines.R
 bd650c427769434ff7ecaaf410f295c4 *R/rhub.R
 c582a36a51b2f6ec9d2edccb39ce2f1c *R/sort_deps_in_desc.R
-ebd2b45c4bd00aa4113c0cadff5f0c9e *R/submit.R
+5abacae8f09f0e557f0a73bcd7dc0bf3 *R/submit.R
 11f9b64fb86fa0b9389a4baed996a5f5 *R/throw.R
 0e3617673d4444c80d24dda46624f517 *R/update_deps.R
 e32bc0fed89230193402c6cd85d13304 *R/upload_cran.R
@@ -42,11 +42,11 @@ fc67072d78bdb58e8b9d3ad6d21a9f27 *R/various.R
 5a95864bbf520793d86a19e25c4bf026 *R/zzz.R
 47d7da3dcf86dda88dca7d2d2fff5005 *README.md
 4dc122d46f98e01248e19d3b28258f70 *build/vignette.rds
-d5345ac61bbabf0e17aa8f71ad05bcbc *inst/NEWS.rd
+3ceaca4c4c0e68224010964cbd283b5e *inst/NEWS.rd
 8a9040c78e2770afca52d17fbd4d56cc *inst/WORDLIST
 42e2aa045103d1cc72566d32833bb44d *inst/doc/An_Introduction_to_packager.R
 12db92378955268e59925a5c79385f51 *inst/doc/An_Introduction_to_packager.Rasciidoc
-b599be4400df7bdddf66af91446b1a3d *inst/doc/An_Introduction_to_packager.html
+75ed8728a69231d3c78e6ae14531403c *inst/doc/An_Introduction_to_packager.html
 04c52551cddf0306e18c46aa7ab64d4e *inst/files/An_Introduction_to_packager.Rasciidoc
 76d721acdd488f61d3399ab7569bd12a *inst/files/An_Introduction_to_packager.Rmd
 ca2537e49d377ffdbf25a7505188a716 *inst/files/a.R

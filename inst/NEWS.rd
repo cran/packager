@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.11.1}{
+\itemize{
+\item Fixed missing codes in vignette.
+}
+}
+
 \section{Changes in version 1.11.0}{
 \itemize{
 \item Gitlab logs for cran-comments.md are now checked for the appropriate version.

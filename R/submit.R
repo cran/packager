@@ -15,12 +15,12 @@
 submit <- function(path = ".", stop_on_git = TRUE, stop_on_devel = TRUE,
                    force = FALSE, verbose = TRUE) {
     if (uses_git(path) && isTRUE(stop_on_git)) {
-        if (is_git_uncommitted(path = path) )
+        if (is_git_uncommitted(path = path))
             throw("You have uncommitted changes.")
         if (is.na(get_git_upstream(path))) {
             warning("You have no upstream!")
         } else {
-            if (! git_sync_status(path = path))
+            if (!git_sync_status(path = path))
                 throw("Your repository is not synced with it's upstream.")
         }
     }

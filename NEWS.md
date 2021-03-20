@@ -1,3 +1,7 @@
+# packager 1.11.1
+
+* Fixed missing codes in vignette.
+
 # packager 1.11.0
 
 * Gitlab logs for cran-comments.md are now checked for the appropriate version.
