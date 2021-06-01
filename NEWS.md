@@ -1,3 +1,7 @@
+# packager 1.12.0
+
+* Adapted for exception handling from fritools.
+
 # packager 1.11.1
 
 * Fixed missing codes in vignette.

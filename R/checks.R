@@ -112,11 +112,12 @@ check_news <- function(path = ".") {
 check_codetags <- function(path = ".", exclude_pattern = "\\.Rcheck/",
                            include_pattern = "\\.[Rr]$|\\.[Rr]md$",
                            pattern =  "XXX:|FIXME:|TODO:") {
-    r <- fritools::search_files(path = path, what = pattern,
+    r <- tryCatch(fritools::search_files(path = path, what = pattern,
                                 pattern = include_pattern,
                                 exclude = exclude_pattern,
-                                recursive = TRUE)
-    if (nrow(r) == 0) {
+                                recursive = TRUE),
+                  error = identity)
+    if (inherits(r, "error")) {
         res <- NULL
     } else {
         res <- summary(r, type = "matches")

@@ -24,7 +24,7 @@ build_and_check:
          #                    relax 
          # l.23 building and checking a package).}
       # so:
-      - R CMD build --no-manual . &&  R CMD check --no-manual $(ls *.tar.gz)
+      - R CMD build --no-manual --no-build-vignettes . &&  R CMD check --no-build-vignettes --no-manual $(ls *.tar.gz)
       # The later needs the desc-package but is more robst as it constructs the
       # file to be checked from the file DESCRIPTION
       #- R --vanilla -e 'remotes::install_git("https://gitlab.com/fvafrCU/packager")' && R CMD build . &&  R --vanilla -e 'system(paste0("R CMD check ", desc::desc_get("Package"), "_", sub("'", "", desc::desc_get_version()), ".tar.gz"))'
@@ -33,7 +33,7 @@ build_and_check:
 packager:
   stage: check
   script:  
-    - R --vanilla -e 'packager::rcmdcheck_and_log(".", args = c("--as-cran", "--no-manual"))'
+    - R --vanilla -e 'packager::rcmdcheck_and_log(".", build_args = c("--no-manual", "--no-build-vignettes"))'
 
       
 coverage:

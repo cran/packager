@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.12.0}{
+\itemize{
+\item Adapted for exception handling from fritools.
+}
+}
+
 \section{Changes in version 1.11.1}{
 \itemize{
 \item Fixed missing codes in vignette.

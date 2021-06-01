@@ -1,5 +1,5 @@
-[![pipeline status](https://gitlab.com/fvafrCU/packager/badges/master/pipeline.svg)](https://gitlab.com/fvafrCU/packager/commits/master)    
-[![coverage report](https://gitlab.com/fvafrCU/packager/badges/master/coverage.svg)](https://gitlab.com/fvafrCU/packager/commits/master)
+[![pipeline status](https://gitlab.com/fvafrCU/packager/badges/master/pipeline.svg)](https://gitlab.com/fvafrCU/packager/-/commits/master)    
+[![coverage report](https://gitlab.com/fvafrCU/packager/badges/master/coverage.svg)](https://gitlab.com/fvafrCU/packager/-/commits/master)
 <!-- 
     [![Build Status](https://travis-ci.org/fvafrCU/packager.svg?branch=master)](https://travis-ci.org/fvafrCU/packager)
     [![Coverage Status](https://codecov.io/github/fvafrCU/packager/coverage.svg?branch=master)](https://codecov.io/github/fvafrCU/packager?branch=master)

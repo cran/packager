@@ -1,5 +1,5 @@
-[![pipeline status](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/badges/master/pipeline.svg)](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/commits/master)    
-[![coverage report](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/badges/master/coverage.svg)](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/commits/master)
+[![pipeline status](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/badges/master/pipeline.svg)](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/-/commits/master)    
+[![coverage report](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/badges/master/coverage.svg)](https://gitlab.com/{{{ git_user }}}/{{{ package }}}/-/commits/master)
 <!-- 
     [![Build Status](https://travis-ci.org/{{{ git_user }}}/{{{ package }}}.svg?branch=master)](https://travis-ci.org/{{{ git_user }}}/{{{ package }}})
     [![Coverage Status](https://codecov.io/github/{{{ git_user }}}/{{{ package }}}/coverage.svg?branch=master)](https://codecov.io/github/{{{ git_user }}}/{{{ package }}}?branch=master)
