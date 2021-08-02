@@ -146,25 +146,40 @@ get_local_tests <- function(path) {
         lines <- readLines(log_file)
         result <- grep(pattern = "test functions?.*errors.*failures",
                        x = lines, value = TRUE)
-        checks_lines <- grep("\\([0-9]* checks\\)", lines, value = TRUE)
-        checks <- sub("^.*\\((.* checks).*$", "\\1", checks_lines)
-        num_checks <- sum(as.numeric(sapply(strsplit(checks, split = " "),
-                                            function(x) x[[1]])))
-        comments <- c(comments, "- RUnit:\n    ", result, " in ", num_checks,
-                      " checks.", "\n")
+        if (!fritools::is_of_length_zero(result, "character")) {
+            checks_lines <- grep("\\([0-9]* checks\\)", lines, value = TRUE)
+            checks <- sub("^.*\\((.* checks).*$", "\\1", checks_lines)
+            num_checks <- sum(as.numeric(sapply(strsplit(checks, split = " "),
+                                                function(x) x[[1]])))
+            comments <- c(comments, "- RUnit:\n    ", result, " in ",
+                          num_checks, " checks.", "\n")
+        }
     }
     if (!is.na(log_file <- pick_log_file(path, "testthat"))) {
-        result <- grep(pattern = paste0("^(OK|Failed|Warnings|Skipped):"),
+        result <- grep(pattern = "fail.*warn.*skip", ignore.case = TRUE,
                        x = readLines(log_file), value = TRUE)
-        comments <- c(comments, "- Testthat:\n    ",
-                      paste(sub("\\s+", " ", result), collapse = ", "), "\n")
+        if (!fritools::is_of_length_zero(result, "character")) {
+            comments <- c(comments, "- testthat:\n    ",
+                          paste(sub("\\s+", " ", result), collapse = ", "),
+                          "\n")
+        }
+    }
+    if (!is.na(log_file <- pick_log_file(path, "tinytest"))) {
+        result <- grep(pattern = "results", ignore.case = TRUE,
+                       x = readLines(log_file), value = TRUE)
+        if (!fritools::is_of_length_zero(result, "character")) {
+            comments <- c(comments, "- tinytest:\n    ",
+                          paste(sub("\\s+", " ", result), collapse = ", "),
+                          "\n")
+        }
     }
     if (!is.na(log_file <- pick_log_file(path, "covr"))) {
         pkg <- as.package(path)
         result <- grep(pattern = paste0("^", pkg[["package"]], " Coverage:"),
                        x = readLines(log_file), value = TRUE)
-        comments <- c(comments, "- Coverage by covr:\n    ", result,
-                      "\n")
+        if (!fritools::is_of_length_zero(result, "character")) {
+            comments <- c(comments, "- Coverage by covr:\n    ", result, "\n")
+        }
     }
     return(comments)
 }

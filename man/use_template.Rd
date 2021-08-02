@@ -16,7 +16,7 @@ use_template(
 )
 }
 \arguments{
-\item{template}{The name of the packages's template (a file in the template
+\item{template}{The name of the package's template (a file in the template
 directory).}
 
 \item{save_as}{The path where the template should be written to.}

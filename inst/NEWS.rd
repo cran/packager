@@ -1,6 +1,18 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.13.0}{
+\itemize{
+\item Added output from \code{log/tinytest.log} to cran-comments.md.
+\item Local test result get written to file \code{cran-comments.md} only if the results
+read from the file are not empty.
+This fixes changing output from testthat causing empty results as well as
+empty log files (for example when tinytest.R is not present target tinytest is
+made anyway).
+\item Now adding \code{tinytest} to infected packages.
+}
+}
+
 \section{Changes in version 1.12.0}{
 \itemize{
 \item Adapted for exception handling from fritools.

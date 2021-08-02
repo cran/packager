@@ -150,3 +150,9 @@ desc::desc_get("Version", file = path)
 cat(readLines(file.path(path, "NEWS.md")), sep = "\n")
 
 
+
+## ---- echo = FALSE------------------------------------------------------------
+package_title <- "veryImportantPackage"
+path <- file.path(tempdir(), package_title)
+unlink(path, recursive = TRUE)
+

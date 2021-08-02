@@ -7,7 +7,7 @@
 #' @param path The package's root directory.
 #' @param stop_on_git Stop if git has uncommitted changes or is not synced with
 #' the origin?
-#' @param stop_on_devel Stop if the package has a developement version? (That is, a four part version.)
+#' @param stop_on_devel Stop if the package has a development version? (That is, a four part version.)
 #' @param force Skip user interaction?
 #' @param verbose Be verbose?
 #' @return \code{\link[base:invisible]{Invisibly} \link{NULL}}

@@ -100,6 +100,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
                  do_remind = TRUE, do_commit = FALSE)
     use_bsd2clause_license(path = path)
     use_testthat(path = path)
+    use_tinytest(path = path)
 
     provide_throw(path = path)
     provide_make(path = path)

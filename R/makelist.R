@@ -23,6 +23,9 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
     cyclocomp_code <- paste0("print(tryCatch(", 
                              "packager::check_cyclomatic_complexity(\".\")",
                              ", error = identity))")
+    tinytest_code <- paste0("if (file.exists(file.path(\"tests\", ",
+                            "\"tinytest.R\"))) ", 
+                            "print(tinytest::build_install_test(\".\"))")
     ml <- fat(makelist = ml, 
                      target = file.path("README.md"),
                      sink = file.path("log", "readme.Rout"),
@@ -32,6 +35,13 @@ get_package_makelist <- function(is_cran = FALSE, gitlab_token = NULL) {
     ml <- fat(makelist = ml, 
                      target = file.path("log", "testthat.Rout"),
                      code = "devtools::test(\".\")",
+                     prerequisites = c(list_files("R"), list_files("inst"),
+                                       list_files("tests")),
+                     prerequisite_to = build_target)
+    ml <- fat(makelist = ml, 
+                     target = file.path("log", "tinytest.Rout"),
+                     sink = file.path("log", "tinytest.Rout"),
+                     code = tinytest_code,
                      prerequisites = c(list_files("R"), list_files("inst"),
                                        list_files("tests")),
                      prerequisite_to = build_target)
@@ -227,5 +237,3 @@ add_log <- function(x) {
         code = c("packager::use_directory(\"log\", ignore = TRUE)"),
            prerequisite_to = TRUE, prerequisites = NULL)
 }
-
-    

@@ -1,7 +1,7 @@
 #' Check to Not Commit to a Tagged Version
 #'
 #' I sometimes forget to bump the package version of a tagged state in git,
-#' then commiting git to that version. Nothing servere, but should be avoided.
+#' then committing git to that version. Nothing severe, but should be avoided.
 #' So we add a check (to) a pre-commit hook for git.
 #'
 #' This might work only for proper git, not for packages like \pkg{gert} or

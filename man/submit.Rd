@@ -27,7 +27,7 @@ release(
 \item{stop_on_git}{Stop if git has uncommitted changes or is not synced with
 the origin?}
 
-\item{stop_on_devel}{Stop if the package has a developement version? (That is, a four part version.)}
+\item{stop_on_devel}{Stop if the package has a development version? (That is, a four part version.)}
 
 \item{force}{Skip user interaction?}
 

@@ -1,6 +1,6 @@
 = An Introduction to *packager*
 :Author: Andreas Dominik Cullmann
-:Date: 2020-04-25, 16:09:38
+:Date: 2021-08-02, 16:18:31
 :toc2:
 
 ////
@@ -241,6 +241,11 @@ cat(readLines(file.path(path, "NEWS.md")), sep = "\n")
 
 //end.rcode
 
+//begin.rcode, echo = FALSE
+package_title <- "veryImportantPackage"
+path <- file.path(tempdir(), package_title)
+unlink(path, recursive = TRUE)
+//end.rcode
 This is close to the workflow I have been using for most of my packages, 
 substituting https://CRAN.R-project.org/package=fakemake[+fakemake+]
 with https://www.gnu.org/software/make/[GNU make] whenever possible.

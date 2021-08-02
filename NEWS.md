@@ -1,3 +1,14 @@
+# packager 1.13.0
+
+* Added output from `log/tinytest.log` to cran-comments.md.
+* Local test result get written to file `cran-comments.md` only if the results
+  read from the file are not empty. 
+  This fixes changing output from testthat causing empty results as well as
+  empty log files (for example when tinytest.R is not present target tinytest is
+  made anyway).
+* Now adding `tinytest` to infected packages.
+
+
 # packager 1.12.0
 
 * Adapted for exception handling from fritools.

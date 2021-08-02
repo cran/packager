@@ -96,3 +96,7 @@ packager::use_dev_version(path = path)
 desc::desc_get("Version", file = path)
 cat(readLines(file.path(path, "NEWS.md")), sep = "\n")
 
+
+package_title <- "veryImportantPackage"
+path <- file.path(tempdir(), package_title)
+unlink(path, recursive = TRUE)

@@ -15,7 +15,7 @@ See the return value of
 \code{\link[lintr:lint_package]{lintr::lint_package}}.
 }
 \description{
-\pkg{lintr} now runs \pkg{cyclocomp}, which we use indendently and we don't
+\pkg{lintr} now runs \pkg{cyclocomp}, which we use independently and we don't
 want to run it twice. So this is just a wrapper to
 code{\link[lintr:lint_package]{lintr::lint_package}} where we hardcode the
 exclusion of unwanted linters (more may be added to \pkg{lintr}) so other

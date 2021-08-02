@@ -10,6 +10,7 @@ PKGSRC  = $(shell pwd)
 R_FILES = $(shell find R/ -type f -name "*.[rR]" -print)
 MAN_FILES = $(shell find man/ -type f -print)
 RUNIT_FILES = $(shell find tests/ -type f  -print | grep  'runit')
+TINYTEST_FILES = $(shell find tests/ -type f  -print | grep  'tiny')
 TESTTHAT_FILES = $(shell find tests/ -type f  -print | grep  'testthat')
 VIGNETTES_FILES = $(shell find vignettes/ -type f -print)
 INST_FILES = $(shell if [ -d inst/ ] ; then find inst/ -not -path "inst/doc/*" -type f -print; fi)
@@ -30,7 +31,8 @@ tag_release:
 
 .PHONY: force_submit
 force_submit:  
-	$(R) -e "packager::submit(force = TRUE)" > $(LOG_DIR)/submit.log 2>&1 
+	$(R) -e "packager::submit(force = TRUE)" > /tmp/submit.log 2>&1
+	cp /tmp/submit.log $(LOG_DIR)/submit.log
 
 .PHONY: submit
 submit: 
@@ -76,6 +78,7 @@ $(PKGNAME)_$(PKGVERS).tar.gz: NEWS.md README.md DESCRIPTION LICENSE \
 	$(LOG_DIR)/roxygen2.log $(R_FILES) $(MAN_FILES) $(TESTTHAT_FILES) \
 	$(RUNIT_FILES) $(VIGNETTES_FILES) $(INST_FILES) $(LOG_DIR)/spell.log \
 	$(LOG_DIR)/check_codetags.log $(LOG_DIR)/news_rd.log $(LOG_DIR)/runit.log \
+	$(LOG_DIR)/tinytest.log \
 	$(LOG_DIR)/testthat.log $(LOG_DIR)/covr.log $(LOG_DIR)/cleanr.log \
 	$(LOG_DIR)/lintr.log $(LOG_DIR)/cyclocomp.log $(LOG_DIR)/vignettes.log \
 	$(LOG_DIR)/usage.log 
@@ -146,6 +149,11 @@ $(LOG_DIR)/lintr.log: .log.log $(R_FILES) $(VIGNETTES_FILES) $(LOG_DIR)/dependen
 coverage: $(LOG_DIR)/covr.log 
 $(LOG_DIR)/covr.log: .log.log $(R_FILES) $(TESTTHAT_FILES) $(RUNIT_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log
 	export IS_RUNIT="TRUE"; $(Rscript) --vanilla -e 'co <- covr::package_coverage(path = ".", function_exclusions = "\\.onLoad"); covr::zero_coverage(co); print(co)' > $(LOG_DIR)/covr.log 2>&1 
+
+.PHONY: tinytest
+tinytest: $(LOG_DIR)/tinytest.log 
+$(LOG_DIR)/tinytest.log: .log.log $(R_FILES) $(TINYTEST_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log
+	$(Rscript) --vanilla -e 'if (file.exists(file.path("tests", "tinytest.R"))) tinytest::build_install_test(".")' >  $(LOG_DIR)/tinytest.log 2>&1
 
 .PHONY: testthat
 testthat: $(LOG_DIR)/testthat.log 

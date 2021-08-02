@@ -21,7 +21,7 @@ provide_make <- function(path, Rbuildignore = TRUE, ...) {
 #' The \pkg{devtools}' or, later \pkg{usethis}' function hardcoded the source
 #' package, it had dialogs on opened files in RStudio. Did Stuff I do not want.
 #'
-#' @param template The name of the packages's template (a file in the template
+#' @param template The name of the package's template (a file in the template
 #' directory).
 #' @param save_as The path where the template should be written to.
 #' @param data A named list of information used to render the new file from the
