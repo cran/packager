@@ -1,3 +1,11 @@
+# packager 1.14.0
+
+* Added function `build_manual` as a substitute for devtools' version.
+* `submit()` now has an argument `consider_tracked` to control exception
+  handling if git status is not clean.
+* tinytest now starts with a reasonable test file testing for
+  `throw()` to throw an error. 
+
 # packager 1.13.0
 
 * Added output from `log/tinytest.log` to cran-comments.md.

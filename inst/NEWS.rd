@@ -1,6 +1,16 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.14.0}{
+\itemize{
+\item Added function \code{build_manual} as a substitute for devtools' version.
+\item \code{submit()} now has an argument \code{consider_tracked} to control exception
+handling if git status is not clean.
+\item tinytest now starts with a reasonable test file testing for
+\code{throw()} to throw an error.
+}
+}
+
 \section{Changes in version 1.13.0}{
 \itemize{
 \item Added output from \code{log/tinytest.log} to cran-comments.md.

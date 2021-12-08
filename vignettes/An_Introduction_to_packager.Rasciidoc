@@ -1,6 +1,6 @@
 = An Introduction to *packager*
 :Author: Andreas Dominik Cullmann
-:Date: 2021-08-02, 16:18:31
+:Date: 2021-12-08, 13:51:51
 :toc2:
 
 ////
@@ -74,7 +74,7 @@ and customize the package creation
  time, we just build the docs):
 
 //begin.rcode, results = "hide", message = FALSE
-package_title <- "veryImportantPackage"
+package_title <- "myOtherPackage"
 path <- file.path(tempdir(), package_title)
 a  <- utils::person(given = "Your", family = "Name", email = "some@whe.re", 
                     role = c("aut", "cre"))
@@ -149,7 +149,7 @@ We see that now there are untracked files in our package's
 log directory and that some files changed.
 //begin.rcode
 gert::git_status(repo = path)
-git_diff(x = ".Rbuildignore", path = path)
+packager::git_diff(x = ".Rbuildignore", path = path)
 //end.rcode
 After inspecting the change, we commit:
 //begin.rcode
@@ -198,31 +198,34 @@ running the check (be it using +R CMD check+ or +rcmdcheck::rcmdcheck+ or its wr
 
 === Submitting the Package
 
-Now we would like to submit our package to https://cran.r-project.org/[CRAN] (which we will not do here, but we want to!)
-We provide comments to https://cran.r-project.org/[CRAN]: 
+Now we would like to submit our package to https://cran.r-project.org/[CRAN] (which we will not do here, but we want to!).
+// We provide comments to https://cran.r-project.org/[CRAN]: 
+// 
+// //begin.rcode
+// withr::with_dir(path, print(fakemake::make("cran_comments", ml, verbose = FALSE)))
+// cat(readLines(file.path(path, "cran-comments.md")), sep = "\n")
+// //end.rcode
+// After editing the contents we feel ready to submit:
+// 
+// 
+// //begin.rcode
+// try(packager::submit(path))
+// //end.rcode
+// 
+// Oops: we need to commit git first:
+// 
+// //begin.rcode
+// packager::git_add_commit(path = path, untracked = TRUE, 
+//                          message = "prepare for CRAN")
+// gert::git_status(repo = path)
+// 
+// //end.rcode
+// 
+// Now we try and fail again, because this vignette is built in batch mode 
+// and there's a security query which then fails:
 
-//begin.rcode
-withr::with_dir(path, print(fakemake::make("cran_comments", ml, verbose = FALSE)))
-cat(readLines(file.path(path, "cran-comments.md")), sep = "\n")
-//end.rcode
-After editing the contents we feel ready to submit:
-
-
-//begin.rcode
-try(packager::submit(path))
-//end.rcode
-
-Oops: we need to commit git first:
-
-//begin.rcode
-packager::git_add_commit(path = path, untracked = TRUE, 
-                         message = "prepare for CRAN")
-gert::git_status(repo = path)
-
-//end.rcode
-
-Now we try and fail again, because this vignette is built in batch mode 
-and there's a security query which then fails:
+We try and fail, because this vignette is built in batch mode 
+and there's a security query:
 //begin.rcode
 try(packager::submit(path))
 //end.rcode
@@ -242,8 +245,7 @@ cat(readLines(file.path(path, "NEWS.md")), sep = "\n")
 //end.rcode
 
 //begin.rcode, echo = FALSE
-package_title <- "veryImportantPackage"
-path <- file.path(tempdir(), package_title)
+# remove the package
 unlink(path, recursive = TRUE)
 //end.rcode
 This is close to the workflow I have been using for most of my packages, 

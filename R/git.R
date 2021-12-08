@@ -76,7 +76,7 @@ git_tag <- function(path = ".", tag_uncommited = FALSE,
 
 git_tag_create <- function(path, version, message) {
     status <- FALSE
-    if (fritools::is_running_on_gitlab_com()) {
+    if (fritools::is_running_on_gitlab_com(verbose = FALSE)) {
         # NOTE: For reasons unkown, on gitlab.com we get
         # # Error in libgit2::git_signature_default :
         # #    config value 'user.name' was not found

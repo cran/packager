@@ -10,7 +10,8 @@ submit(
   stop_on_git = TRUE,
   stop_on_devel = TRUE,
   force = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  consider_untracked = TRUE
 )
 
 release(
@@ -18,7 +19,8 @@ release(
   stop_on_git = TRUE,
   stop_on_devel = TRUE,
   force = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  consider_untracked = TRUE
 )
 }
 \arguments{
@@ -32,6 +34,9 @@ the origin?}
 \item{force}{Skip user interaction?}
 
 \item{verbose}{Be verbose?}
+
+\item{consider_untracked}{Consider untracked files if
+\emph{consider_untracked} is \code{\link{TRUE}}?}
 }
 \value{
 \code{\link[base:invisible]{Invisibly} \link{NULL}}

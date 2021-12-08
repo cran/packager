@@ -7,15 +7,18 @@
 #' @param path The package's root directory.
 #' @param stop_on_git Stop if git has uncommitted changes or is not synced with
 #' the origin?
+#' @param consider_untracked Consider untracked files if
+#' \emph{consider_untracked} is \code{\link{TRUE}}?
 #' @param stop_on_devel Stop if the package has a development version? (That is, a four part version.)
 #' @param force Skip user interaction?
 #' @param verbose Be verbose?
 #' @return \code{\link[base:invisible]{Invisibly} \link{NULL}}
 #' @export
 submit <- function(path = ".", stop_on_git = TRUE, stop_on_devel = TRUE,
-                   force = FALSE, verbose = TRUE) {
+                   force = FALSE, verbose = TRUE, consider_untracked = TRUE) {
     if (uses_git(path) && isTRUE(stop_on_git)) {
-        if (is_git_uncommitted(path = path))
+        if (is_git_uncommitted(path = path,
+                               consider_untracked = consider_untracked))
             throw("You have uncommitted changes.")
         if (is.na(get_git_upstream(path))) {
             warning("You have no upstream!")

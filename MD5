@@ -1,7 +1,8 @@
-2a6457fad4d0abe96f7bb170f9edde62 *DESCRIPTION
+ab87340cf863d43fa80f2e208feda78c *DESCRIPTION
 b07bea834e9dd61e5d8a055953bfe6b3 *LICENSE
-2fe843013020cc3687bc020d83ad7bf6 *NAMESPACE
-5ab70e3d9608fe976ec6b6fcb3b7fdc0 *NEWS.md
+f7590059390a394576df074569b0e198 *NAMESPACE
+d806ec61c8506c8dd2a31629d7947a88 *NEWS.md
+282bfcff5756066fa42cf68760a346e8 *R/build_manual.R
 306c363b222d690ede4fa0241c38f383 *R/checks.R
 79b65a5c125d40d468e1951575edddf7 *R/compare.R
 69543a35a30d95bfda61542f1a8100d8 *R/convert_vignette.R
@@ -10,7 +11,7 @@ ccfd04cc6682faf404f961d62ac523ae *R/description.R
 f356c0ad918ffb00ef462dc2a70daac5 *R/devtools.R
 c4a2f7572a151f51c7d34ab13d83ecc6 *R/extract_vignette_code.R
 cffa629f441880285ba50518bebfc9e1 *R/fritools.R
-44fa173bf611ea2cc8a0534f16d2e0d3 *R/git.R
+77faecda1e5bfc6e33d70b777e9739a8 *R/git.R
 515a9e14a7ad8b6dc3c7f194bc29069c *R/git_hooks.R
 2bde18eff1ea1f9843631c9749ea9962 *R/gitlab.R
 9a06709170c4001c5afcaae3212ee19a *R/install_deps.R
@@ -32,9 +33,9 @@ fc1c0b275caa9289863ded541b57c93d *R/remotes_modified.R
 f0172341efa6ef590bb69ab50f6e901b *R/remove_lines.R
 bd650c427769434ff7ecaaf410f295c4 *R/rhub.R
 c582a36a51b2f6ec9d2edccb39ce2f1c *R/sort_deps_in_desc.R
-a08730f2a8081b1f880b1efff5860422 *R/submit.R
+94d4a4b124968dfe3ac85d5e1a13f20b *R/submit.R
 11f9b64fb86fa0b9389a4baed996a5f5 *R/throw.R
-5f69271af34c8895e499623f843089d5 *R/tinytest.R
+e0b845be500dce46ea3c7dc6336e968a *R/tinytest.R
 0e3617673d4444c80d24dda46624f517 *R/update_deps.R
 e32bc0fed89230193402c6cd85d13304 *R/upload_cran.R
 7b52493dea2f37806fc989cf1b998689 *R/use_dev_version.R
@@ -43,11 +44,11 @@ add1ab891f21ae04b915cc3de5826295 *R/various.R
 5a95864bbf520793d86a19e25c4bf026 *R/zzz.R
 89a4614016826b08c1d5bf854e6c26df *README.md
 a5c6c138071a835a6ebcddb6b9baa60c *build/vignette.rds
-e26d4be69e74a619fc17bdd344a47426 *inst/NEWS.rd
+bf5caa1da28b09d271bc1cfa734ec5d4 *inst/NEWS.rd
 8a9040c78e2770afca52d17fbd4d56cc *inst/WORDLIST
-7f2a3cf4f1af05873f4c3c1bee673f07 *inst/doc/An_Introduction_to_packager.R
-f839c7f8c57b9a56580a47e42de51e8d *inst/doc/An_Introduction_to_packager.Rasciidoc
-19d002bab34c060b598d7cdf7b2cfc53 *inst/doc/An_Introduction_to_packager.html
+6aa31af4b1cd1a9b8c9831de6527e630 *inst/doc/An_Introduction_to_packager.R
+7e1c549f399be6969488b61aeaf2d0f6 *inst/doc/An_Introduction_to_packager.Rasciidoc
+9070686d4cc16940adb5b4a973810820 *inst/doc/An_Introduction_to_packager.html
 04c52551cddf0306e18c46aa7ab64d4e *inst/files/An_Introduction_to_packager.Rasciidoc
 76d721acdd488f61d3399ab7569bd12a *inst/files/An_Introduction_to_packager.Rmd
 ca2537e49d377ffdbf25a7505188a716 *inst/files/a.R
@@ -71,7 +72,7 @@ bd31bf0e64c97a0fd55d39b893cd4756 *inst/templates/check_version_not_tagged.sh
 6afe8134bb8fc998203e309d560a5de1 *inst/templates/make.R
 b0f08ea5438d19b03c2835abc8087c41 *inst/templates/man-roxygen/return_boolean.R
 7a945c8bac02c5e6d47ca2bd4c0b7f2e *inst/templates/man-roxygen/return_invisibly_null.R
-9290e0cdbf8af33f5eb1d98824c9f43c *inst/templates/nomakefile
+adf41a4f104977fe47002596dab0c014 *inst/templates/nomakefile
 52b04bb7467c0ac98bf274e75bb382f4 *inst/templates/omni-README
 96c1277845a557b77a1c4b569849e39f *inst/templates/runit-throw.R
 647f98bb09f7c945b1f7c2b3c4cf6ee2 *inst/templates/runit.R
@@ -82,10 +83,11 @@ b0f08ea5438d19b03c2835abc8087c41 *inst/templates/man-roxygen/return_boolean.R
 21baf16bcd5681884d7c45206121674b *inst/templates/vignette.Rmd
 4481d9515d6d97da8df3a628a7ac2c01 *inst/templates/zzz.R
 cd20807385b6bf9796c0c7e81c5980ed *inst/tinytest/test_packager.R
-694d13956547450b8307e1036b126ecb *inst/vignettes_code/An_Introduction_to_packager.R
+d76865c941b74520443493178b7c7bbf *inst/vignettes_code/An_Introduction_to_packager.R
 101c1f94edbda980e3ed63f60265ebfc *man/add_github_url_to_desc.Rd
 7ce07d2c09595a93b2e9dc827723513e *man/add_news.Rd
 472a72d30eafe8be9c1535263094abbf *man/as.package.Rd
+85591984aa3a67130b6b0987139aadc8 *man/build_manual.Rd
 b044242944d135ca5aba9684d192e628 *man/check_archive.Rd
 c814280db8c6b02d75abad1685cd36be *man/check_codetags.Rd
 5a90ab1e8dc7f363295b5c4f6962f1eb *man/check_cyclomatic_complexity.Rd
@@ -121,7 +123,7 @@ a1ac886be056beb237b630d150e23e40 *man/rcmdcheck_and_log.Rd
 a408da552491dd9c9398f70d2d37cf3f *man/set_options.Rd
 6db8b31211b68e261d2182333919c585 *man/set_package_info.Rd
 44f06e8ddd3ff1048557cd4d733b89e9 *man/sort_deps_in_desc.Rd
-75653b68424a55e5f66d88d8c16687e6 *man/submit.Rd
+e6e93dc763cc5a80f18e5a4833407603 *man/submit.Rd
 e90c158eaf5837a3c0d2c3ab0b4fc428 *man/throw.Rd
 273d4ba57085343d9b984e92888fad0a *man/update_deps.Rd
 d3b40c2bc6059aafc658c559315b6d20 *man/use_bsd2clause_license.Rd
@@ -136,4 +138,4 @@ fcdef7bf25b5e96dd940159fb1b16827 *tests/runit.R
 beee95c271e9e98a7a8cf1d41573f5fd *tests/testthat/test-main.R
 6489ee2ef4d565938eae01a68318a37a *tests/testthat/test-throw.R
 908180603ea280c68024941db1453952 *tests/tinytest.R
-f839c7f8c57b9a56580a47e42de51e8d *vignettes/An_Introduction_to_packager.Rasciidoc
+7e1c549f399be6969488b61aeaf2d0f6 *vignettes/An_Introduction_to_packager.Rasciidoc

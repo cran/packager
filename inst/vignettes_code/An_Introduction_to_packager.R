@@ -16,7 +16,7 @@ unlink(path, recursive = TRUE)
 if ("myFirstPackage" %in% .packages()) detach("package:myFirstPackage", 
                                               unload = TRUE)
 
-package_title <- "veryImportantPackage"
+package_title <- "myOtherPackage"
 path <- file.path(tempdir(), package_title)
 a  <- utils::person(given = "Your", family = "Name", email = "some@whe.re", 
                     role = c("aut", "cre"))
@@ -57,7 +57,7 @@ suppressMessages(withr::with_dir(path,
                                                        verbose = FALSE))))
 
 gert::git_status(repo = path)
-git_diff(x = ".Rbuildignore", path = path)
+packager::git_diff(x = ".Rbuildignore", path = path)
 
 withr::with_dir(path, packager::git_add_commit(path = ".", untracked = TRUE,
                                                message = "make build"))
@@ -79,16 +79,6 @@ withr::with_dir(path, packager::git_add_commit(path = ".", untracked = TRUE,
 
 system.time(withr::with_dir(path, print(fakemake::make("check", ml, verbose = FALSE))))
 
-withr::with_dir(path, print(fakemake::make("cran_comments", ml, verbose = FALSE)))
-cat(readLines(file.path(path, "cran-comments.md")), sep = "\n")
-
-try(packager::submit(path))
-
-packager::git_add_commit(path = path, untracked = TRUE, 
-                         message = "prepare for CRAN")
-gert::git_status(repo = path)
-
-
 try(packager::submit(path))
 
 packager::git_tag(path = path, message = "A Tag")
@@ -97,6 +87,5 @@ desc::desc_get("Version", file = path)
 cat(readLines(file.path(path, "NEWS.md")), sep = "\n")
 
 
-package_title <- "veryImportantPackage"
-path <- file.path(tempdir(), package_title)
+# remove the package
 unlink(path, recursive = TRUE)

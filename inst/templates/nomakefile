@@ -54,7 +54,7 @@ build_win:
 
 .PHONY: use_dev_version
 use_dev_version:
-	$(Rscript) --vanilla -e 'packager::use_dev_version()' > $(LOG_DIR)/use_dev.log 2>&1 
+	$(Rscript) --vanilla -e 'packager::use_dev_version()' 
 
 # install
 cran-comments.md:  $(LOG_DIR)/install.log
