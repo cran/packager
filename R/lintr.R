@@ -14,7 +14,7 @@
 #' @export
 lint_package <- function(path) {
     # We use cyclocomp anyways, plus it takes time..
-    linters <- lintr::with_defaults(cyclocomp_linter = NULL)
+    linters <- lintr::linters_with_defaults(cyclocomp_linter = NULL)
     lints <- lintr::lint_package(path = path, linters = linters)
     return(lints)
 }

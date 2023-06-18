@@ -182,6 +182,10 @@ use_devel <- function(path = ".",
     pkg <- as.package(path)
     use_template("devel.R", data = pkg, pkg = pkg, force = force,
                  ignore = ignore)
+    use_directory("devel", ignore = ignore, pkg = pkg)
+    use_template("devel_test.R", save_as = file.path("devel", "devel_test.R"),
+                 data = pkg, pkg = pkg, force = force,
+                 ignore = ignore)
     invisible(NULL)
 }
 

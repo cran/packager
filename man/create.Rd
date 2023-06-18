@@ -27,7 +27,7 @@ path <- file.path(tempdir(), "myFirstPackage")
 packager::create(path = path, fakemake = "roxygen2")
 list.files(path, recursive = TRUE)
 \dontrun{
-if (require("roxygen2")) { 
+if (require("roxygen2")) {
   ml <- packager::get_package_makelist(is_cran = TRUE)
   d <- file.path(tempdir(), "somePackage")
   dir.create(d)

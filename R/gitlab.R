@@ -18,7 +18,10 @@ is_check <- function(x) {
     return(is_check)
 }
 
-is_my_name <- function(x, name) return(tolower(getElement(x, "name")) == name)
+is_my_name <- function(x, name) {
+    res <- tolower(getElement(x, "name")) == tolower(name)
+    return(res)
+}
 
 #' Read a \verb{gitlab} Check Log
 #'

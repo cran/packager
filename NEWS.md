@@ -1,3 +1,16 @@
+# packager 1.15.0
+
+* Package `fritools` back on CRAN.
+* Updated rhub logs.
+* Read win\_builder message from ~/Mail/CRAN for cran\_comments.md.
+* Adapted to lintr 3.0.0.
+* Fixed retrival of gitlab logs for camelCase packages.
+* Fixed formerly extraneous argument `character.only` to call to
+  `requireNamespase()` in `build_manual()`, which always led to falsely never
+  roxygenizing.
+* `use_devel()` now provides an exenteded `devel.R` and adds 
+  `devel/devel_test.R`, which I found very helpful.
+
 # packager 1.14.0
 
 * Added function `build_manual` as a substitute for devtools' version.
@@ -121,7 +134,7 @@
   So now all `args` except "--as-cran" will be used as `build_args` by default.
   Comes in handy, because usually we want to exclude actions (via "--no-manual" 
   or the like) from both build and check. Now don't need to pass them to two
-  arguments explicitely.
+  arguments explicitly.
 
 
 # packager 1.5.0

@@ -29,4 +29,3 @@ remove_lines <- function(file_path = file.path(".", ".gitignore"),
     if (isTRUE(overwrite)) writeLines(content, con = file_path)
     return(invisible(content))
 }
-

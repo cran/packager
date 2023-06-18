@@ -18,10 +18,16 @@
 ## #' cat(capture.output(print(res)), file = "log/rhub.log", sep = "\n")
 ## #' get_local_rhub(".")
 ## #' }
-check_rhub <- function(path = ".", os = c("solaris", "windows")) {
+check_rhub <- function(path = ".", os = c("m1", "solaris", "windows")) {
     root <- rprojroot::find_root(path = path, rprojroot::is_r_package)
     platforms <- as.data.frame(rhub::platforms())
     res <- list()
+    if ("m1" %in% os) {
+        platform <- platforms[platforms$queue == "m1", "name"]
+        check <- rhub::check_for_cran(path = root, platform = platform,
+                                      show_status = TRUE)
+        res[["m1"]] <- check
+    }
     if ("solaris" %in% os) {
         index <- platforms[["os-type"]] == "Solaris"
         if (sum(index) < 1) throw("Can get solaris for rhub")
@@ -49,18 +55,16 @@ check_rhub <- function(path = ".", os = c("solaris", "windows")) {
                                       show_status = TRUE)
         res[["windows"]] <- check
     }
-    if (!interactive()) message("The return value is meaningless. Use")
+    if (!interactive()) message("The return value is meaningless.",
+                                "Use get_rhub_latest()")
     return(invisible(res))
 }
 
 get_rhub_latest <- function(path = ".") {
     rhub <- rhub::list_package_checks(package = path)
-    platform_names <- unique(rhub$platform_name)
-    checks <- list()
-    for (platform in platform_names) {
-        latest_id <- rhub[rhub[["platform_name"]] == platform, ][1, ][["id"]]
-        check <- rhub::get_check(latest_id)
-        checks[[platform]] <- check
-    }
-    return(checks)
+    version <- as.package(path)$version
+    rhub <- rhub[rhub$status == "ok" & rhub$version == version, TRUE]
+    
+    print(rhub::get_check(as.character(rhub[["id"]])))
+    return(invisible(TRUE))
 }

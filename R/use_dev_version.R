@@ -52,4 +52,3 @@ add_news <- function(path) {
     }
     return(status)
 }
-

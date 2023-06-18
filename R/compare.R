@@ -87,4 +87,3 @@ compare_make <- function(package_directory = ".") {
                                       remove = "\\.log$")
     fritools::compare_vectors(targets_list, targets_file)
 }
-

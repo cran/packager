@@ -97,8 +97,29 @@ provide_cran_comments <- function(check_log = NULL,
     }
     if (!is.null(gitlab_info))
         comments <- c(comments, paste(c("\n- gitlab.com", gitlab_info),
-                                      collapse = "\n  "), "\n")
-    comments <- c(comments, "\n- win-builder (devel)", "\n")
+                                      collapse = "\n  "))
+    comments <- c(comments, "\n- win-builder (devel)")
+    cran_mails <- file.path("~", "Mail", "CRAN")
+    if (! file.access(cran_mails, mode = 4)) {
+        cran <- readLines(cran_mails)
+        from_pattern <- paste0("Subject: winbuilder: Package ",
+                               pkg[["package"]], "_", pkg[["version"]])
+        index <- grep(from_pattern, cran)
+        if (! fritools::is_of_length_zero(index)) {
+            start <- index[length(index)]
+            diff <- start - grep("^Date:", cran)
+            start <- start - min(diff[diff >= 0])
+            tail <- cran[start:length(cran)]
+            from_pattern <- paste0(pkg[["package"]], "_", pkg[["version"]])
+            winbuilder <- fritools::fromto(tail, from_pattern, "All the best",
+                                           from_i = 2, shift_to = -1)
+            winbuilder <- paste(c("  ", grep("^Date:", tail,
+                                             value = TRUE)[1],
+                                  winbuilder), collapse = "\n  ")
+            comments <- c(comments, winbuilder)
+        }
+
+    }
     comments <- c(comments, get_local_tests(path))
     comments <- c(comments, get_local_meta(path))
 
@@ -141,7 +162,7 @@ parse_check_info <- function(path) {
 }
 
 get_local_tests <- function(path) {
-    comments <- c("\n## Local test results\n")
+    comments <- c("\n\n## Local test results\n")
     if (!is.na(log_file <- pick_log_file(path, "runit"))) {
         lines <- readLines(log_file)
         result <- grep(pattern = "test functions?.*errors.*failures",
@@ -285,7 +306,7 @@ get_gitlab_info <- function(path = ".", private_token, ...) {
                     info <- c(info, paste(c("Package:", "Version:"), pkg_info),
                               status)
                 } else {
-                    warning("gitlab version `",  gitlab_version, 
+                    warning("gitlab version `",  gitlab_version,
                             "` not matching current version `", current_version,
                             "`!")
                 }
@@ -298,21 +319,18 @@ get_gitlab_info <- function(path = ".", private_token, ...) {
 get_local_rhub <- function(path) {
     comments <- NULL
     if (!is.na(log_file <- pick_log_file(path, "rhub"))) {
-        comments <- c(comments, "\n- rhub")
         r <- readLines(log_file)
-        r <- unlist(strsplit(paste(r, collapse = "\n"), split = "\\$"))
-        r <- r[nchar(r) != 0]
         desc_version <- desc::desc_get_version(path)
-
-        for(p in r) {
-            p <- unlist(strsplit(p, split = "\n"))
-            version <- sub(".*_(.*)\\.tar.*", "\\1", grep("Build ID", p, value = TRUE))
-            if (identical(package_version(version), desc_version)) {
-                comments <- c(comments, paste(p[-1], collapse = "\n   "))
+        name <- desc::desc_get_field("Package", file = path)
+        i <- grep(paste(name, desc_version), r)
+        if (length(i) > 0) {
+            comments <- c(comments, "\n- rhub")
+            if (length(i) > 1) {
+                r <- r[1:(i[2] -1)]
+                
             }
+            comments <- c(comments, paste(r, collapse = "\n   "))
         }
-
     }
     return(comments)
 }
-

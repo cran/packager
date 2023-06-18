@@ -27,4 +27,3 @@ upload_cran <- function(pkg, built_path, cran_submission_url = NULL) {
     }
     invisible(TRUE)
 }
-

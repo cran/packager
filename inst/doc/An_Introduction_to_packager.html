@@ -832,12 +832,12 @@ http://www.gnu.org/software/src-highlite -->
 ##  [5] "NAMESPACE"                   "NEWS.md"
 ##  [7] "R"                           "README.Rmd"
 ##  [9] "README.md"                   "TODO.md"
-## [11] "devel.R"                     "doc"
-## [13] "inst"                        "log"
-## [15] "make.R"                      "man"
-## [17] "man-roxygen"                 "myFirstPackage.Rcheck"
-## [19] "myFirstPackage_0.1.0.tar.gz" "tests"
-## [21] "vignettes"</code></pre>
+## [11] "devel"                       "devel.R"
+## [13] "doc"                         "inst"
+## [15] "log"                         "make.R"
+## [17] "man"                         "man-roxygen"
+## [19] "myFirstPackage.Rcheck"       "myFirstPackage_0.1.0.tar.gz"
+## [21] "tests"                       "vignettes"</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -848,7 +848,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 0 × 3
-## # … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
+## # ℹ 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -858,29 +858,20 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>gert::git_log(repo = path)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## # A tibble: 20 × 6
-##    commit        author     time                files merge message
-##  * &lt;chr&gt;         &lt;chr&gt;      &lt;dttm&gt;              &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;
-##  1 685d728f6618… fvafrcu &lt;… 2021-12-08 16:55:46    31 FALSE "Packager Changes\n"
-##  2 3b5758bfb797… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `man-roxyge…
-##  3 99a8b6206833… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `man-roxyge…
-##  4 a13b32f0e069… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `R/zzz.R` f…
-##  5 9d999bd7d203… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `make.R` fr…
-##  6 2c924a8954b3… fvafrcu &lt;… 2021-12-08 16:54:46     1 FALSE "Adding `inst/runit…
-##  7 c6b2072ec804… fvafrcu &lt;… 2021-12-08 16:54:46     1 FALSE "Adding `tests/runi…
-##  8 9ec4d2d8c038… fvafrcu &lt;… 2021-12-08 16:54:46     1 FALSE "Adding `tests/test…
-##  9 f29560be13d5… fvafrcu &lt;… 2021-12-08 16:54:46     1 FALSE "Adding `R/throw.R`…
-## 10 9b423fed364e… fvafrcu &lt;… 2021-12-08 16:54:46     1 FALSE "Adding `tests/test…
-## 11 2f4349579e96… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `devel.R` f…
-## 12 046392af7ab6… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `.gitlab-ci…
-## 13 f9f14fd05320… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `.gitlab-ci…
-## 14 e4455e8b8ec7… fvafrcu &lt;… 2021-12-08 16:54:46     2 FALSE "Adding `.travis.ym…
-## 15 fecae35a910d… fvafrcu &lt;… 2021-12-08 16:54:45     2 FALSE "Adding `README.Rmd…
-## 16 3f4f8dd6af5b… fvafrcu &lt;… 2021-12-08 16:54:45     1 FALSE "Adding `NEWS.md` f…
-## 17 701b7fdc4e68… fvafrcu &lt;… 2021-12-08 16:54:45     1 FALSE "Adding `vignettes/…
-## 18 86251385a7df… fvafrcu &lt;… 2021-12-08 16:54:45     2 FALSE "Adding `Makefile` …
-## 19 0562d6c9929a… fvafrcu &lt;… 2021-12-08 16:54:45     1 FALSE "Clean DESCRIPTION\…
-## 20 2d2fefd65e1b… fvafrcu &lt;… 2021-12-08 16:54:45     2 FALSE "Initial Commit\n"</code></pre>
+<pre><code>## # A tibble: 24 × 6
+##    commit                         author time                files merge message
+##  * &lt;chr&gt;                          &lt;chr&gt;  &lt;dttm&gt;              &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;
+##  1 745f49b25c2b830b445216cbcb63e… fvafr… 2023-06-16 20:45:06    31 FALSE "Packa…
+##  2 0c95e0ade7b5fa6176de5cb0b6f2c… fvafr… 2023-06-16 20:44:15     2 FALSE "Addin…
+##  3 75fd03f5f9c122eb835ca29a281b5… fvafr… 2023-06-16 20:44:15     2 FALSE "Addin…
+##  4 83a7394d5f248e4dc29bd29f48999… fvafr… 2023-06-16 20:44:15     2 FALSE "Addin…
+##  5 834114192b90976ceea5bdd074f4c… fvafr… 2023-06-16 20:44:15     2 FALSE "Addin…
+##  6 7c588f00845391a28e7eb8b980b83… fvafr… 2023-06-16 20:44:15     2 FALSE "Addin…
+##  7 32b158e7178c8861339517de88a1d… fvafr… 2023-06-16 20:44:15     2 FALSE "Addin…
+##  8 e48f04a34003e6a227be7613a2f7b… fvafr… 2023-06-16 20:44:15     2 FALSE "Addin…
+##  9 f668dbffeca82d6a86f124fa03d92… fvafr… 2023-06-16 20:44:15     1 FALSE "Addin…
+## 10 b981318ca6896f83f0d69bf803420… fvafr… 2023-06-16 20:44:15     1 FALSE "Addin…
+## # ℹ 14 more rows</code></pre>
 </div></div>
 <div class="paragraph"><p>We can look at some of the files
 (the directory <code>myFirstPackage.Rcheck</code> might be of interest):</p></div>
@@ -892,13 +883,12 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>cat(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"spell.Rout"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## DESCRIPTION does not contain 'Language' field. Defaulting to 'en-US'.
-##   WORD      FOUND IN
+<pre><code>##   WORD      FOUND IN
 ## RStudio   README.Rmd:8,9
 ##           README.md:8,9
 ## gitlab    README.Rmd:43
 ##           README.md:43
-## Spell check failed, see /tmp/RtmpRrLvuD/myFirstPackage/log/spell.Rout for details.</code></pre>
+## Spell check failed, see /tmp/RtmpGSSx7i/myFirstPackage/log/spell.Rout for details.</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -908,9 +898,9 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>tail(readLines(file.path(path, <span style="color: #FF0000">"log"</span>, <span style="color: #FF0000">"check.Rout"</span>)), sep = <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span>)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "Status: 2 NOTEs"
+<pre><code>## [1] "Status: 4 NOTEs"
 ## [2] "See"
-## [3] "  ‘/tmp/RtmpRrLvuD/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
+## [3] "  ‘/tmp/RtmpGSSx7i/myFirstPackage/myFirstPackage.Rcheck/00check.log’"
 ## [4] "for details."
 ## [5] ""
 ## [6] ""</code></pre>
@@ -947,18 +937,18 @@ http://www.gnu.org/software/src-highlite -->
 ## License: BSD_2_clause + file LICENSE
 ## URL: https://gitlab.com/fvafrcu/myFirstPackage
 ## Depends:
-##     R (&gt;= 4.2.0)
+##     R (&gt;= 4.4.0)
 ## Suggests:
 ##     knitr,
 ##     pkgload,
-##     testthat,
 ##     rmarkdown,
-##     tinytest,
+##     rprojroot,
 ##     RUnit,
-##     rprojroot
+##     testthat,
+##     tinytest
 ## VignetteBuilder: knitr
 ## Encoding: UTF-8
-## RoxygenNote: 7.1.2
+## RoxygenNote: 7.2.3
 ## Imports:
 ##     fritools (&gt;= 1.3.0)</code></pre>
 </div></div>
@@ -1013,18 +1003,18 @@ http://www.gnu.org/software/src-highlite -->
 ## License: BSD_2_clause + file LICENSE
 ## URL: https://gitlab.com/fvafrcu/myOtherPackage
 ## Depends:
-##     R (&gt;= 4.2.0)
+##     R (&gt;= 4.4.0)
 ## Suggests:
 ##     knitr,
 ##     pkgload,
-##     testthat,
 ##     rmarkdown,
-##     tinytest,
+##     rprojroot,
 ##     RUnit,
-##     rprojroot
+##     testthat,
+##     tinytest
 ## VignetteBuilder: knitr
 ## Encoding: UTF-8
-## RoxygenNote: 7.1.2
+## RoxygenNote: 7.2.3
 ## Imports:
 ##     fritools (&gt;= 1.3.0)</code></pre>
 </div></div>
@@ -1087,7 +1077,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 0 × 3
-## # … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
+## # ℹ 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1097,29 +1087,20 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>gert::git_log(repo = path)</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## # A tibble: 20 × 6
-##    commit        author     time                files merge message
-##  * &lt;chr&gt;         &lt;chr&gt;      &lt;dttm&gt;              &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;
-##  1 d3ed07feb45c… fvafrcu &lt;… 2021-12-08 16:55:47    14 FALSE "Packager Changes\n"
-##  2 df641300cac6… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `man-roxyge…
-##  3 0c7d96e1964f… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `man-roxyge…
-##  4 c88da401368c… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `R/zzz.R` f…
-##  5 783ce8566c0c… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `make.R` fr…
-##  6 844a52b410b4… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Adding `inst/runit…
-##  7 13220a3e1b7b… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Adding `tests/runi…
-##  8 4e97a9449291… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Adding `tests/test…
-##  9 98cc077aee6a… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Adding `R/throw.R`…
-## 10 b38771115bf7… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Adding `tests/test…
-## 11 bcdc91ae35ba… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `devel.R` f…
-## 12 a383979141bf… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `.gitlab-ci…
-## 13 f6fd4c45bc0b… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `.gitlab-ci…
-## 14 367fd3f7a4b9… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `.travis.ym…
-## 15 b9706e11e83c… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `README.Rmd…
-## 16 476f793cf78a… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Adding `NEWS.md` f…
-## 17 e19c7a024216… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Adding `vignettes/…
-## 18 04607123e687… fvafrcu &lt;… 2021-12-08 16:55:47     2 FALSE "Adding `Makefile` …
-## 19 d0d2f180e0c6… fvafrcu &lt;… 2021-12-08 16:55:47     1 FALSE "Clean DESCRIPTION\…
-## 20 7d2c3a2126a3… fvafrcu &lt;… 2021-12-08 16:55:46     2 FALSE "Initial Commit\n"</code></pre>
+<pre><code>## # A tibble: 24 × 6
+##    commit                         author time                files merge message
+##  * &lt;chr&gt;                          &lt;chr&gt;  &lt;dttm&gt;              &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;
+##  1 bf1cb1d2c8829cb6bdb1cbb2ab0b0… fvafr… 2023-06-16 20:45:07    14 FALSE "Packa…
+##  2 799ed77a402c2ec678d1e61d1a089… fvafr… 2023-06-16 20:45:07     2 FALSE "Addin…
+##  3 1fad0d4f2760f4523318545d7d418… fvafr… 2023-06-16 20:45:07     2 FALSE "Addin…
+##  4 ef65481f06b4a2653371045f5a8b0… fvafr… 2023-06-16 20:45:07     2 FALSE "Addin…
+##  5 7665cdeada3b06acc67a017a8bb71… fvafr… 2023-06-16 20:45:07     2 FALSE "Addin…
+##  6 48e7b54f4871dd1edf218ccca9ca6… fvafr… 2023-06-16 20:45:07     2 FALSE "Addin…
+##  7 86201cec3ca30da6ce2f80300e830… fvafr… 2023-06-16 20:45:07     2 FALSE "Addin…
+##  8 5c16cc90e30ce225f483320cc229c… fvafr… 2023-06-16 20:45:07     2 FALSE "Addin…
+##  9 a019cde60a889972676735fdd6923… fvafr… 2023-06-16 20:45:07     1 FALSE "Addin…
+## 10 f987b3fe607538596892e9910a7e0… fvafr… 2023-06-16 20:45:07     1 FALSE "Addin…
+## # ℹ 14 more rows</code></pre>
 </div></div>
 <div class="paragraph"><p>but we have so far only built the documentation from the <code>roxygen</code> comments:</p></div>
 <div class="listingblock">
@@ -1228,11 +1209,11 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## diff --git a/.Rbuildignore b/.Rbuildignore
-## index 91c8287..624aa0c 100644
+## index 8a5d5c8..000c96d 100644
 ## --- a/.Rbuildignore
 ## +++ b/.Rbuildignore
-## @@ -19,3 +19,5 @@
-##  ^man-roxygen/return_invisibly_null\.R$
+## @@ -24,3 +24,5 @@
+##  ^man-roxygen/stop_on_error\.R$
 ##  ^\.log\.Rout$
 ##  ^log$
 ## +^doc$
@@ -1248,7 +1229,7 @@ http://www.gnu.org/software/src-highlite -->
                                                message = <span style="color: #FF0000">"make build"</span>))</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "ebef81a793def780e97a9f967a82bca8efbe5632"</code></pre>
+<pre><code>## [1] "f401f5c67af5b05f285700e4affd3b59fa64e104"</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1259,7 +1240,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>## # A tibble: 0 × 3
-## # … with 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
+## # ℹ 3 variables: file &lt;chr&gt;, status &lt;chr&gt;, staged &lt;lgl&gt;</code></pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -1308,9 +1289,9 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>##
-## Status: 2 NOTEs
+## Status: 4 NOTEs
 ## See
-##   ‘/tmp/RtmpRrLvuD/myOtherPackage/myOtherPackage.Rcheck/00check.log’
+##   ‘/tmp/RtmpGSSx7i/myOtherPackage/myOtherPackage.Rcheck/00check.log’
 ## for details.</code></pre>
 </div></div>
 <div class="listingblock">
@@ -1335,7 +1316,7 @@ http://www.gnu.org/software/src-highlite -->
                                                message = <span style="color: #FF0000">"make check"</span>))</tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "5064d8d807cfadeb534360f8545ba5daa05fc9bb"</code></pre>
+<pre><code>## [1] "ce0cdc7a615090635465f4827d908ee62375eeb9"</code></pre>
 </div></div>
 <div class="paragraph"><p>If we choose to rerun the check without touching any files "down the make chain" (i.e. no files that any of our make targets depend on), we see there&#8217;s nothing to be done:</p></div>
 <div class="listingblock">
@@ -1351,7 +1332,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="listingblock">
 <div class="content">
 <pre><code>##    user  system elapsed
-##   1.463   0.008   1.471</code></pre>
+##   1.294   0.004   1.297</code></pre>
 </div></div>
 <div class="paragraph"><p>This is the big difference between running the check via <code>fakemake</code> with a set of dependencies (set up with <code>packager</code>) and
 running the check (be it using <code>R CMD check</code> or <code>rcmdcheck::rcmdcheck</code> or its wrapper <code>devtools::check</code>) unconditionally: the latter method rebuilds and checks the whole package every time. <em>This is why I wrote <code>packager</code> and <code>fakemake</code>.</em></p></div>
@@ -1394,7 +1375,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><code>## # A tibble: 1 × 3
 ##   name  ref             commit
 ##   &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;
-## 1 0.1.0 refs/tags/0.1.0 fbfb4a7bc4df1695685841df410a91dc4867fe4c</code></pre>
+## 1 0.1.0 refs/tags/0.1.0 083c1906fcf77172662bf39fe9f10dd623828642</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1411,7 +1392,7 @@ http://www.gnu.org/software/src-highlite -->
 </tt></pre></div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>## [1] "6b38ed3512c008e0cb5f0329728e5fa1ebcdf50c"</code></pre>
+<pre><code>## [1] "610c606110ba3c2f27d1ea3e024e1fa8fd07b348"</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight
@@ -1451,7 +1432,7 @@ with <a href="https://www.gnu.org/software/make/">GNU make</a> whenever possible
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2021-12-08 16:56:56 CET
+ 2023-06-16 20:46:07 CEST
 </div>
 </div>
 </body>

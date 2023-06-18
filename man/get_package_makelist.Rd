@@ -13,7 +13,7 @@ get_package_makelist(is_cran = FALSE, gitlab_token = NULL)
 \url{https://about.gitlab.com}.}
 }
 \value{
-A list for 
+A list for
 \code{\link[fakemake:make]{fakemake::make}}.
 }
 \description{

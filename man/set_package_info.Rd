@@ -33,7 +33,7 @@ default details are inserted. Set to NULL to have no details at all.}
 a list of results of setting the xxx-package.R and the DESCRIPTION.
 }
 \description{
-Fill DESCRIPTION, R/xxx-package.R and an introductory vignette with the same 
+Fill DESCRIPTION, R/xxx-package.R and an introductory vignette with the same
 Title, Description and possibly Details,
 keeping the info given in different places identical.
 }

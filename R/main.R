@@ -16,7 +16,7 @@
 #' packager::create(path = path, fakemake = "roxygen2")
 #' list.files(path, recursive = TRUE)
 #' \dontrun{
-#' if (require("roxygen2")) { 
+#' if (require("roxygen2")) {
 #'   ml <- packager::get_package_makelist(is_cran = TRUE)
 #'   d <- file.path(tempdir(), "somePackage")
 #'   dir.create(d)
@@ -54,7 +54,7 @@ create <- function(path, force = TRUE, ...) {
 #' @param git_add_and_commit Add and commit changes in git?
 #' @param fakemake The \code{name} for a
 #' \code{\link[packager:get_package_makelist]{makelist}} for \pkg{fakemake}.
-#' Set to \code{\link{NULL}} or \code{\link{FALSE}} to disable running 
+#' Set to \code{\link{NULL}} or \code{\link{FALSE}} to disable running
 #' \code{\link[fakemake:make]{fakemake::make}}.
 #' @param ... Arguments to be passed to \code{\link{set_package_info}}.
 #' @return \code{\link[base:invisible]{Invisibly}}
@@ -63,7 +63,7 @@ create <- function(path, force = TRUE, ...) {
 #' @export
 #' @examples
 #' \dontrun{
-#' if (require("roxygen2")) { 
+#' if (require("roxygen2")) {
 #' path <- file.path(tempdir(), "mySecondPackage")
 #' usethis::create_package(path = path, open = FALSE)
 #' l1 <- list.files(path, recursive = TRUE)
@@ -113,7 +113,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
     if (!(is.null(fakemake) || fritools::is_false(fakemake))) {
         ml <- get_package_makelist(is_cran = TRUE)
         fritools::with_dir(path, print(fakemake::make(name = fakemake,
-                                                      make_list = ml, 
+                                                      make_list = ml,
                                                       verbose = FALSE)))
     }
     if (isTRUE(git_add_and_commit)) {
@@ -126,7 +126,7 @@ infect <- function(path, fakemake = "check", git_add_and_commit = TRUE, ...) {
 
 #' Set a Package's Info
 #'
-#' Fill DESCRIPTION, R/xxx-package.R and an introductory vignette with the same 
+#' Fill DESCRIPTION, R/xxx-package.R and an introductory vignette with the same
 #' Title, Description and possibly Details,
 #' keeping the info given in different places identical.
 #'

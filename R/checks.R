@@ -218,4 +218,3 @@ get_check_status <- function(path) {
      log_entries <- list(notes = notes, warnings = warnings, errors = errors)
      return(list(status = status, log = log_entries))
 }
-

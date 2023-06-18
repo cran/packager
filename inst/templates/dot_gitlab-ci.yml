@@ -6,10 +6,11 @@ stages:
     - deploy
 
 before_script:
-    - if [ -e .gitlab-ci/gitlab-com.R ]; then R < .gitlab-ci/gitlab-com.R; fi
-    - R --vanilla -e 'install.packages("packager", repos = "https://cloud.r-project.org/")'
-    - R --vanilla -e 'packager::install_deps(path = ".", repos = "https://cloud.r-project.org/")'
     - if [ -e .gitlab-ci/apt-script.cl ]; then ./.gitlab-ci/apt-script.cl; fi
+    - if [ -e .gitlab-ci/gitlab-com.R ]; then R < .gitlab-ci/gitlab-com.R; fi
+    - R --vanilla -e 'install.packages("remotes", repos = "https://cloud.r-project.org/")'
+    - R --vanilla -e 'remotes::install_gitlab("fvafrcu/packager")'
+    - R --vanilla -e 'packager::install_deps(path = ".", repos = "https://cloud.r-project.org/")'
 
 build_and_check:
   stage: build

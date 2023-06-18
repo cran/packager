@@ -4,4 +4,3 @@ update_make <- function(path) {
     use_makefile(path = path, force = TRUE)
     provide_make(path = path, force = TRUE)
 }
-

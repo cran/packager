@@ -1,5 +1,5 @@
 foobar <- function(x) {
-    # this is a lint: this line is way toooooooooooooooooooooooooooooooooooo long! # Exclude Linting  
+    # this is a lint: this line is way toooooooooooooooooooooooooooooooooooo long! # Exclude Linting
     return(NULL)
 }
 

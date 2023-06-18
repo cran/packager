@@ -12,7 +12,7 @@ infect(path, fakemake = "check", git_add_and_commit = TRUE, ...)
 
 \item{fakemake}{The \code{name} for a
 \code{\link[packager:get_package_makelist]{makelist}} for \pkg{fakemake}.
-Set to \code{\link{NULL}} or \code{\link{FALSE}} to disable running 
+Set to \code{\link{NULL}} or \code{\link{FALSE}} to disable running
 \code{\link[fakemake:make]{fakemake::make}}.}
 
 \item{git_add_and_commit}{Add and commit changes in git?}
@@ -30,7 +30,7 @@ it.
 }
 \examples{
 \dontrun{
-if (require("roxygen2")) { 
+if (require("roxygen2")) {
 path <- file.path(tempdir(), "mySecondPackage")
 usethis::create_package(path = path, open = FALSE)
 l1 <- list.files(path, recursive = TRUE)

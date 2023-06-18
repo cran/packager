@@ -13,7 +13,7 @@ test_add_commit <- function() {
     RUnit::checkException(git_add_commit(path = path))
     git_add_commit(path = path, untracked = TRUE)
     expectation <- structure(list(file = character(0), status = character(0),
-                                  staged = logical(0)), row.names = integer(0), 
+                                  staged = logical(0)), row.names = integer(0),
                              class = c("tbl_df", "tbl", "data.frame"))
     result <- gert::git_status(repo = path)
     RUnit::checkIdentical(expectation, result)
@@ -130,4 +130,3 @@ test_githuburl <- function() {
     result <- desc::desc_get_urls(file = path)
     RUnit::checkIdentical(expectation, result)
 }
-

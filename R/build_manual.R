@@ -13,7 +13,7 @@
 #' \code{R CMD Rd2pdf}.
 build_manual <- function(path = ".", output_directory = NULL,
                          roxygenise = TRUE, verbose = TRUE) {
-    if (requireNamespace("roxygen2", character.only = TRUE, quietly = TRUE) &&
+    if (requireNamespace("roxygen2", quietly = TRUE) &&
         isTRUE(roxygenise)) {
         roxygen2::roxygenise(package.dir = path)
     } else {
@@ -42,6 +42,6 @@ build_manual <- function(path = ".", output_directory = NULL,
                  cat(e[["stdout"]])
                  stop("Failed to build manual", call. = FALSE)
              })
-    cat(msg[["stdout"]])
+    if (isTRUE(verbose)) cat(msg[["stdout"]])
     invisible(msg)
 }

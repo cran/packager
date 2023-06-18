@@ -27,4 +27,3 @@ package_skeleton <- function(path, force = TRUE) {
     status <- path
     return(invisible(status))
 }
-

@@ -7,14 +7,14 @@ test_submit <- function() {
     d <- file.path(tempdir(), "prutp")
     on.exit(unlink(d, recursive = TRUE))
     unlink(d, recursive = TRUE)
-    if (require("roxygen2")) { 
-        # https://cran.r-project.org/doc/manuals/R-exts.html, 
+    if (require("roxygen2")) {
+        # https://cran.r-project.org/doc/manuals/R-exts.html,
         # cran pretest on windows seems not to have roxygen2, albeit being in
         # 'Suggests'.
-        packager::create(path = d, fakemake = "roxygen2") 
+        packager::create(path = d, fakemake = "roxygen2")
         packager::use_dev_version(d)
         RUnit::checkException(packager::submit(d, stop_on_git = FALSE,
                                                stop_on_devel = TRUE))
     }
 }
-if (interactive()) test_submit() 
+if (interactive()) test_submit()

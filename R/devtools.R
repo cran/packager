@@ -266,6 +266,7 @@ print.check_results <- function(x, ...) {
   message(summarise_check_results(x))
 
   cat(format(x), "\n", sep = "")
+  NextMethod("print")
   invisible(x)
 }
 

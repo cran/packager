@@ -21,7 +21,7 @@ test_is_force <- function() {
 }
 
 test_get_news <- function() {
-    path <- provide_fake_package() # Exclude Linting  
+    path <- provide_fake_package() # Exclude Linting
     on.exit(unlink(path, recursive = TRUE))
     packager:::use_news_md(pkg = path, git_commit = FALSE)
     result <- packager:::get_news(path)
@@ -31,7 +31,7 @@ test_get_news <- function() {
 }
 
 test_git <- function() {
-    path <- provide_fake_package() # Exclude Linting  
+    path <- provide_fake_package() # Exclude Linting
     if (!inherits(path, "error")) {
         on.exit(unlink(path, recursive = TRUE))
         RUnit::checkTrue(! packager:::is_git_clone(path),

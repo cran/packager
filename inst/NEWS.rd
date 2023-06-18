@@ -1,6 +1,21 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.15.0}{
+\itemize{
+\item Package \code{fritools} back on CRAN.
+\item Updated rhub logs.
+\item Read win\_builder message from ~/Mail/CRAN for cran\_comments.md.
+\item Adapted to lintr 3.0.0.
+\item Fixed retrival of gitlab logs for camelCase packages.
+\item Fixed formerly extraneous argument \code{character.only} to call to
+\code{requireNamespase()} in \code{build_manual()}, which always led to falsely never
+roxygenizing.
+\item \code{use_devel()} now provides an exenteded \code{devel.R} and adds
+\code{devel/devel_test.R}, which I found very helpful.
+}
+}
+
 \section{Changes in version 1.14.0}{
 \itemize{
 \item Added function \code{build_manual} as a substitute for devtools' version.
@@ -58,11 +73,15 @@ in the subsections.
 \item make build depend on file LICENSE,
 \item build with vignettes instead of without vignettes.
 So now
-}\preformatted{fakemake::make("cran-comments.md", get_package_makelist())
 }
 
-and\preformatted{system(paste("make -f", system.file("templates", "nomakefile", package = "packager"), "cran-comments.md"))
-}
+\if{html}{\out{<div class="sourceCode">}}\preformatted{fakemake::make("cran-comments.md", get_package_makelist())
+}\if{html}{\out{</div>}}
+
+and
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{system(paste("make -f", system.file("templates", "nomakefile", package = "packager"), "cran-comments.md"))
+}\if{html}{\out{</div>}}
 
 will run identical make chains.
 Added internal function \code{compare_make()} to ensure for this.
@@ -147,7 +166,7 @@ the default value for \code{args} for function \code{rcmdcheck_and_log()}.
 So now all \code{args} except "--as-cran" will be used as \code{build_args} by default.
 Comes in handy, because usually we want to exclude actions (via "--no-manual"
 or the like) from both build and check. Now don't need to pass them to two
-arguments explicitely.
+arguments explicitly.
 }
 }
 
@@ -315,7 +334,7 @@ usethis where appropriate).
 \section{Changes in version 0.17.0}{
 \itemize{
 \item Provided minimal example in vignette.
-\item Hardened eval\_from\_log() against logging output like XXX = <environmend> and
+\item Hardened eval\_from\_log() against logging output like XXX = \if{html}{\out{<environmend>}} and
 \verb{\\r}.
 \item Fixed bug in print\_lints().
 \item Do not call add\_github\_url\_to\_desc() any more.
