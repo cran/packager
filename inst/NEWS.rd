@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.15.1}{
+\itemize{
+\item Fix tests failing for R-devel on several platforms.
+}
+}
+
 \section{Changes in version 1.15.0}{
 \itemize{
 \item Package \code{fritools} back on CRAN.

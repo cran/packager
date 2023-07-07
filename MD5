@@ -1,7 +1,7 @@
-780b27be3d57bb78a5f46cbc2c4911f2 *DESCRIPTION
+047264d826257c21367442811f0ee617 *DESCRIPTION
 b07bea834e9dd61e5d8a055953bfe6b3 *LICENSE
 f7590059390a394576df074569b0e198 *NAMESPACE
-cb3bb9e629d3d2a517f20a20b4d76c4d *NEWS.md
+1ee28deb94d569d792ff44d69560b9cd *NEWS.md
 dac53d7a8c621d3e2589e4e1d2c79b20 *R/build_manual.R
 143bbbaebd2299dd67d5a1353480e783 *R/checks.R
 3b137479dd72073e8a91c952b97ebe88 *R/compare.R
@@ -44,11 +44,11 @@ add1ab891f21ae04b915cc3de5826295 *R/various.R
 5a95864bbf520793d86a19e25c4bf026 *R/zzz.R
 b91b37ddcc24f297919f869f4e8d3c60 *README.md
 c607b16ecacc88681cc3f5f90876fdf3 *build/vignette.rds
-3d7428889c6019b9ef2bd6b8c2b342d7 *inst/NEWS.rd
+1f503aafb32991637135d66d836de449 *inst/NEWS.rd
 8a9040c78e2770afca52d17fbd4d56cc *inst/WORDLIST
 6aa31af4b1cd1a9b8c9831de6527e630 *inst/doc/An_Introduction_to_packager.R
 7e1c549f399be6969488b61aeaf2d0f6 *inst/doc/An_Introduction_to_packager.Rasciidoc
-2ac514b3548c289e5cecc1ff0311fe3f *inst/doc/An_Introduction_to_packager.html
+0c12c3421fb5fc1339d945c8bae09b10 *inst/doc/An_Introduction_to_packager.html
 04c52551cddf0306e18c46aa7ab64d4e *inst/files/An_Introduction_to_packager.Rasciidoc
 76d721acdd488f61d3399ab7569bd12a *inst/files/An_Introduction_to_packager.Rmd
 82e72c59e23e569bef9294e799f51336 *inst/files/a.R
@@ -59,7 +59,7 @@ a1707ef1bd052b2b74f69469304f7ae1 *inst/runit_tests/test_convert_vignette.R
 49dfbd18f8d8d4a512d2502ed70e892e *inst/runit_tests/test_devtools_modified.R
 200471041f7663655ff88ae226afc319 *inst/runit_tests/test_git.R
 7e112ee865a6c1757fab53414f11ccfe *inst/runit_tests/test_internal.R
-462734f65757f12d60f3c80ca2fe63f6 *inst/runit_tests/test_main.R
+ac187f88b1d8f40c260fa04fb66b5e75 *inst/runit_tests/test_main.R
 0e75e3382fdfc0574523dcc46adf6b79 *inst/runit_tests/test_submit.R
 80685c1d9dd1bdf5b1bbc61906a037f7 *inst/runit_tests/test_throw.R
 cf7020be115f2a10d0509f36d00f3ecc *inst/runit_tests/test_tools.R

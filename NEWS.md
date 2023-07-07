@@ -1,3 +1,7 @@
+# packager 1.15.1
+
+* Fix tests failing for R-devel on several platforms.
+
 # packager 1.15.0
 
 * Package `fritools` back on CRAN.

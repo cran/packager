@@ -1,6 +1,6 @@
 Package: packager
 Title: Create, Build and Maintain Packages
-Version: 1.15.0
+Version: 1.15.1
 Authors@R: 
     person(given = "Andreas Dominik",
            family = "Cullmann",
@@ -25,8 +25,8 @@ VignetteBuilder: rasciidoc
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-06-16 18:46:09 UTC; qwer
+Packaged: 2023-07-07 06:13:45 UTC; qwer
 Author: Andreas Dominik Cullmann [aut, cre]
 Maintainer: Andreas Dominik Cullmann <fvafrcu@mailbox.org>
 Repository: CRAN
-Date/Publication: 2023-06-18 22:30:02 UTC
+Date/Publication: 2023-07-07 15:10:02 UTC
