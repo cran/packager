@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.15.2}{
+\itemize{
+\item Fixed CRAN notes on Escaped LaTeX specials.
+\item Fix \code{provide_news_rd()} to deal with escaped underscores.
+}
+}
+
 \section{Changes in version 1.15.1}{
 \itemize{
 \item Fix tests failing for R-devel on several platforms.
@@ -11,7 +18,7 @@
 \itemize{
 \item Package \code{fritools} back on CRAN.
 \item Updated rhub logs.
-\item Read win\_builder message from ~/Mail/CRAN for cran\_comments.md.
+\item Read win_builder message from ~/Mail/CRAN for cran_comments.md.
 \item Adapted to lintr 3.0.0.
 \item Fixed retrival of gitlab logs for camelCase packages.
 \item Fixed formerly extraneous argument \code{character.only} to call to
@@ -72,7 +79,7 @@ in the subsections.
 \item Updated the \code{makelist} returned  by \code{get_package_makelist()} to
 \itemize{
 \item install,
-\item dev\_install before running RUnit tests,
+\item dev_install before running RUnit tests,
 \item knit README.md from README.Rmd,
 \item rename the target from \code{log/cran_comments.Rout} (which is now the sink) to
 \code{cran-comments.md}, as the later \emph{is} the target file.
@@ -222,9 +229,9 @@ code from different vignettes.
 
 \section{Changes in version 1.1.0}{
 \itemize{
-\item provide\_cran\_comments() now reports changes read from NEWS.md that may
+\item provide_cran_comments() now reports changes read from NEWS.md that may
 contain sections.
-\item provide\_cran\_comments() now reports the number of checks run by RUnit.
+\item provide_cran_comments() now reports the number of checks run by RUnit.
 }
 }
 
@@ -233,9 +240,9 @@ contain sections.
 \item Removed reading travis.com logs.
 \item Only use files starting with "runit" for RUnit testing.
 \item Allow for file setup.R for RUnit testing.
-\item Function use\_template() now optionally adds and commits files to disk an is
+\item Function use_template() now optionally adds and commits files to disk an is
 exported now.
-\item Function provide\_make() now passes ellpsis to use\_template().
+\item Function provide_make() now passes ellpsis to use_template().
 \item Fixed cleanr Issue #1: RUnit test now no longer write results to disk on their own.
 \item Comments to CRAN now report package meta stats:
 The package is searched for files in ./log/ that correspond to cyclocomp,
@@ -243,19 +250,19 @@ spell checking, cleanr, lintr and usage.
 \item Comments to CRAN now report unit testings stats:
 The package is searched for files in ./log/ that correspond to RUnit, testthat
 and covr.
-\item Added option is\_cran to get\_package\_makelist() to omit targets \code{cyclocomp}
-and \code{runit} instead of option is\_runit.
+\item Added option is_cran to get_package_makelist() to omit targets \code{cyclocomp}
+and \code{runit} instead of option is_runit.
 \item Pass upload error messages if package submission fails.
-\item New function sort\_deps\_in\_desc() sorts the dependencies in file DESCRIPTION.
+\item New function sort_deps_in_desc() sorts the dependencies in file DESCRIPTION.
 \item release() is now linked to submit() which is the better name.
-\item Added a function get\_check\_status() that retrieves the status from a \verb{R CMD check}-log.
+\item Added a function get_check_status() that retrieves the status from a \verb{R CMD check}-log.
 \item Now using package fakemake in infect().
 }
 }
 
 \section{Changes in version 0.22.4}{
 \itemize{
-\item use packager's version of use\_dev\_version().
+\item use packager's version of use_dev_version().
 \item Fix infect() for new behaviour of usethis.
 }
 }
@@ -268,7 +275,7 @@ and \code{runit} instead of option is\_runit.
 
 \section{Changes in version 0.22.2}{
 \itemize{
-\item Added remove\_lines().
+\item Added remove_lines().
 \item Added pkgload to Field Suggests in file DESCRIPTION.
 }
 }
@@ -283,14 +290,14 @@ and \code{runit} instead of option is\_runit.
 \itemize{
 \item Force to use usethis version 1.4.0, as usethis version 1.5.0 breaks loads of
 stuff.
-\item Added function install\_deps(). Installs dependencies from DESCRIPTION with
+\item Added function install_deps(). Installs dependencies from DESCRIPTION with
 minimum version.
 \item Save the install log, too.
 \item Provide template for link to vignette on CRAN.
 \item Fixed link to vignette on gitlab.
 \item Prevent R/PKGNAME-package.R from being overwritten by default.
-\item Use new cleanr::check\_package() instead of cleanr::check\_directory()
-\item Got rid of github\_document in README.
+\item Use new cleanr::check_package() instead of cleanr::check_directory()
+\item Got rid of github_document in README.
 }
 }
 
@@ -302,7 +309,7 @@ minimum version.
 
 \section{Changes in version 0.20.0}{
 \itemize{
-\item Caught possibly failing get\_gitlab\_log as to make provide\_cran\_comments()
+\item Caught possibly failing get_gitlab_log as to make provide_cran_comments()
 more stable.
 \item Fix devel.R template.
 }
@@ -311,20 +318,20 @@ more stable.
 \section{Changes in version 0.19.0}{
 \itemize{
 \item Create a devel.R from the template on infection.
-\item Not using deprecated packager::use\_dev\_version() in Makefile.
+\item Not using deprecated packager::use_dev_version() in Makefile.
 \item Using path with pkgbuild::build() instead of pkg from devtools.
 }
 }
 
 \section{Changes in version 0.18.2}{
 \itemize{
-\item Fixed use\_dev\_version.
+\item Fixed use_dev_version.
 }
 }
 
 \section{Changes in version 0.18.1}{
 \itemize{
-\item Did not fix use\_dev\_version.
+\item Did not fix use_dev_version.
 }
 }
 
@@ -340,18 +347,18 @@ usethis where appropriate).
 \section{Changes in version 0.17.0}{
 \itemize{
 \item Provided minimal example in vignette.
-\item Hardened eval\_from\_log() against logging output like XXX = \if{html}{\out{<environmend>}} and
+\item Hardened eval_from_log() against logging output like XXX = \if{html}{\out{<environmend>}} and
 \verb{\\r}.
-\item Fixed bug in print\_lints().
-\item Do not call add\_github\_url\_to\_desc() any more.
-\item Fixed default for argument details to internal function use\_intro().
-\item Use devtools::upload\_cran() from version 1.13.6.
+\item Fixed bug in print_lints().
+\item Do not call add_github_url_to_desc() any more.
+\item Fixed default for argument details to internal function use_intro().
+\item Use devtools::upload_cran() from version 1.13.6.
 }
 }
 
 \section{Changes in version 0.16.0}{
 \itemize{
-\item provide\_cran\_comments() now reads info from logs on gitlab.com, given that
+\item provide_cran_comments() now reads info from logs on gitlab.com, given that
 .gitlab-ci.yml from this package (via packager:::use_gitlab_ci()) is used.
 }
 }
@@ -370,17 +377,17 @@ usethis where appropriate).
 
 \section{Changes in version 0.15.1}{
 \itemize{
-\item Fixed broken pipeline by hardening provide\_gitlab\_url() against missing git
+\item Fixed broken pipeline by hardening provide_gitlab_url() against missing git
 default config.
 }
 }
 
 \section{Changes in version 0.15.0}{
 \itemize{
-\item Added new functions set\_desc\_url(), which, using provide\_gitlab\_url(),
+\item Added new functions set_desc_url(), which, using provide_gitlab_url(),
 sets the DESCRIPTION's URL to a hopefully reasonable URL when running
 infect().
-\item Added new functions is\_r\_package() and provide\_gitlab\_url().
+\item Added new functions is_r_package() and provide_gitlab_url().
 }
 }
 
@@ -399,7 +406,7 @@ infect().
 
 \section{Changes in version 0.12.0}{
 \itemize{
-\item Added function check\_usage() as a wrapper to codetools::checkUsagePackage().
+\item Added function check_usage() as a wrapper to codetools::checkUsagePackage().
 }
 }
 
@@ -417,7 +424,7 @@ infect().
 
 \section{Changes in version 0.11.0}{
 \itemize{
-\item Added functions use\_dev\_version() and use\_dev\_news().
+\item Added functions use_dev_version() and use_dev_news().
 }
 }
 
@@ -429,16 +436,16 @@ infect().
 
 \section{Changes in version 0.10.0}{
 \itemize{
-\item Added update\_deps() for updating package dependencies like internals from
+\item Added update_deps() for updating package dependencies like internals from
 package remotes does.
-\item provide\_cran\_comments() now optionally reads a travis log from file.
+\item provide_cran_comments() now optionally reads a travis log from file.
 \item Fixed git commit in release().
 }
 }
 
 \section{Changes in version 0.9.0}{
 \itemize{
-\item Added function print\_lints() to print lints sorted by patterns
+\item Added function print_lints() to print lints sorted by patterns
 matching source file names.
 }
 }
@@ -448,15 +455,15 @@ matching source file names.
 \item Setting initial package version to '0.1.0'.
 \item Using the minor R version in DESCRIPTION (not the patched one).
 \item Fixed setting a package's title if no description is given.
-\item Set the argument author\_at\_r for function set\_package\_info to default to
+\item Set the argument author_at_r for function set_package_info to default to
 option packager/whoami.
-\item Add a failsafe version of git2r::commit called git\_commit().
+\item Add a failsafe version of git2r::commit called git_commit().
 \item Added exception handling if reading the git config throws an error by
 conditionally setting a local git config.
 \item Added option \code{verbose} to create().
-\item Sanitized the return value of git\_sync\_status().
+\item Sanitized the return value of git_sync_status().
 \item Linted the codes heavily.
-\item Added an inclusion pattern to check\_codetags() and set reasonable defaults
+\item Added an inclusion pattern to check_codetags() and set reasonable defaults
 for patterns.
 }
 }
@@ -465,9 +472,9 @@ for patterns.
 \itemize{
 \item Added function release() which skips the usual interactive questions done
 by devtools::release().
-\item Added function provide\_make\_list() which is an extension to
-fakemake::provide\_make\_list().
-\item Enhanced docs for provide\_cran\_comments().
+\item Added function provide_make_list() which is an extension to
+fakemake::provide_make_list().
+\item Enhanced docs for provide_cran_comments().
 }
 }
 
@@ -481,7 +488,7 @@ template on systems where travis-cli will fail.
 \section{Changes in version 0.5.0}{
 \itemize{
 \item Fixed testing.
-\item Added internal function strip\_off\_attributes(), mainly to get rid of object
+\item Added internal function strip_off_attributes(), mainly to get rid of object
 names.
 \item Fixed querying the package's maintainer's name.
 \item Updated package's info.
@@ -496,14 +503,14 @@ names.
 
 \section{Changes in version 0.4.0}{
 \itemize{
-\item Hotfixed git\_tag()
-\item Added internal function git\_add\_commit() to mimic \verb{git commit -am"MESSAGE"}.
+\item Hotfixed git_tag()
+\item Added internal function git_add_commit() to mimic \verb{git commit -am"MESSAGE"}.
 }
 }
 
 \section{Changes in version 0.3.1}{
 \itemize{
-\item provide\_cran\_comments(name = ) now defaults to NA, using the DESCRIPTION's
+\item provide_cran_comments(name = ) now defaults to NA, using the DESCRIPTION's
 maintainer's given name.
 }
 }
@@ -517,13 +524,13 @@ maintainer's given name.
 \section{Changes in version 0.2.2}{
 \itemize{
 \item Vignette defaults are now set from details and description passed to
-set\_package\_info.
+set_package_info.
 }
 }
 
 \section{Changes in version 0.2.1}{
 \itemize{
-\item Added bugfix for get\_news().
+\item Added bugfix for get_news().
 }
 }
 

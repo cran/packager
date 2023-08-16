@@ -21,6 +21,7 @@ provide_news_rd <- function(path = ".",
         file  <- file.path(root, "NEWS.md")
         news <- readLines(file)
         news <- sub("^(# ).* ([0-9].*$)", "\\1Changes in version \\2", news)
+        news <- gsub("\\\\_", "\\_", news)
         writeLines(c(paste0("#' ",
                             c("@title NEWS",
                               "@description DESCREMOVE",

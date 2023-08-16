@@ -1,3 +1,8 @@
+# packager 1.15.2
+
+* Fixed CRAN notes on Escaped LaTeX specials.
+* Fix `provide_news_rd()` to deal with escaped underscores.
+
 # packager 1.15.1
 
 * Fix tests failing for R-devel on several platforms.

@@ -7,9 +7,9 @@
 is_version_sufficient(installed, required)
 }
 \arguments{
-\item{required}{The version required.}
+\item{installed}{The version installed.}
 
-\item{available}{The version available.}
+\item{required}{The version required.}
 }
 \value{
 \code{\link{TRUE}}, if so,  \code{\link{FALSE}} otherwise.
@@ -18,5 +18,9 @@ is_version_sufficient(installed, required)
 See \code{
 \link[fritools:is_version_sufficient]{fritools::is_version_sufficient}
 }.
+}
+\examples{
+is_version_sufficient(installed = "1.0.0", required = "2.0.0")
+is_version_sufficient(installed = "1.0.0", required = "1.0.0")
 }
 \keyword{internal}
