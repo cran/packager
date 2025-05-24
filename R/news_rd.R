@@ -1,8 +1,8 @@
 #' Convert \file{NEWS.md} to \file{inst/NEWS.rd}
 #'
 #' The file \file{inst/NEWS.rd} will get listed in the package's help index.
-#' Christian Vonderach uses the index thus wants file{inst/NEWS.rd} to
-#' automatically be in sync with file{./NEWS.md}.
+#' Christian Vonderach uses the index thus wants \file{inst/NEWS.rd} to
+#' automatically be in sync with \file{./NEWS.md}.
 #'
 #' @template package_path
 #' @template verbose

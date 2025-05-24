@@ -2,6 +2,7 @@
 % Please edit documentation in R/packager-package.R
 \docType{package}
 \name{packager-package}
+\alias{packager}
 \alias{packager-package}
 \title{Helps Me Create, Build and Maintain Packages}
 \description{
@@ -11,5 +12,16 @@ heavily borrowing from \pkg{devtools} 1.13.3.
 \details{
 You will find the details in\cr
 \code{vignette("An_Introduction_to_packager", package = "packager")}.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://gitlab.com/fvafrcu/packager}
+}
+
+}
+\author{
+\strong{Maintainer}: Andreas Dominik Cullmann \email{fvafrcu@mailbox.org}
+
 }
 \keyword{package}

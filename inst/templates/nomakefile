@@ -153,7 +153,7 @@ $(LOG_DIR)/covr.log: .log.log $(R_FILES) $(TESTTHAT_FILES) $(RUNIT_FILES) $(INST
 .PHONY: tinytest
 tinytest: $(LOG_DIR)/tinytest.log 
 $(LOG_DIR)/tinytest.log: .log.log $(R_FILES) $(TINYTEST_FILES) $(INST_FILES) $(LOG_DIR)/dependencies.log
-	$(Rscript) --vanilla -e 'if (file.exists(file.path("tests", "tinytest.R"))) pkgload::load_all("."); tinytest::test_all(".")' >  $(LOG_DIR)/tinytest.log 2>&1
+	$(Rscript) --vanilla -e 'if (file.exists(file.path("tests", "tinytest.R"))) {pkgload::load_all("."); tinytest::test_all(".")}' >  $(LOG_DIR)/tinytest.log 2>&1
 
 .PHONY: testthat
 testthat: $(LOG_DIR)/testthat.log 

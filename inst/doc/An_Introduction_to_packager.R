@@ -1,4 +1,4 @@
-## ---- results = "hide", message = FALSE---------------------------------------
+## ----results = "hide", message = FALSE----------------------------------------
 path <- file.path(tempdir(), "myFirstPackage")
 packager::create(path, fakemake = "check")
 
@@ -28,7 +28,7 @@ if ("myFirstPackage" %in% .packages()) detach("package:myFirstPackage",
                                               unload = TRUE)
 
 
-## ---- results = "hide", message = FALSE---------------------------------------
+## ----results = "hide", message = FALSE----------------------------------------
 package_title <- "myOtherPackage"
 path <- file.path(tempdir(), package_title)
 a  <- utils::person(given = "Your", family = "Name", email = "some@whe.re", 
@@ -41,11 +41,11 @@ packager::create(path, author_at_r = a, title = package_title,
 cat(readLines(file.path(path, "DESCRIPTION")), sep = "\n")
 
 
-## ---- eval = FALSE------------------------------------------------------------
-## pkgload::load_all(path)
-## help(paste0(package_title, "-package"))
+## ----eval = FALSE-------------------------------------------------------------
+# pkgload::load_all(path)
+# help(paste0(package_title, "-package"))
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 pkgload::load_all(path)
 # insert developement page
 help_file <-  system.file("man", paste0(package_title, "-package.Rd"), 
@@ -54,15 +54,15 @@ captured <- gsub('_\b', '',  capture.output(tools:::Rd2txt(help_file) ))
 cat(captured, sep = "\n")
 
 
-## ---- eval = FALSE------------------------------------------------------------
-## adc <- utils::person(given = "Andreas Dominik",
-##                       family = "Cullmann",
-##                       email = "fvafrcu@mailbox.org",
-##                       role = c("aut", "cre"))
-## pop <- as.list(getOption("packager"))
-## pop[["whoami"]] <- adc
-## options(packager = pop)
-## 
+## ----eval = FALSE-------------------------------------------------------------
+# adc <- utils::person(given = "Andreas Dominik",
+#                       family = "Cullmann",
+#                       email = "fvafrcu@mailbox.org",
+#                       role = c("aut", "cre"))
+# pop <- as.list(getOption("packager"))
+# pop[["whoami"]] <- adc
+# options(packager = pop)
+# 
 
 
 ## -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ cat(readLines(file.path(path, "NEWS.md")), sep = "\n")
 
 
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 # remove the package
 unlink(path, recursive = TRUE)
 

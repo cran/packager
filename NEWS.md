@@ -1,3 +1,8 @@
+# packager 1.15.3
+
+* Adapted `lintr::indentation_linter()` in `lint_package()` to my vim-settings.
+* Fixed CRAN notes on lost braces.
+
 # packager 1.15.2
 
 * Fixed CRAN notes on Escaped LaTeX specials.
@@ -275,8 +280,8 @@
 # packager 0.17.0
 
 * Provided minimal example in vignette.
-* Hardened eval\_from\_log() against logging output like XXX = <environmend> and
-  `\r`.
+* Hardened `eval_from_log()` against logging output like `XXX = <environment>`
+  and `\r`.
 * Fixed bug in print\_lints().
 * Do not call add\_github\_url\_to\_desc() any more.
 * Fixed default for argument details to internal function use\_intro().

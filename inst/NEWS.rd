@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{NEWS}
 
+\section{Changes in version 1.15.3}{
+\itemize{
+\item Adapted \code{lintr::indentation_linter()} in \code{lint_package()} to my vim-settings.
+\item Fixed CRAN notes on lost braces.
+}
+}
+
 \section{Changes in version 1.15.2}{
 \itemize{
 \item Fixed CRAN notes on Escaped LaTeX specials.
@@ -347,8 +354,8 @@ usethis where appropriate).
 \section{Changes in version 0.17.0}{
 \itemize{
 \item Provided minimal example in vignette.
-\item Hardened eval_from_log() against logging output like XXX = \if{html}{\out{<environmend>}} and
-\verb{\\r}.
+\item Hardened \code{eval_from_log()} against logging output like \verb{XXX = <environment>}
+and \verb{\\r}.
 \item Fixed bug in print_lints().
 \item Do not call add_github_url_to_desc() any more.
 \item Fixed default for argument details to internal function use_intro().

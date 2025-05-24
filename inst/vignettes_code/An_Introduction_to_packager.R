@@ -25,8 +25,8 @@ packager::create(path, author_at_r = a, title = package_title,
                  details = "At least to me.", fakemake = "roxygen2")
 cat(readLines(file.path(path, "DESCRIPTION")), sep = "\n")
 
-## pkgload::load_all(path)
-## help(paste0(package_title, "-package"))
+# pkgload::load_all(path)
+# help(paste0(package_title, "-package"))
 pkgload::load_all(path)
 # insert developement page
 help_file <-  system.file("man", paste0(package_title, "-package.Rd"), 
@@ -34,14 +34,14 @@ help_file <-  system.file("man", paste0(package_title, "-package.Rd"),
 captured <- gsub('_\b', '',  capture.output(tools:::Rd2txt(help_file) ))
 cat(captured, sep = "\n")
 
-## adc <- utils::person(given = "Andreas Dominik",
-##                       family = "Cullmann",
-##                       email = "fvafrcu@mailbox.org",
-##                       role = c("aut", "cre"))
-## pop <- as.list(getOption("packager"))
-## pop[["whoami"]] <- adc
-## options(packager = pop)
-## 
+# adc <- utils::person(given = "Andreas Dominik",
+#                       family = "Cullmann",
+#                       email = "fvafrcu@mailbox.org",
+#                       role = c("aut", "cre"))
+# pop <- as.list(getOption("packager"))
+# pop[["whoami"]] <- adc
+# options(packager = pop)
+# 
 
 gert::git_status(repo = path)
 gert::git_log(repo = path)

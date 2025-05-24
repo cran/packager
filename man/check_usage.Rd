@@ -2,7 +2,7 @@
 % Please edit documentation in R/checks.R
 \name{check_usage}
 \alias{check_usage}
-\title{Check Usage with \pkg{codetools}' \code{\link{checkUsagePackage}}}
+\title{Check Usage with \pkg{codetools}' \code{\link[codetools]{checkUsagePackage}}}
 \usage{
 check_usage(path = ".")
 }
@@ -12,10 +12,11 @@ check_usage(path = ".")
 }
 \value{
 A character vector of issues found by
-\code{\link{checkUsagePackage}}.
+\code{\link[codetools]{checkUsagePackage}}.
 }
 \description{
-This is just a convenience wrapper to \code{\link{checkUsagePackage}} (which
+This is just a convenience wrapper to 
+\code{\link[codetools]{checkUsagePackage}} (which
 needs loading of the [development version of the] package).
 }
 \seealso{

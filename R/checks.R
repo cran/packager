@@ -1,10 +1,11 @@
-#' Check Usage with \pkg{codetools}' \code{\link{checkUsagePackage}}
+#' Check Usage with \pkg{codetools}' \code{\link[codetools]{checkUsagePackage}}
 #'
-#' This is just a convenience wrapper to \code{\link{checkUsagePackage}} (which
+#' This is just a convenience wrapper to 
+#' \code{\link[codetools]{checkUsagePackage}} (which
 #' needs loading of the [development version of the] package).
 #' @template package_path
 #' @return A character vector of issues found by
-#' \code{\link{checkUsagePackage}}.
+#' \code{\link[codetools]{checkUsagePackage}}.
 #' @family maintenance functions
 #' @export
 check_usage <- function(path = ".") {

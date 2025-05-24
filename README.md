@@ -22,7 +22,7 @@ Please read the
 
 Or, after installation, the help page:
 
-```r
+``` r
 help("packager-package", package = "packager")
 ```
 
@@ -39,6 +39,17 @@ help("packager-package", package = "packager")
 #> 
 #>      You will find the details in
 #>      'vignette("An_Introduction_to_packager", package = "packager")'.
+#> 
+#> Author(s):
+#> 
+#>      *Maintainer*: Andreas Dominik Cullmann
+#>      <mailto:fvafrcu@mailbox.org>
+#> 
+#> See Also:
+#> 
+#>      Useful links:
+#> 
+#>         • <https://gitlab.com/fvafrcu/packager>
 ```
 
 ## Installation
@@ -46,7 +57,7 @@ help("packager-package", package = "packager")
 You can install packager from gitlab via:
 
 
-```r
+``` r
 if (! require("remotes")) install.packages("remotes")
 remotes::install_gitlab("fvafrcu/packager")
 ```
